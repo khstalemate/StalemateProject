@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원가입</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/common.css">
+</head>
+<body class="membership-body">
+    <main class="membership-container">
+        <section class="section-card membership-header">
+            <div class="logo membership-logo">
+                <span class="logo-badge logo-badge-large"><i class="fas fa-paw" style="font-size:26px;"></i></span>
+                <div class="membership-logo-text">
+                    <h1 class="membership-title">MatE</h1>
+                    <p class="muted membership-subtitle">반려동물과 함께하는 행복한 시간</p>
+                </div>
+            </div>
+            <br>
+            <h2 class="title-lg membership-form-title">회원가입</h2>
+            <br>
+            <form id="signup-form" class="membership-form">
+                <label class="membership-label">아이디(이메일)</label>
+                <div class="membership-input-group">
+                    <input type="email" class="form-control membership-input-flex" placeholder="아이디(이메일)을 입력하세요">
+                    <button class="btn btn-ghost" type="button">중복검사</button>
+                </div>
+
+                <label class="membership-label">비밀번호</label>
+                <input type="password" class="form-control" placeholder="비밀번호를 입력하세요">
+
+                <label class="membership-label">닉네임</label>
+                <input type="text" class="form-control" placeholder="닉네임을 입력하세요">
+
+                <label class="membership-label">전화번호</label>
+                <input type="tel" class="form-control" placeholder="010-0000-0000">
+
+                <label class="membership-label">인증번호</label>
+                <div class="membership-input-group">
+                    <input class="form-control membership-input-flex" placeholder="인증번호를 입력하세요">
+                    <button class="btn btn-ghost" type="button">인증하기</button>
+                </div>
+
+                <label class="membership-checkbox-group">
+                    <input type="checkbox" class="membership-checkbox"> 
+                    <span><span class="link-primary-bold">이용약관</span> 및 <span class="link-primary-bold">개인정보처리방침</span>에 동의합니다.</span>
+                </label>
+
+                <button type="submit" class="btn btn-primary membership-submit">회원가입</button>
+            </form>
+
+            <div class="membership-footer">
+                이미 계정이 있으신가요? <a href="#" class="link-primary-bold">로그인</a>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        document.getElementById("signup-form").addEventListener("submit", function(e) {
+            e.preventDefault();
+            alert("회원가입이 완료되었습니다!");
+        });
+    </script>
+</body>
+</html>
+
