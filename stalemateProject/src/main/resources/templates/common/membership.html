@@ -24,12 +24,18 @@
             <form id="signup-form" class="membership-form">
                 <label class="membership-label">아이디(이메일)</label>
                 <div class="membership-input-group">
-                    <input type="email" class="form-control membership-input-flex" placeholder="아이디(이메일)을 입력하세요">
+                    <div class="input-wrap">
+                        <i class="fa-solid fa-envelope"></i>
+                        <input type="email" class="membership-email" placeholder="example@email.com">
+                    </div>
                     <button class="btn btn-ghost" type="button">중복검사</button>
                 </div>
 
                 <label class="membership-label">비밀번호</label>
-                <input type="password" class="form-control" placeholder="비밀번호를 입력하세요">
+                <div class="input-wrap">
+                    <i class="fa-solid fa-lock"></i>
+                    <input type="password" placeholder="비밀번호를 입력하세요">
+                </div>
 
                 <label class="membership-label">닉네임</label>
                 <input type="text" class="form-control" placeholder="닉네임을 입력하세요">

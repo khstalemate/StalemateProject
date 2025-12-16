@@ -531,6 +531,11 @@ footer { margin-top: 56px; background: #111827; color: #d1d5db; padding: 32px 0 
     flex: 1;
 }
 
+/* 로그인 공통 input보다 우선 적용되도록 input.membership-email로 지정 */
+input.membership-email {
+    width: 270px;
+}
+
 .membership-checkbox-group {
     display: flex;
     gap: 8px;
