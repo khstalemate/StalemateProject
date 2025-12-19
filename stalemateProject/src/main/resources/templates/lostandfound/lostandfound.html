@@ -54,28 +54,28 @@
                 <div class="stat-card">
                     <div>
                         <p class="stat-label">총 게시글</p>
-                        <p class="stat-value">1,247</p>
+                        <p class="stat-value" id="allPostCount"></p>
                     </div>
                     <div class="stat-icon"><i class="fa-solid fa-list"></i></div>
                 </div>
                 <div class="stat-card">
                     <div>
                         <p class="stat-label">실종</p>
-                        <p class="stat-value stat-value-primary">156</p>
+                        <p class="stat-value stat-value-primary" id="lostPostCount"></p>
                     </div>
                     <div class="stat-icon stat-icon-primary"><i class="fa-solid fa-search"></i></div>
                 </div>
                 <div class="stat-card">
                     <div>
                         <p class="stat-label">목격</p>
-                        <p class="stat-value stat-value-secondary">89</p>
+                        <p class="stat-value stat-value-secondary" id="witnessPostCount"></p>
                     </div>
                     <div class="stat-icon stat-icon-secondary"><i class="fa-solid fa-eye"></i></div>
                 </div>
                 <div class="stat-card">
                     <div>
                         <p class="stat-label">오늘 등록</p>
-                        <p class="stat-value stat-value-green">12</p>
+                        <p class="stat-value stat-value-green" id="todayPostCount"></p>
                     </div>
                     <div class="stat-icon stat-icon-green"><i class="fa-solid fa-plus"></i></div>
                 </div>
@@ -205,6 +205,8 @@
             </div>
         </div>
     </footer>
+
+    <script src="/js/board/lostandfound.js"></script>
 </body>
 </html>
 
