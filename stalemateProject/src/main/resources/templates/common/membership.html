@@ -24,39 +24,42 @@
             <form id="signup-form" class="membership-form">
                 <label class="membership-label">아이디(이메일)</label>
                 <div class="membership-input-group">
-                    <input type="email" class="form-control membership-input-flex" placeholder="아이디(이메일)을 입력하세요">
+                    <div class="input-wrap">
+                        <i class="fa-solid fa-envelope"></i>
+                        <input type="email" class="membership-email" placeholder="example@email.com">
+                    </div>
                     <button class="btn btn-ghost" type="button">중복검사</button>
                 </div>
-
                 <label class="membership-label">비밀번호</label>
-                <input type="password" class="form-control" placeholder="비밀번호를 입력하세요">
-
+                <div class="input-wrap">
+                    <i class="fa-solid fa-lock"></i>
+                    <input type="password" placeholder="비밀번호를 입력하세요">
+                </div>
                 <label class="membership-label">닉네임</label>
-                <input type="text" class="form-control" placeholder="닉네임을 입력하세요">
-
+                <div class="membership-input-group">
+                    <div class="input-wrap">
+                        <input type="text" class="form-control" placeholder="닉네임을 입력하세요">
+                        <button class="btn btn-ghost" type="button">중복검사</button>
+                    </div>
+                </div>
                 <label class="membership-label">전화번호</label>
-                <input type="tel" class="form-control" placeholder="010-0000-0000">
-
+                <input type="tel" class="form-control3" placeholder="010-0000-0000">
                 <label class="membership-label">인증번호</label>
                 <div class="membership-input-group">
-                    <input class="form-control membership-input-flex" placeholder="인증번호를 입력하세요">
+                    <input class="form-control membership-input-flex" placeholder="이메일 인증번호를 입력하세요">
                     <button class="btn btn-ghost" type="button">인증하기</button>
                 </div>
-
                 <label class="membership-checkbox-group">
-                    <input type="checkbox" class="membership-checkbox"> 
+                    <input type="checkbox" class="membership-checkbox">
                     <span><span class="link-primary-bold">이용약관</span> 및 <span class="link-primary-bold">개인정보처리방침</span>에 동의합니다.</span>
                 </label>
-
                 <button type="submit" class="btn btn-primary membership-submit">회원가입</button>
             </form>
-
             <div class="membership-footer">
                 이미 계정이 있으신가요? <a href="#" class="link-primary-bold">로그인</a>
             </div>
         </section>
     </main>
-
     <script>
         document.getElementById("signup-form").addEventListener("submit", function(e) {
             e.preventDefault();
@@ -65,4 +68,3 @@
     </script>
 </body>
 </html>
-
