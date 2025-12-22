@@ -1,4 +1,4 @@
-package com.stale.mate.model.dto;
+package com.stale.mate.member.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
