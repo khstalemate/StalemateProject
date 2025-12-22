@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-    <html lang="ko">
+    <html lang="ko" xmlns:th="http://www.thymeleaf.org">
         <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,19 +11,7 @@
             <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         </head>
     <body>
-        <header>
-            <div class="header-wrap">
-                <div class="logo">
-                    <span class="logo-badge"><i class="fa-solid fa-paw"></i></span>
-                    <span class="logo-text">MatE</span>
-                </div>
-                <nav>
-                    <a href="#adoption-board"><i class="fa-solid fa-heart"></i>분양·입양</a>
-                    <a href="#missing-board"><i class="fa-solid fa-search"></i>실종·목격</a>
-                    <a href="#mypage"><i class="fa-solid fa-user"></i>마이페이지</a>
-                </nav>
-            </div>
-        </header>
+        <th:block th:replace="~{common/header}"></th:block>
 
         <main class="page">
             <div class="layout">
@@ -152,40 +140,6 @@
             </section>
         </main>
 
-        <footer>
-            <div class="footer-inner">
-                <div class="footer-grid">
-                    <div>
-                    <div class="logo footer-logo">
-                        <span class="logo-badge logo-badge-small"><i class="fa-solid fa-paw"></i></span>
-                        <span class="logo-text-white">MatE</span>
-                    </div>
-                    <p class="footer-text">반려동물과 함께하는 행복한 세상을 만듭니다</p>
-                    </div>
-                    <div>
-                        <strong>서비스</strong>
-                        <ul class="footer-links">
-                            <li><a href="#">분양&입양</a></li>
-                            <li><a href="#">실종&목격</a></li>
-                        </ul>
-                    </div>
-                    <div>
-                        <strong>고객지원</strong>
-                        <ul class="footer-links">
-                            <li><a href="#">FAQ</a></li>
-                            <li><a href="#">이용가이드</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="footer-meta">
-                <div class="footer-meta-links">
-                    <a href="#">개인정보처리방침</a>
-                    <a href="#">이용약관</a>
-                    <a href="#">사업자정보</a>
-                </div>
-                    <span>Copyright © 2025 MatE</span>
-                </div>
-            </div>
-        </footer>
+        <th:block th:replace="~{common/footer}"></th:block>
     </body>
 </html>
