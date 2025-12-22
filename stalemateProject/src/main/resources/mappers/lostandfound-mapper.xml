@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.stale.mate.board.model.mapper.LostAndFoundMapper">
+
+	<!-- 실종, 분양 게시판의 총 게시글 개수 가져오기 -->
+	<select id="getAllPostCount">
+		SELECT COUNT(*) FROM POST
+		WHERE MENU_NO = 2	
+	</select>
+	
+	<!-- 상태가 실종인 게시글의 개수 가져오기 -->
+	<select id="getLostPostCount">
+		SELECT COUNT(*) FROM POST
+		WHERE MENU_NO = 2
+		AND CATEGORY = '실종'
+	</select>
+	
+	<!-- 상태가 목격인 게시글의 개수 가져오기 -->
+	<select id="getWitnessPostCount">
+		SELECT COUNT(*) FROM POST
+		WHERE MENU_NO = 2
+		AND CATEGORY = '목격'
+	</select>
+	
+	<!-- 오늘 등록한 게시글의 개수 가져오기 -->
+	<select id="getTodayPostCount">
+		SELECT COUNT(*) FROM POST
+		WHERE MENU_NO = 2
+		AND TO_CHAR(POST_DATE, 'YYYYMMDD') = TO_CHAR(SYSDATE, 'YYYYMMDD')
+	</select>
+</mapper>
