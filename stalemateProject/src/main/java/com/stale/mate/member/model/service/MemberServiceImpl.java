@@ -1,12 +1,12 @@
-package com.stale.mate.model.service;
+package com.stale.mate.member.model.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.stale.mate.model.dto.Member;
-import com.stale.mate.model.mapper.MemberMapper;
+import com.stale.mate.member.model.dto.Member;
+import com.stale.mate.member.model.mapper.MemberMapper;
 
 import lombok.extern.slf4j.Slf4j;
 
