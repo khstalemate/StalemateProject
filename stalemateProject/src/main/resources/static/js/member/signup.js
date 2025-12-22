@@ -17,6 +17,7 @@ checkIdBtn.addEventListener("click", function(e) {
   if(inputId.length === 0){
 
     alert("아이디(이메일)을 입력해주세요!");
+
     return;
   }
 
@@ -24,6 +25,7 @@ checkIdBtn.addEventListener("click", function(e) {
 
   if(!regExp.test(inputId)) {
     alert("알맞은 이메일 형식으로 입력해주세요!");
+
     return;
   }
 
@@ -35,14 +37,30 @@ checkIdBtn.addEventListener("click", function(e) {
   .then( resp => resp.text())
   .then( result => {
     if( result == 0){
-      alert("사용 가능한 아이디(이메일)입니다!")
+      alert("사용 가능한 아이디(이메일)입니다!");
       checkObj.memberId = true;
 
     }else{
-      alert("중복된 아이디(이메일)입니다!")
+      alert("중복된 아이디(이메일)입니다!");
+
       return;
     }
   }).catch( error => {
     console.log(error);
   })
 })
+
+const checkNameBtn = document.querySelector("#checkNameBtn");
+
+checkNameBtn.addEventListener("click", function(e) {
+  const inputName = memberName.value.trim();
+
+  if(inputName.length === 0) {
+    alert("닉네임을 입력해주세요.");
+    
+    return;
+  }
+
+})
+
+

@@ -9,7 +9,7 @@ public interface MemberMapper {
 
 	Member login(String memberId);
 
-	int checkId(String memberId);
+	int checkId(Member memberId);
 
 	int checkName(String memberName);
 
