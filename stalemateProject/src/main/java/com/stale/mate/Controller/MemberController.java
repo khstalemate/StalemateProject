@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -29,6 +30,9 @@ public class MemberController {
 	@Autowired
 	private MemberService service;
 	
+	/** 미완성 로그인/로그인유지 기능, 테스트후 수정예정
+	 * 
+	 */
 	@PostMapping("login")
 	public String login(Member inputMember,
 						RedirectAttributes ra,
@@ -95,8 +99,8 @@ public class MemberController {
 	 * 작성일 : 2025/12/18
 	 */
 	@ResponseBody
-	@GetMapping("checkId")
-	public int checkId(@RequestParam("memberId") String memberId) {
+	@PostMapping("checkId")
+	public int checkId(@RequestBody Member memberId) {
 		
 		return service.checkId(memberId);
 	}

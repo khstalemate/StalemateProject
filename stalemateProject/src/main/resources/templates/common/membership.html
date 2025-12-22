@@ -26,9 +26,9 @@
                 <div class="membership-input-group">
                     <div class="input-wrap">
                         <i class="fa-solid fa-envelope"></i>
-                        <input type="email" class="membership-email" placeholder="example@email.com">
+                        <input id="memberId" name="memberId"  type="email" class="membership-email" placeholder="example@email.com">
                     </div>
-                    <button class="btn btn-ghost" type="button">중복검사</button>
+                    <button id="checkIdBtn" class="btn btn-ghost" type="button">중복검사</button>
                 </div>
                 <label class="membership-label">비밀번호</label>
                 <div class="input-wrap">
@@ -47,8 +47,9 @@
                 <label class="membership-label">인증번호</label>
                 <div class="membership-input-group">
                     <input class="form-control membership-input-flex" placeholder="이메일 인증번호를 입력하세요">
-                    <button class="btn btn-ghost" type="button">인증하기</button>
+                    <button id="sendAuthKeyBtn" class="btn btn-ghost" type="button">인증하기</button>
                 </div>
+                <div id="authKeyMessage"></div>
                 <label class="membership-checkbox-group">
                     <input type="checkbox" class="membership-checkbox">
                     <span><span class="link-primary-bold">이용약관</span> 및 <span class="link-primary-bold">개인정보처리방침</span>에 동의합니다.</span>
@@ -56,7 +57,7 @@
                 <button type="submit" class="btn btn-primary membership-submit">회원가입</button>
             </form>
             <div class="membership-footer">
-                이미 계정이 있으신가요? <a href="#" class="link-primary-bold">로그인</a>
+                이미 계정이 있으신가요? <a href="/" class="link-primary-bold">로그인</a>
             </div>
         </section>
     </main>
@@ -66,5 +67,6 @@
             alert("회원가입이 완료되었습니다!");
         });
     </script>
+    <script src="/js/member/signup.js"></script>
 </body>
 </html>
