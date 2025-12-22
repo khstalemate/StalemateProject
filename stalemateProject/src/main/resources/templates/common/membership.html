@@ -30,24 +30,43 @@
                     </div>
                     <button id="checkIdBtn" class="btn btn-ghost" type="button">중복검사</button>
                 </div>
-                <label class="membership-label">비밀번호</label>
+                <div>
+                    <label id="emailMessage" class="membership-label"></label>
+                </div>
+                <label class="membership-label">비밀번호 
+                    <div class="membership-notice">(최대 15글자, 한글, 영어 대소문자, 숫자 조합가능)</div>
+                </label>
                 <div class="input-wrap">
                     <i class="fa-solid fa-lock"></i>
-                    <input type="password" placeholder="비밀번호를 입력하세요">
+                    <input id="memberPw" name="memberPw" type="password" placeholder="비밀번호를 입력하세요">
                 </div>
-                <label class="membership-label">닉네임</label>
+                <div>
+                    <label id="memberPwCheck" class="membership-label"> </label>
+                </div>
+                <label class="membership-label">닉네임 
+                    <div class="membership-notice">(최대 10글자, 한글, 영어 대소문자, 숫자 조합가능)</div>
+                </label>
                 <div class="membership-input-group">
                     <div class="input-wrap">
-                        <input type="text" class="form-control" placeholder="닉네임을 입력하세요">
+                        <input id="memberName" name="memberName" type="text" class="form-control" placeholder="닉네임을 입력하세요">
                         <button id="checkNameBtn" class="btn btn-ghost" type="button">중복검사</button>
                     </div>
                 </div>
+                <div>
+                    <label id="nickNameMessage" class="membership-label"></label>
+                </div>
                 <label class="membership-label">전화번호</label>
-                <input type="tel" class="form-control3" placeholder="010-0000-0000">
-                <label class="membership-label">인증번호</label>
+                <input id="memberPhone" name="memberPhone" type="tel" class="form-control3" placeholder="010-0000-0000">
+                <div>
+                    <label id="memberPhoneCheck" class="membership-label"></label>
+                </div>
+                <label class="membership-label">이메일 인증번호</label>
                 <div class="membership-input-group">
                     <input class="form-control membership-input-flex" placeholder="이메일 인증번호를 입력하세요">
                     <button id="sendAuthKeyBtn" class="btn btn-ghost" type="button">인증하기</button>
+                </div>
+                <div>
+                    <label id="emailAuthMessage" class="membership-label"></label>
                 </div>
                 <div id="authKeyMessage"></div>
                 <label class="membership-checkbox-group">
