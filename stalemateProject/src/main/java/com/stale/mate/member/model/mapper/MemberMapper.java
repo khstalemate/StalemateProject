@@ -1,8 +1,8 @@
-package com.stale.mate.model.mapper;
+package com.stale.mate.member.model.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.stale.mate.model.dto.Member;
+import com.stale.mate.member.model.dto.Member;
 
 @Mapper
 public interface MemberMapper {

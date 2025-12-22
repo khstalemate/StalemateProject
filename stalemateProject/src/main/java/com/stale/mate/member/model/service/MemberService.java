@@ -1,6 +1,6 @@
-package com.stale.mate.model.service;
+package com.stale.mate.member.model.service;
 
-import com.stale.mate.model.dto.Member;
+import com.stale.mate.member.model.dto.Member;
 
 public interface MemberService {
 
