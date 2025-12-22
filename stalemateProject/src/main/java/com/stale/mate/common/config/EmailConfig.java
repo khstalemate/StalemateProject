@@ -1,5 +1,7 @@
 package com.stale.mate.common.config;
 
+import java.util.Properties;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,7 +24,7 @@ public class EmailConfig {
 		
 		JavaMailSenderImpl mailSender = new JavaMailSenderImpl();  
 		
-		
+		Properties prop = new Properties();
 		
 		
 		
