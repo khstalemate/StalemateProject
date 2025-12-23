@@ -28,4 +28,6 @@ public class Post {
 	private String content;
 	private int menuNo;
 	private int memberNo;
+	private String memberName;
+	private int replyCount;
 }
