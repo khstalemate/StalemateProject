@@ -19,6 +19,10 @@ public class EmailConfig {
 	@Value("${spring.mail.password}")
 	private String password;
 	
+	/** 작성자 : 이승준
+	 * 작성일자 : 2025-12-22
+	 * 이메일 전송 설정
+	 */
 	@Bean
 	public JavaMailSender javaMailSender() {
 		
@@ -26,12 +30,20 @@ public class EmailConfig {
 		
 		Properties prop = new Properties();
 		
+		prop.setProperty("mail.transport.protocol", "smtp");
+		prop.setProperty("mail.smtp.auth", "true");
+		prop.setProperty("mail.smtp.starttls.enable", "true");
+		prop.setProperty("mail.debug", "true");
+		prop.setProperty("mail.smtp.ssl.trust", "smtp.gmail.com");
+		prop.setProperty("mail.smtp.ssl.protocols", "TLSv1.2");
 		
-		
-		
-		
-		
-		
+		mailSender.setUsername(userName);
+		mailSender.setPassword(password);
+		mailSender.setHost("smtp.gmail.com");
+		mailSender.setPort(587);
+		mailSender.setDefaultEncoding("UTF-8");
+		mailSender.setJavaMailProperties(prop);
+					
 		return mailSender;
 	}
 
