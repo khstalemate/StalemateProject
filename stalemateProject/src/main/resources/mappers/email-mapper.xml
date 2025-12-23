@@ -14,10 +14,10 @@
 		VALUES(SEQ_KEY_NO.NEXTVAL, #{email}, #{authKey}, DEFAULT)
 	</insert>
 
-	<select id="checkAuthKey">
+	<select id="checkAuthKey" resultType="_int">
 		SELECT COUNT(*)
 		FROM TB_AUTH_KEY
-		WHERE EMAIL = ${email}
-		AND AUTH_KEY = ${authKey}
+		WHERE EMAIL = #{email}
+		AND AUTH_KEY = #{authKey}
 	</select>
 </mapper>

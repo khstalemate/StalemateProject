@@ -25,8 +25,9 @@ public class EmailController {
 	 */
 	@ResponseBody
 	@PostMapping("signup")
-	public int signup(@RequestBody String email) {
+	public int signup(@RequestBody Map<String, String> map) {
 		
+		String email = map.get("email");
 		String authKey = service.sendEmail("signup", email);
 		
 		if(authKey != null) {
