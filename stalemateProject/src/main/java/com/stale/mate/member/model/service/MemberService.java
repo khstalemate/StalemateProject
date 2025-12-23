@@ -6,7 +6,7 @@ public interface MemberService {
 
 	Member login(Member inputMember);
 
-	int checkId(String memberId);
+	int checkId(Member memberId);
 
 	int checkName(String memberName);
 
