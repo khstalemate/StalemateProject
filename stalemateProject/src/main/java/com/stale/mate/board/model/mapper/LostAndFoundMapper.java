@@ -1,6 +1,11 @@
 package com.stale.mate.board.model.mapper;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.session.RowBounds;
+
+import com.stale.mate.board.model.dto.Post;
 
 @Mapper
 public interface LostAndFoundMapper {
@@ -16,4 +21,7 @@ public interface LostAndFoundMapper {
 
 	// 오늘 등록한 게시글의 개수 가져오는 SQL
 	int getTodayPostCount();
+
+	// 게시글 목록 조회 SQL
+	List<Post> selectPostList(RowBounds rowBounds);
 }
