@@ -23,6 +23,8 @@ public class LostAndFoundController {
 	private LostAndFoundService service;
 	
 	/**
+	 * 작성자 : 최보윤
+	 * 작성일자 : 2025-12-23
 	 * 게시글 목록 조회
 	 * @return
 	 */
@@ -38,6 +40,8 @@ public class LostAndFoundController {
 	}
 	
 	/**
+	 * 작성자 : 최보윤
+	 * 작성일자 : 2025-12-23
 	 * 실종, 분양 게시판의 총 게시글 개수 가져오기
 	 */
 	@ResponseBody
@@ -47,6 +51,8 @@ public class LostAndFoundController {
 	}
 	
 	/**
+	 * 작성자 : 최보윤
+	 * 작성일자 : 2025-12-23
 	 * 상태가 실종인 게시글의 개수 가져오기
 	 */
 	@ResponseBody
@@ -56,6 +62,8 @@ public class LostAndFoundController {
 	}
 	
 	/**
+	 * 작성자 : 최보윤
+	 * 작성일자 : 2025-12-23
 	 * 상태가 목격인 게시글의 개수 가져오기
 	 */
 	@ResponseBody
@@ -65,6 +73,8 @@ public class LostAndFoundController {
 	}
 	
 	/**
+	 * 작성자 : 최보윤
+	 * 작성일자 : 2025-12-23
 	 * 오늘 등록한 게시글의 개수 가져오기
 	 */
 	@ResponseBody

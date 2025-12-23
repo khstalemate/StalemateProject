@@ -10,18 +10,44 @@ import com.stale.mate.board.model.dto.Post;
 @Mapper
 public interface LostAndFoundMapper {
 
-	// 총 게시글 가져오기 SQL
+	/**
+	 * 작성자 : 최보윤
+	 * 작성일자 : 2025-12-23
+	 * 총 게시글 가져오기 SQL
+	 * @return
+	 */
 	int getAllPostCount();
 
-	// 상태가 실종인 게시글의 개수 가져오는 SQL
+	/**
+	 * 작성자 : 최보윤
+	 * 작성일자 : 2025-12-23
+	 * 상태가 실종인 게시글의 개수 가져오는 SQL
+	 * @return
+	 */
 	int getLostPostCount();
 
-	// 상태가 목격인 게시글의 개수 가져오는 SQL
+	/**
+	 * 작성자 : 최보윤
+	 * 작성일자 : 2025-12-23
+	 * 상태가 목격인 게시글의 개수 가져오는 SQL
+	 * @return
+	 */
 	int getWitnessPostCount();
 
-	// 오늘 등록한 게시글의 개수 가져오는 SQL
+	/**
+	 * 작성자 : 최보윤
+	 * 작성일자 : 2025-12-23
+	 * 오늘 등록한 게시글의 개수 가져오는 SQL
+	 * @return
+	 */
 	int getTodayPostCount();
 
-	// 게시글 목록 조회 SQL
+	/**
+	 * 작성자 : 최보윤
+	 * 작성일자 : 2025-12-23
+	 * 게시글 목록 조회 SQL
+	 * @param rowBounds
+	 * @return
+	 */
 	List<Post> selectPostList(RowBounds rowBounds);
 }
