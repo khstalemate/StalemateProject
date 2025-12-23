@@ -15,18 +15,21 @@
 
     <main class="page">
         <div class="mypage-layout">
-
+            
             <th:block th:replace="~{common/aside}"></th:block>
 
             <section class="info-section">
-                <h2 class="info-title">내 정보 관리</h2>
+                <h2 class="info-title">내 정보 수정</h2>
                 
                 <div class="profile-section">
                     <div class="profile-image">
                         <div class="profile-image-overflow">
-                            <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-1.jpg" alt="프로필 이미지" style="display: none;">
-                            <span class="default-profile"><i class="fa-solid fa-paw"></i></span>
+                            <img id="profilePreview" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-1.jpg" alt="프로필 이미지">
                         </div>
+                        <label class="profile-edit-icon" for="imageInput">
+                            <i class="fa-solid fa-camera"></i>
+                            <input type="file" name="profileImg" id="imageInput" accept="image/*" onchange="previewImage(this)">
+                        </label>
                     </div>
                 </div>
 
@@ -37,7 +40,14 @@
 
                 <div class="info-item">
                     <label>닉네임</label>
-                    <div class="value">유건우</div>
+                    <div class="membership-notice">(최대 10글자, 한글, 영어 대소문자, 숫자 조합가능)</div>
+                    <div class="membership-input-group">
+                        <div class="input-wrap">
+                            <input type="text" class="form-control" placeholder="닉네임을 입력하세요">
+                            <button class="btn btn-ghost" type="button">중복검사</button>
+                            <label id="nickNameMessage" class="membership-label mypage-label" style="display: none;"></label>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="info-item">
@@ -49,12 +59,14 @@
                     <label>가입일자</label>
                     <div class="value">2024-12-11</div>
                 </div>
+
+                <button onclick="chageProfile()" class="btn btn-primary edit-btn">정보 수정하기</button>
             </section>
         </div>
     </main>
 
     <th:block th:replace="~{common/footer}"></th:block>
-
+    
     <script src="js/member/mypage.js"></script>
 </body>
 </html>
