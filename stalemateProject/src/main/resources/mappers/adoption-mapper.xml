@@ -1,43 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.stale.mate.board.model.mapper.LostAndFoundMapper">
+<mapper namespace="com.stale.mate.board.model.mapper.AdoptionMapper">
 
 	<!-- 작성자 : 최보윤
+		 수정자 : 유건우
 		작성일자 : 2025-12-23
-	 	실종, 목격 게시판의 총 게시글 개수 가져오기 -->
+	 	분양, 입양 게시판의 총 게시글 개수 가져오기 -->
 	<select id="getAllPostCount">
 		SELECT COUNT(*) FROM POST
-		WHERE MENU_NO = 2	
+		WHERE MENU_NO = 1
 	</select>
 	
 	<!-- 작성자 : 최보윤
 		작성일자 : 2025-12-23
-		상태가 실종인 게시글의 개수 가져오기 -->
-	<select id="getLostPostCount">
+		상태가 분양인 게시글의 개수 가져오기 -->
+	<select id="getSalePostCount">
 		SELECT COUNT(*) FROM POST
-		WHERE MENU_NO = 2
-		AND CATEGORY = '실종'
+		WHERE MENU_NO = 1
+		AND CATEGORY = '분양'
 	</select>
 	
 	<!-- 작성자 : 최보윤
+		 수정자 : 유건우
 		작성일자 : 2025-12-23
-		상태가 목격인 게시글의 개수 가져오기 -->
-	<select id="getWitnessPostCount">
+		상태가 입양인 게시글의 개수 가져오기 -->
+	<select id="getAdoptionPostCount">
 		SELECT COUNT(*) FROM POST
-		WHERE MENU_NO = 2
-		AND CATEGORY = '목격'
+		WHERE MENU_NO = 1
+		AND CATEGORY = '입양'
 	</select>
 	
 	<!-- 작성자 : 최보윤
+		 수정자 : 유건우
 		작성일자 : 2025-12-23
 		오늘 등록한 게시글의 개수 가져오기 -->
 	<select id="getTodayPostCount">
 		SELECT COUNT(*) FROM POST
-		WHERE MENU_NO = 2
+		WHERE MENU_NO = 1
 		AND TO_CHAR(POST_DATE, 'YYYYMMDD') = TO_CHAR(SYSDATE, 'YYYYMMDD')
 	</select>
 	
 	<!-- 작성자 : 최보윤
+		수정자 : 유건우
 		작성일자 : 2025-12-23
 		게시글 목록 조회하기 -->
 	<select id="selectPostList">
@@ -59,7 +63,7 @@
 		FROM POST
 		JOIN MEMBER USING (MEMBER_NO)
 		WHERE POST_DELETE = 'N'
-		AND CATEGORY IN ('실종', '목격')
+		AND CATEGORY IN ('분양', '입양')
 		ORDER BY POST_NO DESC
 	</select>
 </mapper>
