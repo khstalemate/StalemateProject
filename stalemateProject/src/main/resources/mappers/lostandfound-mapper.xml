@@ -2,30 +2,64 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.stale.mate.board.model.mapper.LostAndFoundMapper">
 
-	<!-- 실종, 분양 게시판의 총 게시글 개수 가져오기 -->
+	<!-- 작성자 : 최보윤
+		작성일자 : 2025-12-23
+	 	실종, 분양 게시판의 총 게시글 개수 가져오기 -->
 	<select id="getAllPostCount">
 		SELECT COUNT(*) FROM POST
 		WHERE MENU_NO = 2	
 	</select>
 	
-	<!-- 상태가 실종인 게시글의 개수 가져오기 -->
+	<!-- 작성자 : 최보윤
+		작성일자 : 2025-12-23
+		상태가 실종인 게시글의 개수 가져오기 -->
 	<select id="getLostPostCount">
 		SELECT COUNT(*) FROM POST
 		WHERE MENU_NO = 2
 		AND CATEGORY = '실종'
 	</select>
 	
-	<!-- 상태가 목격인 게시글의 개수 가져오기 -->
+	<!-- 작성자 : 최보윤
+		작성일자 : 2025-12-23
+		상태가 목격인 게시글의 개수 가져오기 -->
 	<select id="getWitnessPostCount">
 		SELECT COUNT(*) FROM POST
 		WHERE MENU_NO = 2
 		AND CATEGORY = '목격'
 	</select>
 	
-	<!-- 오늘 등록한 게시글의 개수 가져오기 -->
+	<!-- 작성자 : 최보윤
+		작성일자 : 2025-12-23
+		오늘 등록한 게시글의 개수 가져오기 -->
 	<select id="getTodayPostCount">
 		SELECT COUNT(*) FROM POST
 		WHERE MENU_NO = 2
 		AND TO_CHAR(POST_DATE, 'YYYYMMDD') = TO_CHAR(SYSDATE, 'YYYYMMDD')
+	</select>
+	
+	<!-- 작성자 : 최보윤
+		작성일자 : 2025-12-23
+		게시글 목록 조회하기 -->
+	<select id="selectPostList">
+		SELECT POST_NO, CATEGORY, POST_TITLE, CONTENT, MEMBER_NAME AS "memberName", VIEWS, STATUS,
+		<![CDATA[
+		CASE
+			WHEN SYSDATE - CAST(POST_DATE AS DATE) < 1 / 24 / 60
+			THEN FLOOR((SYSDATE - CAST(POST_DATE AS DATE)) * 24 * 60 * 60) || '초 전'
+			
+			WHEN SYSDATE - CAST(POST_DATE AS DATE) < 1 / 24
+			THEN FLOOR((SYSDATE - CAST(POST_DATE AS DATE)) * 24 * 60) || '분 전'
+			
+			WHEN SYSDATE - CAST(POST_DATE AS DATE) < 1
+			THEN FLOOR((SYSDATE - CAST(POST_DATE AS DATE)) * 24) || '시간 전' 
+			
+			ELSE TO_CHAR(POST_DATE, 'YYYY.MM.DD')
+		END POST_DATE
+		]]>
+		FROM POST
+		JOIN MEMBER USING (MEMBER_NO)
+		WHERE POST_DELETE = 'N'
+		AND CATEGORY IN ('실종', '목격')
+		ORDER BY POST_NO DESC
 	</select>
 </mapper>

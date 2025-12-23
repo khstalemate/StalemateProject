@@ -101,7 +101,9 @@ footer { margin-top: 56px; background: #111827; color: #d1d5db; padding: 32px 0 
 .list-row { padding: 16px; display: grid; grid-template-columns: 70px 70px 1.7fr 1fr 100px 80px 80px; gap: 10px; align-items: flex-start; border-bottom: 1px solid var(--border); }
 .list-row:last-child { border-bottom: none; }
 .list-title { margin: 0 0 4px; font-weight: 700; color: var(--text); }
-.list-desc { margin: 0; color: var(--muted); font-size: 13px; }
+.list-desc {
+    margin: 0; color: var(--muted); font-size: 13px;
+}
 .list-meta { font-size: 13px; color: var(--muted); }
 
 /* 페이지 네이션 */
