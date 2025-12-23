@@ -10,13 +10,14 @@ const sendAuthKeyBtn = document.querySelector("#sendAuthKeyBtn");
 const checkIdBtn = document.querySelector("#checkIdBtn");
 const memberId =  document.querySelector("#memberId");
 
-checkIdBtn.addEventListener("click", function(e) {
+checkIdBtn.addEventListener("click", function() {
 
   const inputId = memberId.value.trim();
 
   if(inputId.length === 0){
 
     alert("아이디(이메일)을 입력해주세요!");
+
     return;
   }
 
@@ -24,6 +25,7 @@ checkIdBtn.addEventListener("click", function(e) {
 
   if(!regExp.test(inputId)) {
     alert("알맞은 이메일 형식으로 입력해주세요!");
+
     return;
   }
 
@@ -35,14 +37,249 @@ checkIdBtn.addEventListener("click", function(e) {
   .then( resp => resp.text())
   .then( result => {
     if( result == 0){
-      alert("사용 가능한 아이디(이메일)입니다!")
+      alert("사용 가능한 아이디(이메일)입니다!");
       checkObj.memberId = true;
 
     }else{
-      alert("중복된 아이디(이메일)입니다!")
+      alert("중복된 아이디(이메일)입니다!");
+
       return;
     }
   }).catch( error => {
     console.log(error);
+  });
+});
+
+const memberPw = document.querySelector("#memberPw");
+const memberPwCheck = document.querySelector("#memberPwCheck");
+
+memberPw.addEventListener("input", function() {
+
+  const inputPw = memberPw.value.trim();
+
+  memberPwCheck.innerText = "";
+
+  if(inputPw.length === 0) {
+    memberPwCheck.innerText = "비밀번호를 입력해주세요";
+    memberPwCheck.classList.add("error");
+    memberPwCheck.classList.remove("confirm");
+    memberId.value = "";
+
+    return;
+  }
+
+  const regExp = /^[가-힣A-Za-z0-9]{1,15}$/;
+
+  if(!regExp.test(inputPw)) {
+    memberPwCheck.innerText = "알맞은 형식으로 입력해주세요!";
+    memberPwCheck.classList.add("error");
+    memberPwCheck.classList.remove("confirm");
+    memberId.value = "";
+
+    return;
+  }
+
+  memberPwCheck.innerText = "유효한 비밀번호 형식입니다!";
+  memberPwCheck.classList.add("confirm");
+  memberPwCheck.classList.remove("error");
+  checkObj.memberPw = true;
+
+});
+
+
+const checkNameBtn = document.querySelector("#checkNameBtn");
+const memberName = document.querySelector("#memberName");
+
+checkNameBtn.addEventListener("click", function() {
+  const inputName = memberName.value.trim();
+
+  if(inputName.length === 0) {
+    alert("닉네임을 입력해주세요.");
+    
+    return;
+  }
+
+  const regExp = /^[가-힣A-Za-z0-9]{1,10}$/;
+
+  if(!regExp.test(inputName)) {
+    alert("알맞는 닉네임 형식으로 입력해주세요!");
+
+    return;
+  }
+
+  fetch("/member/checkName?memberName=" + inputName)
+  .then( resp => resp.text())
+  .then( result => {
+
+    if( result == 0) {
+      alert("사용 가능한 닉네임 입니다!");
+      checkObj.memberName = true;
+
+    }else{
+      alert("중복된 닉네임 입니다!");
+
+      return;
+    }
+  }).catch( error => {
+    console.log(error);
+  });
+
+});
+
+const memberPhone = document.querySelector("#memberPhone");
+const memberPhoneCheck = document.querySelector("#memberPhoneCheck");
+
+memberPhone.addEventListener("input", function() {
+
+  const inputPhone = memberPhone.value.trim();
+
+  memberPhoneCheck.innerText = "";
+
+  if(inputPhone.value === 0) {
+    memberPhoneCheck.innerText = "전화번호를 입력해주세요";
+    memberPhoneCheck.classList.add("error");
+    memberPhoneCheck.classList.remove("confirm");
+    memberPhone.value = "";
+
+    return;
+  }
+
+  const regExp = /^\d{3}-\d{4}-\d{4}$/;
+
+  if(!regExp.test(inputPhone)) {
+    memberPhoneCheck.innerText = "알맞은 형식으로 입력해주세요!";
+    memberPhoneCheck.classList.add("error");
+    memberPhoneCheck.classList.remove("confirm");
+    memberPhone.value = "";
+    
+    return;
+  }
+
+  memberPhoneCheck.innerText = "유효한 전화번호 형식입니다!";
+  memberPhoneCheck.classList.add("confirm");
+  memberPhoneCheck.classList.remove("error");
+  checkObj.memberPhone = true;
+
+});
+
+const emailAuthMessage = document.querySelector("#emailAuthMessage");
+const initMin = 2; 
+const initSec = 0; 
+const initTime = "02:00";
+
+let min = initMin;
+let sec = initSec;
+let authTimer;
+
+sendAuthKeyBtn.addEventListener("click", function() {
+
+  checkObj.authKey = false;
+  emailAuthMessage.innerText = "";
+
+  if(!checkObj.memberId) {
+    alert("유효한 이메일을 작성하세요!");
+    
+    return;
+  }
+
+  min = initMin;
+  sec = initSec;
+
+  fetch("/email/signup", {
+    method : "POST",
+    headers : { "Content-Type": "application/json" },
+    body: JSON.stringify(memberId.value)
+
   })
+    .then( resp => resp.text())
+    .then( result => {
+      if(result == 1) {
+        console.log("인증 번호 전송");
+
+      }else{
+        console.log("인증 번호 실패");
+      }
+
+    });
+
+  emailAuthMessage.innerText = initTime;
+
+  alert("인증번호 발송완료! 시간안에 입력해주세요");
+
+  clearInterval(authTimer);
+
+  authTimer = setInterval(function() {
+
+    emailAuthMessage.innerText = `${addZero(min)}:${addZero(sec)}`;
+
+    if(min == 0 && sec == 0) {
+      checkObj.authKey = false;
+      clearInterval(authTimer);
+      emailAuthMessage.classList.add("error");
+      emailAuthMessage.classList.remove("confirm");
+      alert("인증 제한시간 초과! 다시 번호를 발급받아주세요")
+
+      return;
+    }
+
+    if(sec == 0) {
+      sec = 60;
+      min--;
+    }
+
+    sec--;
+    emailAuthMessage.classList.remove("error");
+
+  }, 1000);
+
+});
+
+function addZero(number) {
+  if (number < 10) return "0" + number;
+  else return number;
+}
+
+const inputAuthkey = document.querySelector("#inputAuthKey");
+
+inputAuthkey.addEventListener("input", function() {
+
+  const inputKey = inputAuthkey.value.trim();
+
+  if(inputKey.length !== 6) {
+    emailAuthMessage.innerText = "이메일 인증 오류";
+    emailAuthMessage.classList.add("error");
+    emailAuthMessage.classList.remove("confirm");
+    checkObj.authKey = false;
+
+    return;
+  }
+
+  fetch("/email/checkAuthKey", {
+    method : "POST",
+    headers : { "Content-Type": "application/json" },
+    body : JSON.stringify({
+      email : memberId.value,
+      authKey : inputKey
+    })
+  })
+  .then( resp => resp.text())
+  .then( result => {
+    if(result == 1){
+      emailAuthMessage.innerText = "이메일 인증 성공!";
+      emailAuthMessage.classList.add("confirm");
+      emailAuthMessage.classList.remove("error");
+      checkObj = true;
+
+    }else {
+      emailAuthMessage.innerText = "이메일 인증 오류";   
+      emailAuthMessage.classList.add("error");
+      emailAuthMessage.classList.remove("confirm");
+      checkObj.authKey = false;
+
+    }
+
+  })
+
 })
+
+
