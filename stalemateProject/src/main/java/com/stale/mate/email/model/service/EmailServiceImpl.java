@@ -2,11 +2,14 @@ package com.stale.mate.email.model.service;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.thymeleaf.context.Context;
 import org.thymeleaf.spring6.SpringTemplateEngine;
 
 import com.stale.mate.email.model.mapper.EmailMapper;
@@ -61,44 +64,48 @@ public class EmailServiceImpl implements EmailService{
 		}
 		
 	}
-
 	
-
-	
-	
-	
-	
-	
-	
+	/** 작성자 : 이승준
+	 * 작성일 : 2025-12-23
+	 * HTML 문자열 완성기능
+	 */
 	private String loadhtml(String authKey, String type) {
 
+		Context context = new Context();
+		context.setVariable("authKey", authKey);
 		
-		return null;
+		return templateEngine.process("email/" + type, context);
 	}
 
 
-
-
-
-
-
-
-
+	/** 작성자 : 이승준
+	 * 작성일 : 2025-12-23
+	 * 인증키와 이메일 DB저장 기능
+	 */
+	@Transactional(rollbackFor = Exception.class)
 	private boolean storeAuthKey(Map<String, String> map) {
 		
+		int result = mapper.updateAuthKey(map);
 		
-		return false;
+		if(result == 0) {
+			result = mapper.insertAuthKey(map);
+		}
+		
+		return result > 0;
 	}
 
 
-
-
-
-
-
+	/** 작성자 : 이승준
+	 * 작성일 : 2025-12-23
+	 * 인증번호 발급 기능
+	 */
 	private String createAuthKey() {
-		
-		
-		return null;
+		return UUID.randomUUID().toString().substring(0, 6);
+	}
+
+	@Override
+	public int checkAuthKey(Map<String, String> map) {
+
+		return mapper.checkAuthKey(map);
 	}
 }
