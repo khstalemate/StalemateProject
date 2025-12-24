@@ -84,4 +84,26 @@ public class LostAndFoundServiceImpl implements LostAndFoundService {
 		
 		return map;
 	}
+
+	/**
+	 * 작성자 : 최보윤
+	 * 작성일자 : 2025-12-24
+	 * 검색 결과에 부합하는 게시글 목록 조회
+	 */
+	@Override
+	public Map<String, Object> searchList(Map<String, Object> paramMap, int cp) {
+		int listCount = mapper.getSearchCount(paramMap);
+		Pagination pagination = new Pagination(cp, listCount);
+		int limit = pagination.getLimit();
+		
+		int offset = (cp - 1) * limit;
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		List<Post> postList = mapper.selectSearchList(paramMap, rowBounds);
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("postList", postList);
+		map.put("pagination", pagination);
+		
+		return map;
+	}
 }

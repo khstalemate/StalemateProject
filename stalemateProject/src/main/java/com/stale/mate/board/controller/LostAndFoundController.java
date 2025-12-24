@@ -32,7 +32,13 @@ public class LostAndFoundController {
 	public String lostandfound(@RequestParam(value = "cp", required = false, defaultValue = "1") int cp, Model model,
 							@RequestParam Map<String, Object> paramMap) {
 		Map<String, Object> map = null;
-		map = service.selectPostList(cp);
+		
+		if(paramMap.isEmpty()) {
+			map = service.selectPostList(cp);
+		} else {
+			map = service.searchList(paramMap, cp);
+		}
+		
 		model.addAttribute("pagination", map.get("pagination"));
 		model.addAttribute("postList", map.get("postList"));
 		

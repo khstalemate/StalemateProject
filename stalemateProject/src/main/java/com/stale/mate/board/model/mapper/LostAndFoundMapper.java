@@ -1,6 +1,7 @@
 package com.stale.mate.board.model.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.session.RowBounds;
@@ -50,4 +51,21 @@ public interface LostAndFoundMapper {
 	 * @return
 	 */
 	List<Post> selectPostList(RowBounds rowBounds);
+
+	/**
+	 * 작성자 : 최보윤
+	 * 작성일자 : 2025-12-24
+	 * 검색 결과에 부합하는 게시글 개수 가져오는 SQL
+	 * @param paramMap (사용자가 입력한 검색 조건이 담긴 맵)
+	 */
+	int getSearchCount(Map<String, Object> paramMap);
+
+	/**
+	 * 작성자 : 최보윤
+	 * 작성일자 : 2025-12-24
+	 * 검색 결과에 부합하는 게시글 목록 조회 SQL
+	 * @param paramMap (사용자가 입력한 검색 조건이 담긴 맵)
+	 * @param rowBounds
+	 */
+	List<Post> selectSearchList(Map<String, Object> paramMap, RowBounds rowBounds);
 }
