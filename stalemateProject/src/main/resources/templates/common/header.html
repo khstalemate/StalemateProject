@@ -22,8 +22,12 @@
                 <!--로그인 유무에 따라 th:block display 변경 필요-->
                 <a href="/mypage">
                     <span class="profile-info">
-                        <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-1.jpg" alt="Profile" class="profile-avatar">
-                        로그인세션 관련 프론트
+                        <img th:if="${session.loginMember.profileImg != null}" th:src="@{${session.loginMember.profileImg}}"
+                                alt="프로필 이미지">
+                            <span th:if="${session.loginMember.profileImg == null}" class="logo-badge">
+                                <i class="fa-solid fa-paw"></i>
+                            </span>
+                        <span th:text="${session.loginMember.memberName}">로그인세션 관련 프론트</span>
                     </span>
                 </a>
             </nav>
