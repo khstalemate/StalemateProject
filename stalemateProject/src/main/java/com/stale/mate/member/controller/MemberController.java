@@ -21,7 +21,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 
-@SessionAttributes({"loginMember"})
 @Controller
 @RequestMapping("member")
 @Slf4j
@@ -30,13 +29,13 @@ public class MemberController {
 	@Autowired
 	private MemberService service;
 	
-	/** 미완성 로그인/로그인유지 기능, 테스트후 수정예정
-	 * 
+	/** 작성자 : 이승준
+	 * 작성일 : 2025-12-24
+	 * 로그인 / 로그인 유지 기능
 	 */
 	@PostMapping("login")
 	public String login(Member inputMember,
 						RedirectAttributes ra,
-						Model model,
 						@RequestParam(value = "loginKeep", required = false) String loginkeep,
 						HttpServletResponse resp,
 						HttpServletRequest req) {
@@ -47,25 +46,26 @@ public class MemberController {
 			
 			ra.addFlashAttribute("message", "로그인 실패, 아이디 또는 비밀번호가 일치하지 않습니다.");
 			
+			return "redirect:/";
+			
 		}else {
 			
-			model.addAttribute("loginMember", loginMember);
-			
-			Cookie cookie = new Cookie("loginKeep", "Y");
-			cookie.setPath("/");
+			req.getSession().setAttribute("loginMember", loginMember);
 			
 			if(loginkeep != null) {
 				
-				req.getSession().setMaxInactiveInterval(60*60*24*14);
-				cookie.setMaxAge(60*60*24*14);
+				Cookie cookie = new Cookie("loginKeep", String.valueOf(loginMember.getMemberNo()));
+				cookie.setPath("/");
+				cookie.setMaxAge(60*30);
+				resp.addCookie(cookie);
 				
 			}else {
 					
-				cookie.setMaxAge(0);
-				
+				Cookie cookie = new Cookie("loginKeep", null);
+			    cookie.setPath("/");
+			    cookie.setMaxAge(0);
+			    resp.addCookie(cookie);
 			}
-			
-			resp.addCookie(cookie);
 			
 		}
 		
@@ -74,12 +74,17 @@ public class MemberController {
 	
 	/** 로그아웃 기능
 	 * 작성자 : 이승준
-	 * 작성일 : 2025/12/18
+	 * 작성일 : 2025/12/24
 	 */
 	@GetMapping("logout")
-	public String logout(SessionStatus status) {
+	public String logout(HttpServletRequest req, HttpServletResponse resp) {
 		
-		status.setComplete();
+		req.getSession().invalidate();
+		
+	    Cookie cookie = new Cookie("loginKeep", null);
+	    cookie.setPath("/");
+	    cookie.setMaxAge(0);
+	    resp.addCookie(cookie);
 		
 		return "redirect:/";
 	}
