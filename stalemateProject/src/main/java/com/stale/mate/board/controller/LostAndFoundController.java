@@ -25,12 +25,12 @@ public class LostAndFoundController {
 	/**
 	 * 작성자 : 최보윤
 	 * 작성일자 : 2025-12-23
-	 * 게시글 목록 조회
+	 * 게시글 목록 조회(2025-12-23), 검색 기능 추가(2025-12-)
 	 * @return
 	 */
 	@GetMapping("/")
-	public String lostandfound(@RequestParam(value = "cp", required = false, defaultValue = "1") int cp,
-			Model model) {
+	public String lostandfound(@RequestParam(value = "cp", required = false, defaultValue = "1") int cp, Model model,
+							@RequestParam Map<String, Object> paramMap) {
 		Map<String, Object> map = null;
 		map = service.selectPostList(cp);
 		model.addAttribute("pagination", map.get("pagination"));
