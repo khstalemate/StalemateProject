@@ -12,5 +12,9 @@ public interface MemberService {
 
 	int signup(Member inputMember);
 
+	Member selectMemberByNo(int memberNo);
+
+
+
 
 }

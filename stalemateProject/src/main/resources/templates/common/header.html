@@ -6,17 +6,31 @@
                 <span class="logo-text">MatE</span>
             </div>
         </a>
-        <nav>
-            <a href="/adoption/"><i class="fa-solid fa-heart"></i>분양·입양</a>
-            <a href="/lostandfound/"><i class="fa-solid fa-search"></i>실종·목격</a>
-            <a href="/mypage"><i class="fa-solid fa-user"></i>마이페이지</a>
-            <!--로그인 유무에 따라 th:block display 변경 필요-->
-            <a href="/mypage">
-                <span class="profile-info">
-                    <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-1.jpg" alt="Profile" class="profile-avatar">
-                    로그인세션 관련 프론트
-                </span>
-            </a>
-        </nav>
+
+        <th:block th:if="${session.loginMember == null}">
+            <nav>
+                <a href="/adoption/"><i class="fa-solid fa-heart"></i>분양·입양</a>
+                <a href="/lostandfound/"><i class="fa-solid fa-search"></i>실종·목격</a>
+            </nav>
+        </th:block>
+
+        <th:block th:if="${session.loginMember != null}">
+            <nav>
+                <a href="/adoption/"><i class="fa-solid fa-heart"></i>분양·입양</a>
+                <a href="/lostandfound/"><i class="fa-solid fa-search"></i>실종·목격</a>
+                <a href="/mypage"><i class="fa-solid fa-user"></i>마이페이지</a>
+                <!--로그인 유무에 따라 th:block display 변경 필요-->
+                <a href="/mypage">
+                    <span class="profile-info">
+                        <img th:if="${session.loginMember.profileImg != null}" th:src="@{${session.loginMember.profileImg}}"
+                                alt="프로필 이미지">
+                            <span th:if="${session.loginMember.profileImg == null}" class="logo-badge">
+                                <i class="fa-solid fa-paw"></i>
+                            </span>
+                        <span th:text="${session.loginMember.memberName}">로그인세션 관련 프론트</span>
+                    </span>
+                </a>
+            </nav>
+        </th:block>
     </div>
 </header>
