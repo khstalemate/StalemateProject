@@ -47,25 +47,26 @@ public class MemberController {
 			
 			ra.addFlashAttribute("message", "로그인 실패, 아이디 또는 비밀번호가 일치하지 않습니다.");
 			
+			return "redirect:/";
+			
 		}else {
 			
 			model.addAttribute("loginMember", loginMember);
 			
-			Cookie cookie = new Cookie("loginKeep", "Y");
-			cookie.setPath("/");
-			
 			if(loginkeep != null) {
 				
-				req.getSession().setMaxInactiveInterval(60*60*24*14);
-				cookie.setMaxAge(60*60*24*14);
+				Cookie cookie = new Cookie("loginKeep", String.valueOf(loginMember.getMemberNo()));
+				cookie.setPath("/");
+				cookie.setMaxAge(60*30);
+				resp.addCookie(cookie);
 				
 			}else {
 					
-				cookie.setMaxAge(0);
-				
+				Cookie cookie = new Cookie("loginKeep", null);
+			    cookie.setPath("/");
+			    cookie.setMaxAge(0);
+			    resp.addCookie(cookie);
 			}
-			
-			resp.addCookie(cookie);
 			
 		}
 		
@@ -77,9 +78,14 @@ public class MemberController {
 	 * 작성일 : 2025/12/18
 	 */
 	@GetMapping("logout")
-	public String logout(SessionStatus status) {
+	public String logout(SessionStatus status, HttpServletResponse resp) {
 		
 		status.setComplete();
+		
+	    Cookie cookie = new Cookie("loginKeep", null);
+	    cookie.setPath("/");
+	    cookie.setMaxAge(0);
+	    resp.addCookie(cookie);
 		
 		return "redirect:/";
 	}

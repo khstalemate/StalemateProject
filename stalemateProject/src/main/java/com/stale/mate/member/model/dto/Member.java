@@ -22,4 +22,4 @@ public class Member {
 	private String profileImg;
 	
 }
-
+	

@@ -15,6 +15,8 @@ public interface MemberMapper {
 
 	int signup(Member inputMember);
 
+	Member selectMemberByNo(int memberNo);
+
 }
 
 
