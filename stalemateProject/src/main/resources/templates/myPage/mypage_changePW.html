@@ -6,7 +6,7 @@
     <title>마이페이지 - MatE</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="/css/common.css">
     <script>window.FontAwesomeConfig = { autoReplaceSvg: "nest"};</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
@@ -16,7 +16,7 @@
     <main class="page">
         <div class="mypage-layout">
             
-            <th:block th:replace="~{common/aside}"></th:block>
+            <th:block th:replace="~{myPage/aside}"></th:block>
 
             <section class="info-section">
                 <h2 class="info-title">비밀번호 변경</h2>
@@ -51,8 +51,7 @@
     </main>
 
     <th:block th:replace="~{common/footer}"></th:block>
-    
-    <script src="js/member/mypage.js"></script>
+
 </body>
 </html>
 

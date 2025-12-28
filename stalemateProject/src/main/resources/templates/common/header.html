@@ -18,11 +18,10 @@
             <nav>
                 <a href="/adoption/"><i class="fa-solid fa-heart"></i>분양·입양</a>
                 <a href="/lostandfound/"><i class="fa-solid fa-search"></i>실종·목격</a>
-                <a href="/mypage"><i class="fa-solid fa-user"></i>마이페이지</a>
-                <!--로그인 유무에 따라 th:block display 변경 필요-->
-                <a href="/mypage">
+                <a href="/myPage/info"><i class="fa-solid fa-user"></i>마이페이지</a>
+                <a href="/myPage/info">
                     <span class="profile-info">
-                        <img th:if="${session.loginMember.profileImg != null}" th:src="@{${session.loginMember.profileImg}}"
+                        <img th:if="${session.loginMember.profileImg != null}" th:src="@{${session.loginMember.profileImg}}" width="44px" height="44px"
                                 alt="프로필 이미지">
                             <span th:if="${session.loginMember.profileImg == null}" class="logo-badge">
                                 <i class="fa-solid fa-paw"></i>

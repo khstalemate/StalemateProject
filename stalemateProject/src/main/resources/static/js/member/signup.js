@@ -137,29 +137,28 @@ memberPhone.addEventListener("input", function() {
 
   memberPhoneCheck.innerText = "";
 
-  if(inputPhone.value === 0) {
-    memberPhoneCheck.innerText = "전화번호를 입력해주세요";
-    memberPhoneCheck.classList.add("error");
-    memberPhoneCheck.classList.remove("confirm");
+    if(inputPhone === "") {
+        memberPhoneCheck.innerText = "전화번호를 입력해주세요.";
+        memberPhoneCheck.classList.add("error");
+        memberPhoneCheck.style.color = "red";
 
-    return;
-  }
+        return;
+    }
 
-  const regExp = /^\d{3}-\d{4}-\d{4}$/;
+    const regExp = /^\d{3}-\d{4}-\d{4}$/;
 
-  if(!regExp.test(inputPhone)) {
-    memberPhoneCheck.innerText = "알맞은 형식으로 입력해주세요!";
-    memberPhoneCheck.classList.add("error");
-    memberPhoneCheck.classList.remove("confirm");
-    
-    return;
-  }
+    if(!regExp.test(inputPhone)) {
+        memberPhoneCheck.innerText = "알맞은 형식으로 입력해주세요.";
+        memberPhoneCheck.classList.add("error");
+        memberPhoneCheck.style.color = "red";
+        
+        return;
+    }
 
-  memberPhoneCheck.innerText = "유효한 전화번호 형식입니다!";
-  memberPhoneCheck.classList.add("confirm");
-  memberPhoneCheck.classList.remove("error");
-  checkObj.memberPhone = true;
-
+    memberPhoneCheck.innerText = "유효한 전화번호 형식입니다.";
+    memberPhoneCheck.classList.add("confirm");
+    memberPhoneCheck.style.color = "green";
+    checkObj.memberPhone = true;
 });
 
 const emailAuthMessage = document.querySelector("#emailAuthMessage");
