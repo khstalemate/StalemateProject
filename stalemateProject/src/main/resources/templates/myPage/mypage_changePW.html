@@ -19,39 +19,44 @@
             <th:block th:replace="~{myPage/aside}"></th:block>
 
             <section class="info-section">
-                <h2 class="info-title">비밀번호 변경</h2>
+                <form action="changePw" method="POST" name="myPageFrm" id="changePw">
+                    <h2 class="info-title">비밀번호 변경</h2>
 
-                <div class="info-item">
-                    <label>현재 비밀번호</label>
-                    <div class="input-wrap">
-                        <i class="fa-solid fa-lock"></i>
-                        <input type="password" placeholder="현재 비밀번호를 입력하세요">
+                    <div class="info-item">
+                        <label>현재 비밀번호</label>
+                        <div class="input-wrap">
+                            <i class="fa-solid fa-lock"></i>
+                            <input type="password" name="currentPw" placeholder="현재 비밀번호를 입력하세요">
+                        </div>
                     </div>
-                </div>
 
-                <div class="info-item">
-                    <label>변경할 비밀번호</label>
-                    <div class="input-wrap">
-                        <i class="fa-solid fa-lock"></i>
-                        <input type="password" placeholder="변경할 비밀번호를 입력하세요">
+                    <div class="info-item">
+                        <label>변경할 비밀번호</label>
+                        <div class="input-wrap">
+                            <i class="fa-solid fa-lock"></i>
+                            <input type="password" name="newPw" placeholder="변경할 비밀번호를 입력하세요">
+                        </div>
                     </div>
-                </div>
 
-                <div class="info-item">
-                    <label>변경할 비밀번호 확인</label>
-                    <div class="input-wrap">
-                        <i class="fa-solid fa-lock"></i>
-                        <input type="password" placeholder="변경할 비밀번호를 입력하세요">
+                    <div class="info-item">
+                        <label>변경할 비밀번호 확인</label>
+                        <div class="input-wrap">
+                            <i class="fa-solid fa-lock"></i>
+                            <input type="password" name="newPwConfirm" placeholder="변경할 비밀번호를 입력하세요">
+                        </div>
                     </div>
-                </div>
 
-                <button onclick="changePW()" class="btn btn-primary edit-btn">비밀번호 변경</button>
+                    <button class="btn btn-primary edit-btn">비밀번호 변경</button>
+                </form>
             </section>
         </div>
     </main>
 
     <th:block th:replace="~{common/footer}"></th:block>
 
+    <script th:if="${message}" th:inline="javascript">
+        alert(/*[[${message}]]*/"");
+    </script>
 </body>
 </html>
 

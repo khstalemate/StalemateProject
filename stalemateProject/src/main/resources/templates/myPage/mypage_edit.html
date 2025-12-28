@@ -80,6 +80,10 @@
     </main>
 
     <th:block th:replace="~{common/footer}"></th:block>
+
+    <script th:if="${message}" th:inline="javascript">
+        alert(/*[[${message}]]*/"");
+    </script>
 </body>
 </html>
 

@@ -181,19 +181,14 @@ function chageProfile(){
     return true;
 }
 
-//비밀번호 변경
-function changePW(){
-    //비밀번호 변경 로직작성 필요
-    alert("비밀번호가 변경되었습니다.");
-}
-
 //회원탈퇴
 function memberexit() {
-    if(confirm("탈퇴 신청시 즉시 탈퇴 처리됩니다.\n정말로 회원 탈퇴를 하시겠습니까?")){
-        //탈퇴 로직작성 필요
-        alert("회원탈퇴가 완료되었습니다. 감사합니다.");
+    const isConfirmed = confirm("탈퇴 신청시 즉시 탈퇴 처리됩니다.\n정말로 회원 탈퇴를 하시겠습니까?");
+
+    if (isConfirmed) {
+        document.getElementById("deleteForm").submit();
     }
-    else{
-        alert("회원탈퇴 취소");
+    else {
+        alert("취소되었습니다.");
     }
 }

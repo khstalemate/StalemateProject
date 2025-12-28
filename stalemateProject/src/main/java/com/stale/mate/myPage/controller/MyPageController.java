@@ -1,5 +1,7 @@
 package com.stale.mate.myPage.controller;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,7 +35,6 @@ public class MyPageController {
 	/** 작성자 : 유건우
 	 * 작성일자 : 2025-12-22
 	 * 마이페이지 - 내정보 관리 이동
-	 * @return
 	 */
 	@GetMapping("info")
 	public String myPage() {
@@ -43,7 +44,6 @@ public class MyPageController {
 	/** 작성자 : 유건우
 	 * 작성일자 : 2025-12-22
 	 * 마이페이지 - 내정보 수정 이동
-	 * @return
 	 */
 	@GetMapping("edit")
 	public String myPageEdit() {
@@ -54,7 +54,6 @@ public class MyPageController {
 	/** 작성자 : 유건우
 	 * 작성일자 : 2025-12-28
 	 * 마이페이지 - 내정보 수정 기능
-	 * @return
 	 */
 	@PostMapping("edit")
 	public String myPageEditInfo(@SessionAttribute(value = "loginMember") Member loginMember,
@@ -116,12 +115,10 @@ public class MyPageController {
 		// 닉네임이 변경되었다면 중복검사 진행
 		return memberService.checkName(memberName);
 	}
-
 	
 	/** 작성자 : 유건우
 	 * 작성일자 : 2025-12-22
 	 * 마이페이지 - 비밀번호 변경 이동
-	 * @return
 	 */
 	@GetMapping("changePW")
 	public String myPagePW() {
@@ -129,13 +126,71 @@ public class MyPageController {
 	}
 
 	/** 작성자 : 유건우
+	 * 작성일자 : 2025-12-28
+	 * 마이페잊비 - 비밀번호 변경 기능
+	 */
+	@PostMapping("changePw")
+	public String changePw(@RequestParam Map<String, Object> paramMap,
+						@SessionAttribute("loginMember") Member loginMember,
+						RedirectAttributes ra ) {
+	
+		int memberNo = loginMember.getMemberNo();
+		
+		// 현재 + 새 (paramMap) + 회원 번호(memberNo)를 서비스로 전달
+		int result = service.changePw(paramMap, memberNo);
+		
+		String path = null;
+		String message = null;
+		
+		if(result > 0) {
+			//변경 성공 시 
+			message = "비밀번호가 변경 되었습니다";
+			path = "/myPage/info";
+			
+		} else {
+			//변경 실패 시
+			message = "현재 비밀번호가 일치하지 않습니다";
+			path = "/myPage/changePW";
+		}
+
+		ra.addFlashAttribute("message", message);
+		
+		return "redirect:" + path;
+	}
+	
+	/** 작성자 : 유건우
 	 * 작성일자 : 2025-12-22
 	 * 마이페이지 - 신고페이지 이동
-	 * @return
 	 */
 	@GetMapping("report")
 	public String myPageReport(){
 		return "myPage/mypage_report";
 	}
 
+	/** 작성자 : 유건우
+	 * 작성일자 : 2025-12-28
+	 * 마이페이지 - 회원탈퇴 기능
+	 */
+	@PostMapping("deleteMember")
+	public String deleteMember(@SessionAttribute("loginMember") Member loginMember, RedirectAttributes ra, HttpServletRequest req){
+		
+		int result = service.deleteMember(loginMember);
+		
+		String path = null;
+		String message = null;
+
+		if(result > 0) {
+			message = "계정이 탈퇴처리 되었습니다.";
+			path = "/";
+			//세션제거
+			req.getSession().invalidate();
+		}
+		else{
+			message = "탈퇴처리에 실패하였습니다.";
+			path = "/myPage/info";
+		}
+		
+		ra.addFlashAttribute("message", message);
+		return "redirect:" + path;
+	}
 }
