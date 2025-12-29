@@ -76,6 +76,19 @@ public class MemberServiceImpl implements MemberService{
 		return mapper.signup(inputMember);
 	}
 
+	/** 작성자 : 이승준
+	 * 작성일 : 2025-12-24
+	 * 로그인 유지 쿠기 관련 멤버 조회 기능
+	 */
+	@Override
+	public Member selectMemberByNo(int memberNo) {
+		
+		return mapper.selectMemberByNo(memberNo);
+	}
+
+
+
+
 
 
 }

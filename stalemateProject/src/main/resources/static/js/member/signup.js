@@ -3,7 +3,9 @@ const checkObj = {
   "memberPw" : false,
   "memberName" : false,
   "memberPhone" : false,
-  "authKey" : false
+  "authKey" : false,
+  "agreeTerms" : false
+
 };
 
 const sendAuthKeyBtn = document.querySelector("#sendAuthKeyBtn");
@@ -135,31 +137,28 @@ memberPhone.addEventListener("input", function() {
 
   memberPhoneCheck.innerText = "";
 
-  if(inputPhone.value === 0) {
-    memberPhoneCheck.innerText = "전화번호를 입력해주세요";
-    memberPhoneCheck.classList.add("error");
-    memberPhoneCheck.classList.remove("confirm");
-    memberPhone.value = "";
+    if(inputPhone === "") {
+        memberPhoneCheck.innerText = "전화번호를 입력해주세요.";
+        memberPhoneCheck.classList.add("error");
+        memberPhoneCheck.style.color = "red";
 
-    return;
-  }
+        return;
+    }
 
-  const regExp = /^\d{3}-\d{4}-\d{4}$/;
+    const regExp = /^\d{3}-\d{4}-\d{4}$/;
 
-  if(!regExp.test(inputPhone)) {
-    memberPhoneCheck.innerText = "알맞은 형식으로 입력해주세요!";
-    memberPhoneCheck.classList.add("error");
-    memberPhoneCheck.classList.remove("confirm");
-    memberPhone.value = "";
-    
-    return;
-  }
+    if(!regExp.test(inputPhone)) {
+        memberPhoneCheck.innerText = "알맞은 형식으로 입력해주세요.";
+        memberPhoneCheck.classList.add("error");
+        memberPhoneCheck.style.color = "red";
+        
+        return;
+    }
 
-  memberPhoneCheck.innerText = "유효한 전화번호 형식입니다!";
-  memberPhoneCheck.classList.add("confirm");
-  memberPhoneCheck.classList.remove("error");
-  checkObj.memberPhone = true;
-
+    memberPhoneCheck.innerText = "유효한 전화번호 형식입니다.";
+    memberPhoneCheck.classList.add("confirm");
+    memberPhoneCheck.style.color = "green";
+    checkObj.memberPhone = true;
 });
 
 const emailAuthMessage = document.querySelector("#emailAuthMessage");
@@ -188,7 +187,9 @@ sendAuthKeyBtn.addEventListener("click", function() {
   fetch("/email/signup", {
     method : "POST",
     headers : { "Content-Type": "application/json" },
-    body: JSON.stringify(memberId.value)
+    body: JSON.stringify({
+      email: memberId.value
+    })
 
   })
     .then( resp => resp.text())
@@ -198,7 +199,7 @@ sendAuthKeyBtn.addEventListener("click", function() {
 
       }else{
         console.log("인증 번호 실패");
-      }
+      } 
 
     });
 
@@ -243,6 +244,8 @@ const inputAuthkey = document.querySelector("#inputAuthKey");
 
 inputAuthkey.addEventListener("input", function() {
 
+  if(checkObj.authKey) return;
+
   const inputKey = inputAuthkey.value.trim();
 
   if(inputKey.length !== 6) {
@@ -268,7 +271,10 @@ inputAuthkey.addEventListener("input", function() {
       emailAuthMessage.innerText = "이메일 인증 성공!";
       emailAuthMessage.classList.add("confirm");
       emailAuthMessage.classList.remove("error");
-      checkObj = true;
+      clearInterval(authTimer);
+      checkObj.authKey = true;
+
+      inputAuthkey.disabled = true;
 
     }else {
       emailAuthMessage.innerText = "이메일 인증 오류";   
@@ -280,6 +286,62 @@ inputAuthkey.addEventListener("input", function() {
 
   })
 
-})
+});
 
+const agreeTerms = document.querySelector("#agreeTerms");
+
+agreeTerms.addEventListener("change", function() {
+
+  checkObj.agreeTerms = true;
+});
+
+const signupForm = document.querySelector("#signup-form");
+
+signupForm.addEventListener("submit", function(e){
+
+  for(let key in checkObj) {
+
+    if(!checkObj[key]) {
+      
+      let str;
+
+      switch(key) {
+        case "memberId" : 
+          str = "유효한 아이디가 아닙니다"; 
+          document.getElementById("memberId").focus();
+          break;
+        
+        case "memberPw" :
+          str = "유효한 비밀번호가 아닙니다";
+          document.getElementById("memberPw").focus();
+          break;
+
+        case "memberName" :
+          str = "유효한 닉네임이 아닙니다";
+          document.getElementById("memberName").focus();
+          break;
+         
+        case "memberPhone" :
+          str = "유효한 전화번호가 아닙니다";
+          document.getElementById("memberPhone").focus();
+          break;
+          
+        case "authKey" :
+          str = "유효한 인증번호가 아닙니다";
+          document.getElementById("inputAuthKey").focus();
+          break;
+
+        case "agreeTerms" :
+          str = "이용약관 및 개인정보처리방침에 동의해주세요";
+          document.getElementById("agreeTerms").focus();
+          break;
+      }
+
+      alert(str);
+
+      e.preventDefault();
+      return;
+    }
+  }
+});
 

@@ -1,0 +1,15 @@
+<aside class="sidebar" xmlns:th="http://www.thymeleaf.org" th:fragment="aside">
+    <a href="info"><div class="sidebar-item">내정보 조회</div></a>
+    <a href="edit"><div class="sidebar-item">내정보 수정</div></a>
+    <a href="changePW"><div class="sidebar-item">비밀번호 변경</div></a>
+    <!-- 일반 사용자면 안보이게 타임리프 작성-->
+    <th:block th:if="${session.loginMember.authority == 2}">
+        <a href="report"><div class="sidebar-item">신고글 관리</div></a>
+    </th:block>
+    <a href="#" onclick="memberexit(); return false;">
+        <div class="sidebar-item">회원탈퇴</div>
+    </a>
+    <form id="deleteForm" action="/myPage/deleteMember" method="post"></form>
+
+    <script src="/js/member/mypage.js"></script>
+</aside>

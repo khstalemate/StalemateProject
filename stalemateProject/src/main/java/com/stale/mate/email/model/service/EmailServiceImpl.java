@@ -51,7 +51,7 @@ public class EmailServiceImpl implements EmailService{
 			helper.setTo(email);
 			helper.setSubject("MatE 회원가입 인증번호 메일입니다.");
 			helper.setText( loadhtml(authKey, type), true);
-			helper.addInline("logo", new ClassPathResource("static/favicon.ico"));
+			helper.addInline("logo", new ClassPathResource("static/images/logo.jpg"));
 			
 			mailSender.send(mimeMessage);
 			
@@ -105,7 +105,8 @@ public class EmailServiceImpl implements EmailService{
 
 	@Override
 	public int checkAuthKey(Map<String, String> map) {
-
+		
 		return mapper.checkAuthKey(map);
+		
 	}
 }
