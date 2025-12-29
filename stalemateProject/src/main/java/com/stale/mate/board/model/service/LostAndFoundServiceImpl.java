@@ -139,34 +139,36 @@ public class LostAndFoundServiceImpl implements LostAndFoundService {
 	 */
 	@Override
 	public int insertPost(Post inputPost, List<MultipartFile> images) {
-		int result = mapper.insertPost(inputPost);
-		if(result == 0) return 0;
-		int postNo = inputPost.getPostNo();
-		List<PostImg> uploadList = new ArrayList<>();
-
-		for(int i = 0; i<images.size(); i++) {
-			if(!images.get(i).isEmpty()) {
-				String originalName = images.get(i).getOriginalFilename();
-				String rename = Utility.fileRename(originalName);
-				PostImg img = PostImg.builder().imgOriginalName(originalName).imgRename(rename).imgPath(webPath)
-						.postNo(postNo).uploadFile(images.get(i)).build();
-				uploadList.add(img);
-			}
-		}
-		
-		if(uploadList.isEmpty()) {
-			return postNo;
-		}
-		
-		result = mapper.insertUploadList(uploadList);
-		if(result == uploadList.size()) {
-			for(PostImg img : uploadList) {
-				img.getUploadFile.transferTo(new File(folderPath + getImgRename()));
-			} else {
-				throw new RuntimeException();
-			}
-		}
-		
-		return postNo;;
+//		int result = mapper.insertPost(inputPost);
+//		if(result == 0) return 0;
+//		int postNo = inputPost.getPostNo();
+//		List<PostImg> uploadList = new ArrayList<>();
+//
+//		for(int i = 0; i<images.size(); i++) {
+//			if(!images.get(i).isEmpty()) {
+//				String originalName = images.get(i).getOriginalFilename();
+//				String rename = Utility.fileRename(originalName);
+//				PostImg img = PostImg.builder().imgOriginalName(originalName).imgRename(rename).imgPath(webPath)
+//						.postNo(postNo).uploadFile(images.get(i)).build();
+//				uploadList.add(img);
+//			}
+//		}
+//		
+//		if(uploadList.isEmpty()) {
+//			
+//			return postNo;
+//		}
+//		
+//		result = mapper.insertUploadList(uploadList);
+//		if(result == uploadList.size()) {
+//			for(PostImg img : uploadList) {
+//				img.getUploadFile.transferTo(new File(folderPath + getImgRename()));
+//			} else {
+//				throw new RuntimeException();
+//			}
+//		}
+//		
+//		return postNo;
+		return 0;
 	}
 }

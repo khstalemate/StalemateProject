@@ -198,6 +198,13 @@
 	<insert id="insertUploadList">
 		INSERT INTO POST_IMG
 		<foreach collection="list" item="img" open="(" close=")" separator=" UNION ">
+			SELECT NEXT_IMG_NO(), 
+			#{img.imgPath}, 
+			#{img.imgOriginalName}, 
+			#{img.imgRename},
+			#{img.imgOrder}, 
+			#{img.boardNo} 
+			FROM DUAL
 		</foreach>
 	</insert>
 </mapper>
