@@ -19,7 +19,7 @@
             <th:block th:replace="~{myPage/aside}"></th:block>
 
             <section class="info-section">
-                <form action="changePw" method="POST" name="myPageFrm" id="changePw">
+                <form action="changePw" method="POST" name="myPageFrm" id="changePw" onsubmit="return chagePW()">
                     <h2 class="info-title">비밀번호 변경</h2>
 
                     <div class="info-item">
