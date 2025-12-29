@@ -33,7 +33,7 @@ public class InterceptorConfig implements WebMvcConfigurer{
 		.addPathPatterns("/**")
 		.excludePathPatterns("/", "/loginError", "/member/login", "/member/signup",
 							 "/member/checkId", "/member/checkName", "/email/**",
-							 "/member/resetPw/**",
+							 "/member/resetPw/**", "/member/userCheck",
 							 "/css/**", "/js/**", "/favicon.ico");
 		
 	}

@@ -57,8 +57,10 @@ public class EmailController {
 	@PostMapping("resetPw")
 	public int resetPw(@RequestBody Map<String, String> map) {
 		
-		String email = map.get("email");
-		String authKey = service.resetPwEmail("resetPw", email);
+		String memberId = map.get("memberId");
+		String memberPhone = map.get("memberPhone");
+		
+		String authKey = service.resetPwEmail("resetPw", memberId, memberPhone);
 		
 		if(authKey != null) {
 			

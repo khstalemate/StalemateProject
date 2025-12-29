@@ -90,11 +90,12 @@ public class MemberServiceImpl implements MemberService{
 	 * 작성일 : 2025-12-29
 	 * 비밀번호 초기화 본인인증 기능 
 	 */
+	/*
 	@Override
 	public int userCheck(String memberId, String memberPhone) {
 		
 		return mapper.userCheck(memberId, memberPhone);
-	}
+	}*/
 
 
 

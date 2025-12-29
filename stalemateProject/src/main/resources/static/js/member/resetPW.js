@@ -53,7 +53,7 @@ sendAuthKeyBtn.addEventListener("click", function() {
   })
   .then(resp => resp.text())
   .then(result => {
-    if(result === "1"){
+    if(result == 1) {
       alert("인증번호 발송! 이메일을 확인해주세요!");
       checkObj.memberCheck = true;
 
@@ -63,6 +63,8 @@ sendAuthKeyBtn.addEventListener("click", function() {
   })
 
 });
+
+
 
 const inputAuthkey = document.querySelector("#inputAuthKey");
 

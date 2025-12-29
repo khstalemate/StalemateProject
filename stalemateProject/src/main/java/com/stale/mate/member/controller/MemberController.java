@@ -166,6 +166,7 @@ public class MemberController {
 	 * 작성일 : 2025/12/29
 	 * 비밀번호 초기화시 본인 인증 기능
 	 */
+	/*
 	@ResponseBody
 	@PostMapping("userCheck")
 	public int resetPw(@RequestBody Map<String, String> param) {
@@ -173,10 +174,7 @@ public class MemberController {
 		String memberId = param.get("memberId");
 		String memberPhone = param.get("memberPhone");
 		
-		System.out.println("memberId = [" + memberId + "]");
-		System.out.println("memberPhone = [" + memberPhone + "]");
-		
 		return service.userCheck(memberId, memberPhone);
-	}
+	}*/
 	
 }
