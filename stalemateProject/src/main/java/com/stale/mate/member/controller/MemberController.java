@@ -150,4 +150,10 @@ public class MemberController {
 		return "redirect:" + path;
 	}
 	
+	@GetMapping("resetPw")
+	public String resetPwPage() {
+		
+		return "common/resetPW";
+	}
+	
 }
