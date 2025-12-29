@@ -86,6 +86,16 @@ public class MemberServiceImpl implements MemberService{
 		return mapper.selectMemberByNo(memberNo);
 	}
 
+	/** 작성자 : 이승준
+	 * 작성일 : 2025-12-29
+	 * 비밀번호 초기화 본인인증 기능 
+	 */
+	@Override
+	public int userCheck(String memberId, String memberPhone) {
+		
+		return mapper.userCheck(memberId, memberPhone);
+	}
+
 
 
 

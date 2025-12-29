@@ -17,6 +17,8 @@ public interface MemberMapper {
 
 	Member selectMemberByNo(int memberNo);
 
+	int userCheck(String memberId, String memberPhone);
+
 }
 
 

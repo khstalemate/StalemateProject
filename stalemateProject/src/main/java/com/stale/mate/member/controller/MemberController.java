@@ -1,5 +1,7 @@
 package com.stale.mate.member.controller;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -150,10 +152,28 @@ public class MemberController {
 		return "redirect:" + path;
 	}
 	
+	/** 작성자 : 이승줁
+	 * 작성일 : 2025/12/29
+	 * 비밀번호 초기화 페이지 이동기능
+	 */
 	@GetMapping("resetPw")
 	public String resetPwPage() {
 		
 		return "common/resetPW";
+	}
+	
+	/** 작성자 : 이승준
+	 * 작성일 : 2025/12/29
+	 * 비밀번호 초기화시 본인 인증 기능
+	 */
+	@ResponseBody
+	@PostMapping("userCheck")
+	public int resetPw(@RequestBody Map<String, String> param) {
+		
+		String memberId = param.get("memberId");
+		String memberPhone = param.get("memberPhone");
+		
+		return service.userCheck(memberId, memberPhone);
 	}
 	
 }

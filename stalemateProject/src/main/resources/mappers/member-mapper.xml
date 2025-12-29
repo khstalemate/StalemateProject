@@ -46,4 +46,12 @@
    		WHERE MEMBER_NO = #{memberNo}
      	AND MEMBER_DEL_FL = 'N'	
 	</select>
+	
+	<select id="userCheck">
+		SELECT COUNT(*)
+		FROM "MEMBER"
+		WHERE MEMBER_ID = #{memberId}
+		AND MEMBER_PHONE = #{memberPhone}
+		AND MEMBER_DEL_FL = 'N'
+	</select>
 </mapper>
