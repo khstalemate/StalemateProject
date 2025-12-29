@@ -77,12 +77,17 @@ public class MyPageController {
 		updateMemberInfo.setMemberName(memberName);
 		updateMemberInfo.setMemberPhone(memberPhone);
 		
-		// 이미지가 업로드 되었다면, 경로를 설정 (없으면 기존 이미지 유지)
+		
+		// 프로필 이미지 처리 로직
 		if (profileUploadResult != null) {
+			// 1. 프로필 사진이 변경되었을 경우: 새로 업로드된 이미지 설정
 			updateMemberInfo.setProfileImg(profileUploadResult);
-		}
-		else{
+		} else if (loginMember.getProfileImg() != null && !loginMember.getProfileImg().isEmpty()) {
+			// 2. 변경되지 않았을 경우: 기존 이미지 유지
 			updateMemberInfo.setProfileImg(loginMember.getProfileImg());
+		} else {
+			// 3. 사진이 없을 경우: null 또는 빈 문자열 설정
+			updateMemberInfo.setProfileImg(null);
 		}
 
 		//DB Update 구문 실행
