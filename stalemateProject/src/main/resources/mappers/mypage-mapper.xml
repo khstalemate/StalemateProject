@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.stale.mate.myPage.model.mapper.MyPageMapper">
+
+	<!-- 프로필 정보 수정 -->
+	<update id="profileUpdate">
+		UPDATE "MEMBER" SET
+	   	MEMBER_NAME = #{memberName},
+	   	MEMBER_PHONE = #{memberPhone},
+	   	PROFILE_IMG = #{profileImg}
+	   	WHERE MEMBER_NO = #{memberNo}
+	</update>
+	
+	<!-- 비밀번호 조회 -->
+	<select id="selectPw">
+		SELECT MEMBER_PW
+		FROM "MEMBER"
+		WHERE MEMBER_NO = #{memberNo}
+	</select>
+	
+	<!--  비밀번호 변경  -->
+	<update id="changePw">
+		UPDATE "MEMBER" SET
+		MEMBER_PW = #{encPw}
+		WHERE MEMBER_NO = #{memberNo}
+	</update>
+	
+	<!-- 회원탈퇴 -->
+	<update id="deleteMember">
+		UPDATE "MEMBER" SET
+		MEMBER_DEL_FL = 'Y'
+		WHERE MEMBER_NO = #{memberNo}
+	</update>
+</mapper>
