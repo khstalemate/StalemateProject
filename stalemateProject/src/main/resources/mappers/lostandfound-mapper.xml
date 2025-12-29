@@ -164,4 +164,40 @@
       	</if>
       	ORDER BY POST_NO DESC
 	</select>
+	
+	<!-- 작성자 : 최보윤
+	작성일자 : 2025-12-28
+	게시글 상세 조회 -->
+	<select id="getPost">
+		SELECT POST_TITLE, CATEGORY, STATUS, VIEWS, LOCATION, DETAIL_LOCATION, SPECIES, GENDER, AGE, WEIGHT, CONTENT, MEMBER_NAME AS "memberName",
+		TO_CHAR(MISSING_DATE, 'YYYY"년" MM"월" DD"일"') AS MISSING_DATE,
+		TO_CHAR(MISSING_TIME, 'HH24:MI') AS MISSING_TIME,
+		TO_CHAR(POST_DATE, 'YYYY"년" MM"월" DD"일"') AS POST_DATE
+		FROM POST
+		JOIN MEMBER USING(MEMBER_NO)
+		WHERE POST_NO = #{postNo}
+		AND MENU_NO = 2
+		AND POST_DELETE = 'N'
+	</select>
+	
+	<!-- 작성자 : 최보윤
+	작성일자 : 2025-12-28
+	게시글 삽입(이미지 제외) -->
+	<insert id="insertPost" useGeneratedKeys="true" parameterType="Post">
+		<selectKey order="BEFORE" resultType="_int" keyProperty="postNo">
+			SELECT SEQ_POST.NEXTVAL FROM DUAL
+		</selectKey>
+		INSERT INTO POST
+		VALUES (#{postTitle}, #{category}, #{missingDate}, #{missingTime}, #{location},
+		#{detail_location}, #{species}, #{gender}, #{age}, #{weight}, #{content})
+	</insert>
+		
+	<!-- 작성자 : 최보윤
+	작성일자 : 2025-12-28
+	게시글 삽입(이미지) -->
+	<insert id="insertUploadList">
+		INSERT INTO POST_IMG
+		<foreach collection="list" item="img" open="(" close=")" separator=" UNION ">
+		</foreach>
+	</insert>
 </mapper>

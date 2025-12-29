@@ -1,6 +1,11 @@
 package com.stale.mate.board.model.service;
 
+import java.util.List;
 import java.util.Map;
+
+import org.springframework.web.multipart.MultipartFile;
+
+import com.stale.mate.board.model.dto.Post;
 
 public interface LostAndFoundService {
 
@@ -48,4 +53,18 @@ public interface LostAndFoundService {
 	 * @param paramMap (사용자가 입력한 검색 조건이 담긴 맵)
 	 */
 	Map<String, Object> searchList(Map<String, Object> paramMap, int cp);
+
+	/**
+	 * 작성자 : 최보윤
+	 * 작성일자 : 2025-12-28
+	 * 게시글 상세 정보 가져오기
+	 */
+	Post getPost(int postNo);
+
+	/**
+	 * 작성자 : 최보윤
+	 * 작성일자 : 2025-12-28
+	 * 게시글 작성하기
+	 */
+	int insertPost(Post inputPost, List<MultipartFile> images);
 }

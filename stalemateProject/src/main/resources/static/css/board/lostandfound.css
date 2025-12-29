@@ -89,7 +89,7 @@
   display: none !important;
 }
 
-#popup-close, .controls .search .input, .popup-row button {
+#popup-close, .controls .search .input, .popup-row button, #post_title {
   cursor: pointer;
 }
 

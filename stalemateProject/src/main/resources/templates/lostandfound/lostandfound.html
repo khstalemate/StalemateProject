@@ -26,7 +26,7 @@
                         <i class="fa-solid fa-search"></i>
                         <input type="text" class="input" placeholder="제목, 내용으로 검색" readonly>
                     </div>
-                    <button class="btn btn-primary" id="insertBtn">
+                    <button class="btn btn-primary" id="insertBtn" th:onclick="|location.href='@{/lostandfound/lostandfound_edit}'|">
                         <i class="fa-solid fa-plus"></i> 글쓰기
                     </button>
                 </div>
@@ -120,7 +120,7 @@
                             <option value="2">소형(3~8kg)</option>
                             <option value="3">중형(8~15kg)</option>
                             <option value="4">대형(25~40kg)</option>
-                            <option value="5">초대형(40kg 미만)</option>
+                            <option value="5">초대형(40kg 초과)</option>
                         </select>
                     </div>
                 </div>
@@ -181,48 +181,38 @@
                         <div><span th:text="*{category == '실종'} ? '실종' : '목격'" class="badge"
                                 th:classappend="*{category == '실종'} ? 'badge-primary' : 'badge-secondary'">실종</span></div>
                         <div>   
-                            <h3 th:text="*{postTitle}" class="list-title character-limit" data-limit="20">제목</h3>
+                            <h3 th:text="*{postTitle}" class="list-title character-limit" data-limit="20" id="post_title"
+                                th:onclick="|location.href='@{/lostandfound/detail(postNo=*{postNo})}'|">제목</h3>
                             <p th:text="*{content}" class="list-desc character-limit" data-limit="30">내용</p>
                         </div>
                         <div th:text="*{memberName}" class="list-meta">작성자</div>
                         <div th:text="*{postDate}" class="list-meta">2024.03.15</div>
                         <div th:text="*{views}" class="list-meta"></div>
                         <div th:switch="*{status}">
-                            <span th:case="*{'NOT_START'}" class="badge badge-primary">미해결</span>
-                            <span th:case="*{'IN_PROGRESS'}" class="badge badge-green">진행중</span>
-                            <span th:case="*{'COMPLETE'}" class="badge badge-dark">완료</span>
+                            <span th:case="'NOT_START'" class="badge badge-primary">미해결</span>
+                            <span th:case="'IN_PROGRESS'" class="badge badge-green">진행중</span>
+                            <span th:case="'COMPLETE'" class="badge badge-dark">완료</span>
                         </div>
                     </div>
 
-                    <div class="pagination" th:object="${pagination}">
-                        <th:block th:unless="${param != null}">
-                            <button class="page-btn" th:onclick="|location.href='@{/lostandfound/(cp=*{prevPage})}'|">
+                    <div class="pagination" th:if="${pagination != null and pagination.maxPage > 1}">
+                        <th:block th:object="${pagination}">
+                            
+                            <button type="button" class="page-btn" th:if="*{currentPage > 1}"
+                                    th:onclick="|location.href='@{/lostandfound/(cp=*{prevPage}, title=${param.title}, writer=${param.writer}, category=${param.category}, status=${param.status}, species=${param.species}, gender=${param.gender}, age=${param.age}, weight=${param.weight})}'|">
                                 <i class="fa-solid fa-chevron-left"></i>
                             </button>
+
                             <th:block th:each="i : ${#numbers.sequence(pagination.startPage, pagination.endPage)}">
-                                <button th:if="${i} == *{currentPage}" class="page-btn active" th:text="${i}">1</button>
-                                <button th:unless="${i} == *{currentPage}" th:onclick="|location.href='@{/lostandfound/(cp=${i})}'|" th:text="${i}" class="page-btn">2</button>
+                                <button type="button" th:if="${i} == *{currentPage}" class="page-btn active" th:text="${i}">1</button>
+                                
+                                <button type="button" th:unless="${i} == *{currentPage}" class="page-btn"
+                                        th:onclick="|location.href='@{/lostandfound/(cp=${i}, title=${param.title}, writer=${param.writer}, category=${param.category}, status=${param.status}, species=${param.species}, gender=${param.gender}, age=${param.age}, weight=${param.weight})}'|"
+                                        th:text="${i}">2</button>
                             </th:block>
-                            <th:block th:unless="*{startPage lt endPage}">
-                                <a class="current" th:style="'display:none;'"></a>
-                            </th:block>
-                            <button class="page-btn" th:onclick="|location.href='@{/lostandfound/(cp=*{nextPage})}'|">
-                                <i class="fa-solid fa-chevron-right"></i>
-                            </button>
-                        </th:block>
-                        
-                        <th:block th:if="${param != null}">
-                            <button class="page-btn" th:onclick="|location.href='@{/lostandfound/(cp=*{prevPage})}'|">
-                                <i class="fa-solid fa-chevron-left"></i>
-                            </button>
-                            <th:block th:each="i : ${#numbers.sequence(pagination.startPage, pagination.endPage)}">
-                                <button th:if="${i} == *{currentPage}" class="page-btn active" th:text="${i}">1</button>
-                                <button th:unless="${i} == *{currentPage}" th:onclick="|location.href='@{/lostandfound/(cp=${i})}'|" th:text="${i}" class="page-btn">2</button>
-                            </th:block>
-                            <th:block th:unless="*{startPage lt endPage}">
-                                <a class="current" th:style="'display:none;'"></a>
-                            </th:block>
-                            <button class="page-btn" th:onclick="|location.href='@{/lostandfound/(cp=*{nextPage})}'|">
+
+                            <button type="button" class="page-btn" th:if="*{currentPage < maxPage}"
+                                    th:onclick="|location.href='@{/lostandfound/(cp=*{nextPage}, title=${param.title}, writer=${param.writer}, category=${param.category}, status=${param.status}, species=${param.species}, gender=${param.gender}, age=${param.age}, weight=${param.weight})}'|">
                                 <i class="fa-solid fa-chevron-right"></i>
                             </button>
                         </th:block>

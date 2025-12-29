@@ -1,27 +1,40 @@
 package com.stale.mate.board.model.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.stale.mate.board.model.dto.Pagination;
 import com.stale.mate.board.model.dto.Post;
+import com.stale.mate.board.model.dto.PostImg;
 import com.stale.mate.board.model.mapper.LostAndFoundMapper;
+import com.stale.mate.common.Utility;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Transactional(rollbackFor = Exception.class)
 @Slf4j
+@PropertySource("classpath:/config.properties")
 public class LostAndFoundServiceImpl implements LostAndFoundService {
 	
 	@Autowired
 	private LostAndFoundMapper mapper;
+	
+	@Value("${board.web-path}")
+	private String webPath;
+	
+	@Value("${board.folder-path}")
+	private String folderPath;
 
 	/**
 	 * 작성자 : 최보윤
@@ -105,5 +118,54 @@ public class LostAndFoundServiceImpl implements LostAndFoundService {
 		map.put("pagination", pagination);
 		
 		return map;
+	}
+
+	/**
+	 * 작성자 : 최보윤
+	 * 작성일자 : 2025-12-28
+	 * 게시글 상세 정보 가져오기
+	 */
+	@Override
+	public Post getPost(int postNo) {
+		
+		return mapper.getPost(postNo);
+	}
+
+	/**
+	 * 작성자 : 최보윤
+	 * 작성일자 : 2025-12-28
+	 * 게시글 작성하기
+	 */
+	@Override
+	public int insertPost(Post inputPost, List<MultipartFile> images) {
+		int result = mapper.insertPost(inputPost);
+		if(result == 0) return 0;
+		int postNo = inputPost.getPostNo();
+		List<PostImg> uploadList = new ArrayList<>();
+
+		for(int i = 0; i<images.size(); i++) {
+			if(!images.get(i).isEmpty()) {
+				String originalName = images.get(i).getOriginalFilename();
+				String rename = Utility.fileRename(originalName);
+				PostImg img = PostImg.builder().imgOriginalName(originalName).imgRename(rename).imgPath(webPath)
+						.postNo(postNo).uploadFile(images.get(i)).build();
+				uploadList.add(img);
+			}
+		}
+		
+		if(uploadList.isEmpty()) {
+			return postNo;
+		}
+		
+		result = mapper.insertUploadList(uploadList);
+		if(result == uploadList.size()) {
+			for(PostImg img : uploadList) {
+				img.getUploadFile.transferTo(new File(folderPath + getImgRename()));
+			} else {
+				throw new RuntimeException();
+			}
+		}
+		
+		return postNo;;
 	}
 }
