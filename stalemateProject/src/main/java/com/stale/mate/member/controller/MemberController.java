@@ -173,6 +173,9 @@ public class MemberController {
 		String memberId = param.get("memberId");
 		String memberPhone = param.get("memberPhone");
 		
+		System.out.println("memberId = [" + memberId + "]");
+		System.out.println("memberPhone = [" + memberPhone + "]");
+		
 		return service.userCheck(memberId, memberPhone);
 	}
 	

@@ -48,10 +48,8 @@
 	</select>
 	
 	<select id="userCheck">
-		SELECT COUNT(*)
-		FROM "MEMBER"
-		WHERE MEMBER_ID = #{memberId}
-		AND MEMBER_PHONE = #{memberPhone}
-		AND MEMBER_DEL_FL = 'N'
+SELECT *
+FROM "MEMBER"
+WHERE MEMBER_ID = #{memberId};
 	</select>
 </mapper>
