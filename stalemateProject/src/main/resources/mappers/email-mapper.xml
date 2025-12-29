@@ -20,4 +20,5 @@
 		WHERE EMAIL = #{email}
 		AND AUTH_KEY = #{authKey}
 	</select>
+	
 </mapper>

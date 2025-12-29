@@ -103,10 +103,64 @@ public class EmailServiceImpl implements EmailService{
 		return UUID.randomUUID().toString().substring(0, 6);
 	}
 
+	/** 작성자 : 이승준
+	 * 작성일 : 2025-12-23
+	 * 인증번호 확인 기능
+	 *
+	 */
 	@Override
 	public int checkAuthKey(Map<String, String> map) {
 		
 		return mapper.checkAuthKey(map);
 		
+	}
+
+	/** 작성자 : 이승준
+	 * 작성일 : 2025-12-29
+	 * 비밀번호 초기화 메일보내는 기능
+	 *
+	 */
+	@Override
+	public String resetPwEmail(String type, String email) {
+	
+		String authKey = createAuthKey();
+		
+		Map<String, String> map = new HashMap<>();
+		map.put("authKey", authKey);
+		map.put("email", email);
+		
+		if(!storeAuthKey(map)) return null;
+		
+		MimeMessage mimeMessage = mailSender.createMimeMessage();
+		
+		try {
+			
+			MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+			
+			helper.setTo(email);
+			helper.setSubject("MatE 비밀번호 초기화 인증번호 메일입니다.");
+			helper.setText( loadhtml(authKey, type), true);
+			helper.addInline("logo", new ClassPathResource("static/images/logo.jpg"));
+			
+			mailSender.send(mimeMessage);
+			
+			return authKey;
+			
+		}catch (Exception e){
+			e.printStackTrace();
+			
+			return null;		
+		}
+		
+	}
+
+	/** 작성자 : 이승준
+	 * 작성일 : 2025-12-29
+	 * 비밀번호 초기화 확인 기능
+	 */
+	@Override
+	public int resetPwAuthKey(Map<String, String> map) {
+		
+		return mapper.checkAuthKey(map);
 	}
 }
