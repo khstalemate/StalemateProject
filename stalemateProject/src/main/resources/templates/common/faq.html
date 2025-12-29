@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ - 자주 묻는 질문</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* 기본 설정 */
+        :root {
+            --primary-color: #FF9F43; /* 브랜드 컬러 (오렌지) */
+            --primary-light: #fff0e0;
+            --text-dark: #333;
+            --text-gray: #666;
+            --bg-color: #f9f9f9;
+            --white: #ffffff;
+            --border-color: #eeeeee;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #f4f4f4;
+            color: var(--text-dark);
+            display: flex;
+            justify-content: center;
+            padding: 40px 20px;
+            line-height: 1.6;
+        }
+
+        .faq-container {
+            width: 100%;
+            max-width: 800px;
+            background-color: var(--white);
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            overflow: hidden;
+        }
+
+        /* 헤더 영역 */
+        .faq-header {
+            padding: 40px 30px;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .faq-header h2 {
+            font-size: 26px;
+            color: var(--text-dark);
+            margin-bottom: 10px;
+        }
+
+        .faq-header p {
+            color: var(--text-gray);
+            font-size: 14px;
+        }
+
+        /* 아코디언 리스트 스타일 */
+        .faq-list {
+            padding: 0;
+        }
+
+        details {
+            border-bottom: 1px solid var(--border-color);
+            transition: background-color 0.2s;
+        }
+
+        details:last-child {
+            border-bottom: none;
+        }
+
+        details[open] {
+            background-color: #fafafa;
+        }
+
+        /* 질문 (Summary) 스타일 */
+        summary {
+            list-style: none; /* 기본 화살표 제거 */
+            padding: 25px 30px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-weight: 500;
+            font-size: 16px;
+        }
+
+        summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .question-wrap {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .q-badge {
+            background-color: var(--primary-color);
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        /* 화살표 아이콘 애니메이션 */
+        .arrow-icon {
+            width: 24px;
+            height: 24px;
+            transition: transform 0.3s ease;
+            opacity: 0.5;
+        }
+
+        details[open] .arrow-icon {
+            transform: rotate(180deg);
+        }
+
+        /* 답변 스타일 */
+        .answer {
+            padding: 0 30px 30px 73px; /* Q뱃지 너비만큼 들여쓰기 */
+            color: var(--text-gray);
+            font-size: 15px;
+            line-height: 1.7;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        
+        /* 강조 텍스트 스타일 */
+        .highlight {
+            color: #d35400;
+            font-weight: 500;
+            background-color: #fff3cd;
+            padding: 0 4px;
+            border-radius: 4px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 모바일 대응 */
+        @media (max-width: 600px) {
+            .faq-header { padding: 30px 20px; }
+            summary { padding: 20px; }
+            .answer { padding: 0 20px 20px 20px; background-color: #f9f9f9; }
+            .question-wrap { gap: 10px; }
+            .q-badge { width: 24px; height: 24px; font-size: 12px; margin-top: 2px; align-self: flex-start; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="faq-container">
+        <div class="faq-header">
+            <h2>자주 묻는 질문 (FAQ)</h2>
+            <p>궁금한 점을 선택하시면 답변을 확인하실 수 있습니다.</p>
+        </div>
+
+        <div class="faq-list">
+            
+            <details>
+                <summary>
+                    <div class="question-wrap">
+                        <span class="q-badge">Q</span>
+                        <span>입양 시 비용이 발생하나요?</span>
+                    </div>
+                    <svg class="arrow-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </summary>
+                <div class="answer">
+                    기본적으로 무료 입양을 원칙으로 합니다.<br>
+                    다만 예방접종, 중성화 수술 등 <span class="highlight">실제 발생한 비용에 한해</span> 입양자가 부담할 수 있으며, 해당 내용은 게시글에 반드시 명시되어야 합니다.
+                </div>
+            </details>
+
+            <details>
+                <summary>
+                    <div class="question-wrap">
+                        <span class="q-badge">Q</span>
+                        <span>실종 동물 게시글은 어떻게 작성하나요?</span>
+                    </div>
+                    <svg class="arrow-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </summary>
+                <div class="answer">
+                    실종 동물 게시판에서 <strong>실종 날짜, 장소, 동물 특징(사진 포함)</strong>을 최대한 자세히 작성해 주세요.<br>
+                    정보가 구체적일수록 발견 가능성이 높아집니다.
+                </div>
+            </details>
+
+            <details>
+                <summary>
+                    <div class="question-wrap">
+                        <span class="q-badge">Q</span>
+                        <span>실종 동물을 발견했을 경우 어떻게 하나요?</span>
+                    </div>
+                    <svg class="arrow-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </summary>
+                <div class="answer">
+                    해당 게시글에 댓글을 남기거나, 게시글에 기재된 연락처로 직접 연락해 주세요.<br>
+                    개인 정보 보호를 위해 게시판 외 연락은 신중히 부탁드립니다.
+                </div>
+            </details>
+
+            <details>
+                <summary>
+                    <div class="question-wrap">
+                        <span class="q-badge">Q</span>
+                        <span>입양이 완료되면 게시글은 어떻게 되나요?</span>
+                    </div>
+                    <svg class="arrow-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </summary>
+                <div class="answer">
+                    입양이 완료된 경우, 작성자는 게시글을 <span class="highlight">[입양 완료] 상태로 변경</span>하거나 삭제해 주세요.<br>
+                    이를 통해 다른 사용자들의 혼선을 줄일 수 있습니다.
+                </div>
+            </details>
+
+            <details>
+                <summary>
+                    <div class="question-wrap">
+                        <span class="q-badge">Q</span>
+                        <span>게시글에 사진은 꼭 첨부해야 하나요?</span>
+                    </div>
+                    <svg class="arrow-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </summary>
+                <div class="answer">
+                    필수는 아니지만, 입양 및 실종 게시글 모두 <strong>사진 첨부를 강력히 권장</strong>합니다.<br>
+                    사진이 있는 경우 조회수와 관심도가 훨씬 높아집니다.
+                </div>
+            </details>
+
+            <details>
+                <summary>
+                    <div class="question-wrap">
+                        <span class="q-badge">Q</span>
+                        <span>부적절한 게시글을 발견했어요. 어떻게 하나요?</span>
+                    </div>
+                    <svg class="arrow-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </summary>
+                <div class="answer">
+                    게시글의 <strong>신고 기능</strong>을 이용해 주세요. 관리자가 확인 후 규정에 따라 조치합니다.
+                </div>
+            </details>
+
+            <details>
+                <summary>
+                    <div class="question-wrap">
+                        <span class="q-badge">Q</span>
+                        <span>입양 후 문제가 발생하면 사이트에서 책임지나요?</span>
+                    </div>
+                    <svg class="arrow-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </summary>
+                <div class="answer">
+                    본 게시판은 정보 제공 목적의 커뮤니티 공간으로, 입양 과정에서 발생하는 문제에 대해서는 당사자 간의 책임으로 처리됩니다.
+                </div>
+            </details>
+
+             <details>
+                <summary>
+                    <div class="question-wrap">
+                        <span class="q-badge">Q</span>
+                        <span>실종 게시글은 얼마나 오래 유지되나요?</span>
+                    </div>
+                    <svg class="arrow-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </summary>
+                <div class="answer">
+                    기본적으로 30일간 유지되며, 작성자가 연장하거나 발견 완료 처리할 수 있습니다.
+                </div>
+            </details>
+
+             <details>
+                <summary>
+                    <div class="question-wrap">
+                        <span class="q-badge">Q</span>
+                        <span>상업 목적(분양업자)의 게시글도 가능한가요?</span>
+                    </div>
+                    <svg class="arrow-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </summary>
+                <div class="answer">
+                    <span class="highlight" style="color:#d9534f; background-color:#fce4ec;">아니요, 절대 불가능합니다.</span><br>
+                    본 게시판은 개인 간 책임 있는 입양과 실종 동물 찾기를 위한 공간으로, 상업적 분양 게시글은 허용되지 않습니다.
+                </div>
+            </details>
+
+        </div>
+    </div>
+
+</body>
+</html>
