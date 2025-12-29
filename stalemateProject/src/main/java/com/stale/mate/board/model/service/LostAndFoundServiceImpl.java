@@ -1,5 +1,6 @@
 package com.stale.mate.board.model.service;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
