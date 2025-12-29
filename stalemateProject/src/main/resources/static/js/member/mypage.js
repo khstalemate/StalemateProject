@@ -181,6 +181,18 @@ function chageProfile(){
     return true;
 }
 
+
+//변경할 비밀번호 확인
+function chagePW(){
+    const newPw = document.getElementsByName("newPw")[0].value;
+    const newPwConfirm = document.getElementsByName("newPwConfirm")[0].value;
+    if( newPw != newPwConfirm) {
+        alert("변경할 비밀번호와 비밀번호 확인이 값이 서로 다릅니다.");
+        return false;
+    }
+}
+
+
 //회원탈퇴
 function memberexit() {
     const isConfirmed = confirm("탈퇴 신청시 즉시 탈퇴 처리됩니다.\n정말로 회원 탈퇴를 하시겠습니까?");

@@ -17,9 +17,10 @@ memberId.addEventListener("input", function() {
   const inputId = memberId.value.trim();
 
   if(inputId.length === 0){
-
     emailMessage.innerText = "아이디(이메일)을 입력해주세요!";
-
+    checkObj.memberId = false;
+    emailMessage.classList.add("error");
+    emailMessage.classList.remove("confirm");
     return;
   }
 
