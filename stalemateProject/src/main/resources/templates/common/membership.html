@@ -24,12 +24,9 @@
             <br>
             <form id="signup-form" action="/member/signup" method="post" class="membership-form">
                 <label class="membership-label">아이디(이메일)</label>
-                <div class="membership-input-group">
-                    <div class="input-wrap">
-                        <i class="fa-solid fa-envelope"></i>
-                        <input id="memberId" name="memberId"  type="email" class="membership-email" placeholder="example@email.com">
-                    </div>
-                    <button id="checkIdBtn" class="btn btn-ghost" type="button">중복검사</button>
+                <div class="input-wrap">
+                    <i class="fa-solid fa-envelope"></i>
+                    <input id="memberId" name="memberId" type="email" class="membership-email" placeholder="example@email.com">
                 </div>
                 <div>
                     <label id="emailMessage" class="membership-label"></label>
@@ -42,16 +39,13 @@
                     <input id="memberPw" name="memberPw" type="password" placeholder="비밀번호를 입력하세요">
                 </div>
                 <div>
-                    <label id="memberPwCheck" class="membership-label"> </label>
+                    <label id="memberPwCheck" class="membership-label"></label>
                 </div>
                 <label class="membership-label">닉네임 
                     <div class="membership-notice">(최대 10글자, 한글, 영어 대소문자, 숫자 조합가능)</div>
                 </label>
-                <div class="membership-input-group">
-                    <div class="input-wrap">
-                        <input id="memberName" name="memberName" type="text" class="form-control" placeholder="닉네임을 입력하세요">
-                        <button id="checkNameBtn" class="btn btn-ghost" type="button">중복검사</button>
-                    </div>
+                <div class="input-wrap">
+                    <input type="text" class="form-control3" placeholder="닉네임을 입력하세요" id="memberName" name="memberName"></label>
                 </div>
                 <div>
                     <label id="nickNameMessage" class="membership-label"></label>
