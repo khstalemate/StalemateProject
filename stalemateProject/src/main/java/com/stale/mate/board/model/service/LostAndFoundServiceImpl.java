@@ -139,36 +139,36 @@ public class LostAndFoundServiceImpl implements LostAndFoundService {
 	 */
 	@Override
 	public int insertPost(Post inputPost, List<MultipartFile> images) {
-//		int result = mapper.insertPost(inputPost);
-//		if(result == 0) return 0;
-//		int postNo = inputPost.getPostNo();
-//		List<PostImg> uploadList = new ArrayList<>();
-//
-//		for(int i = 0; i<images.size(); i++) {
-//			if(!images.get(i).isEmpty()) {
-//				String originalName = images.get(i).getOriginalFilename();
-//				String rename = Utility.fileRename(originalName);
-//				PostImg img = PostImg.builder().imgOriginalName(originalName).imgRename(rename).imgPath(webPath)
-//						.postNo(postNo).uploadFile(images.get(i)).build();
-//				uploadList.add(img);
-//			}
-//		}
-//		
-//		if(uploadList.isEmpty()) {
-//			
-//			return postNo;
-//		}
-//		
-//		result = mapper.insertUploadList(uploadList);
-//		if(result == uploadList.size()) {
-//			for(PostImg img : uploadList) {
-//				img.getUploadFile.transferTo(new File(folderPath + getImgRename()));
-//			} else {
-//				throw new RuntimeException();
-//			}
-//		}
-//		
-//		return postNo;
-		return 0;
+		int result = mapper.insertPost(inputPost);
+		if(result == 0) return 0;
+		int postNo = inputPost.getPostNo();
+		List<PostImg> uploadList = new ArrayList<>();
+
+		for(int i = 0; i<images.size(); i++) {
+			if(!images.get(i).isEmpty()) {
+				String originalName = images.get(i).getOriginalFilename();
+				String rename = Utility.fileRename(originalName);
+				PostImg img = PostImg.builder().imgOriginalName(originalName).imgRename(rename).imgPath(webPath)
+						.postNo(postNo).uploadFile(images.get(i)).build();
+				uploadList.add(img);
+			}
+		}
+
+		// 실제로 등록된 이미지 파일이 존재하지 않는다면 > 바로 postNo 반환
+		if(uploadList.isEmpty()) {
+			return postNo;
+		}
+		
+		result = mapper.insertUploadList(uploadList);
+		if(result == uploadList.size()) {
+			for(PostImg img : uploadList) {
+				// transferTo(경로) : 메모리 또는 임시 저장 경로에 업로드된 파일을 원하는 경로에 실제로 전송(서버의 어떤 폴더에 저장할지 지정) 
+				img.getUploadFile.transferTo(new File(folderPath + getImgRename()));
+			} else {
+				throw new RuntimeException();
+			}
+		}
+		
+		return postNo;
 	}
 }
