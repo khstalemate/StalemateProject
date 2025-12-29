@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>이용약관 동의</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* 기본 설정 */
+        :root {
+            --primary-color: #FF9F43; /* 브랜드 컬러 */
+            --primary-hover: #e68a30;
+            --text-dark: #333;
+            --text-gray: #666;
+            --border-color: #ddd;
+            --bg-light: #f9f9f9;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            color: var(--text-dark);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        /* 약관 내용 박스 (스크롤 적용) */
+        .terms-box {
+            border: 1px solid var(--border-color);
+            background-color: var(--bg-light);
+            padding: 20px;
+            height: 250px; /* 높이 고정 */
+            overflow-y: auto; /* 내용 넘치면 스크롤 */
+            border-radius: 8px;
+            font-size: 14px;
+            line-height: 1.6;
+            color: var(--text-gray);
+            margin-bottom: 25px;
+        }
+
+        .terms-box h2 {
+            font-size: 16px;
+            color: var(--text-dark);
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        
+        .terms-box h2:first-child { margin-top: 0; }
+
+        .terms-box ul { list-style: none; padding-left: 5px; }
+        .terms-box li { margin-bottom: 5px; }
+
+        /* 동의 체크박스 영역 */
+        .agreement-section {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .checkbox-wrapper {
+            display: inline-flex;
+            align-items: center;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            user-select: none;
+        }
+
+        input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            margin-right: 10px;
+            accent-color: var(--primary-color);
+            cursor: pointer;
+        }
+
+        /* 버튼 그룹 */
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        button {
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            border: none;
+            transition: background 0.2s;
+        }
+
+        .btn-submit {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .btn-submit:hover { background-color: var(--primary-hover); }
+
+        .btn-cancel {
+            background-color: #e0e0e0;
+            color: var(--text-dark);
+        }
+
+        .btn-cancel:hover { background-color: #d0d0d0; }
+
+        /* 스크롤바 커스텀 (선택사항) */
+        .terms-box::-webkit-scrollbar { width: 8px; }
+        .terms-box::-webkit-scrollbar-thumb { background-color: #ccc; border-radius: 4px; }
+        .terms-box::-webkit-scrollbar-track { background-color: #f1f1f1; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>서비스 이용약관</h1>
+        
+        <div class="terms-box">
+            <h2>제1조 (목적)</h2>
+            <p>본 약관은 [회사명/서비스명]이 제공하는 서비스의 이용과 관련하여 회원과 회사 간의 권리, 의무 및 책임사항 등을 규정함을 목적으로 합니다.</p>
+
+            <h2>제2조 (용어의 정의)</h2>
+            <p>본 약관에서 사용하는 용어의 정의는 다음과 같습니다.</p>
+            <ul>
+                <li>1. "서비스"라 함은 구현되는 단말기(PC, 휴대용단말기 등의 각종 유무선 장치를 포함)와 상관없이 회원이 이용할 수 있는 모든 서비스를 의미합니다.</li>
+                <li>2. "회원"이라 함은 회사의 "서비스"에 접속하여 본 약관에 따라 회사와 이용계약을 체결하고 회사가 제공하는 서비스를 이용하는 고객을 말합니다.</li>
+            </ul>
+
+            <h2>제3조 (약관의 효력 및 변경)</h2>
+            <p>회사는 본 약관의 내용을 회원이 쉽게 알 수 있도록 서비스 초기 화면에 게시합니다. 회사는 관련 법령을 위배하지 않는 범위에서 본 약관을 개정할 수 있습니다.</p>
+            
+            <h2>제4조 (회원가입)</h2>
+            <p>이용자는 회사가 정한 가입 양식에 따라 회원정보를 기입한 후 이 약관에 동의한다는 의사표시를 함으로서 회원가입을 신청합니다.</p>
+        </div>
+
+        <div class="agreement-section">
+            <label class="checkbox-wrapper" for="agree">
+                <input type="checkbox" id="agree" name="agree">
+                위 이용약관 내용을 확인하였으며, 이에 동의합니다.
+            </label>
+        </div>
+
+        <div class="btn-group">
+            <button class="btn-cancel" onclick="cancel()">취소</button>
+            <button class="btn-submit" onclick="agreeTerms()">동의하고 가입하기</button>
+        </div>
+    </div>
+
+    <script>
+        function agreeTerms() {
+            const checkbox = document.getElementById('agree');
+            
+            if (checkbox.checked) {
+                // 실제 서비스에서는 여기서 다음 페이지(회원가입 폼)로 이동시킵니다.
+                alert('약관에 동의하셨습니다. 회원가입 페이지로 이동합니다.');
+                // location.href = 'signup.html'; 
+            } else {
+                alert('서비스 이용을 위해 약관에 동의해 주세요.');
+                checkbox.focus(); // 체크박스로 포커스 이동
+            }
+        }
+
+        function cancel() {
+            if(confirm("회원가입을 취소하고 메인으로 돌아가시겠습니까?")) {
+                // 메인 페이지로 이동 또는 창 닫기
+                alert("가입이 취소되었습니다.");
+                // location.href = 'index.html';
+            }
+        }
+    </script>
+</body>
+</html>
