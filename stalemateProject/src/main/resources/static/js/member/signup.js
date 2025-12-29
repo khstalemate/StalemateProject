@@ -9,25 +9,28 @@ const checkObj = {
 };
 
 const sendAuthKeyBtn = document.querySelector("#sendAuthKeyBtn");
-const checkIdBtn = document.querySelector("#checkIdBtn");
 const memberId =  document.querySelector("#memberId");
+const emailMessage = document.querySelector("#emailMessage");
 
-checkIdBtn.addEventListener("click", function() {
+memberId.addEventListener("input", function() {
 
   const inputId = memberId.value.trim();
 
   if(inputId.length === 0){
-
-    alert("아이디(이메일)을 입력해주세요!");
-
+    emailMessage.innerText = "아이디(이메일)을 입력해주세요!";
+    checkObj.memberId = false;
+    emailMessage.classList.add("error");
+    emailMessage.classList.remove("confirm");
     return;
   }
 
   const regExp = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
 
   if(!regExp.test(inputId)) {
-    alert("알맞은 이메일 형식으로 입력해주세요!");
-
+    emailMessage.innerText = "알맞은 아이디(이메일) 형식으로 입력해주세요!";
+    checkObj.memberId = false;
+    emailMessage.classList.add("error");
+    emailMessage.classList.remove("confirm");
     return;
   }
 
@@ -39,12 +42,16 @@ checkIdBtn.addEventListener("click", function() {
   .then( resp => resp.text())
   .then( result => {
     if( result == 0){
-      alert("사용 가능한 아이디(이메일)입니다!");
+      emailMessage.innerText = "사용 가능한 아이디(이메일) 입니다.";
+      emailMessage.classList.add("confirm");
+      emailMessage.classList.remove("error");
       checkObj.memberId = true;
-
-    }else{
-      alert("중복된 아이디(이메일)입니다!");
-
+    }
+    else{
+      emailMessage.innerText = "중복된 아이디(이메일) 입니다.";
+      emailMessage.classList.add("error");
+      emailMessage.classList.remove("confirm");
+      checkObj.memberId = false;
       return;
     }
   }).catch( error => {
@@ -65,8 +72,6 @@ memberPw.addEventListener("input", function() {
     memberPwCheck.innerText = "비밀번호를 입력해주세요";
     memberPwCheck.classList.add("error");
     memberPwCheck.classList.remove("confirm");
-    memberId.value = "";
-
     return;
   }
 
@@ -76,8 +81,6 @@ memberPw.addEventListener("input", function() {
     memberPwCheck.innerText = "알맞은 형식으로 입력해주세요!";
     memberPwCheck.classList.add("error");
     memberPwCheck.classList.remove("confirm");
-    memberId.value = "";
-
     return;
   }
 
@@ -88,24 +91,25 @@ memberPw.addEventListener("input", function() {
 
 });
 
-
-const checkNameBtn = document.querySelector("#checkNameBtn");
 const memberName = document.querySelector("#memberName");
+const nickNameMessage = document.querySelector("#nickNameMessage");
 
-checkNameBtn.addEventListener("click", function() {
+memberName.addEventListener("input", function() {
   const inputName = memberName.value.trim();
 
   if(inputName.length === 0) {
-    alert("닉네임을 입력해주세요.");
-    
+    nickNameMessage.innerText = "닉네임을 입력해주세요.";
+    checkObj.memberName = false;
+    nickNameMessage.style.color = "red";
     return;
   }
 
   const regExp = /^[가-힣A-Za-z0-9]{1,10}$/;
 
   if(!regExp.test(inputName)) {
-    alert("알맞는 닉네임 형식으로 입력해주세요!");
-
+    nickNameMessage.innerText = "알맞는 닉네임 형식으로 입력해주세요!";
+    checkObj.memberName = false;
+    nickNameMessage.style.color = "red";
     return;
   }
 
@@ -114,12 +118,14 @@ checkNameBtn.addEventListener("click", function() {
   .then( result => {
 
     if( result == 0) {
-      alert("사용 가능한 닉네임 입니다!");
+      nickNameMessage.innerText = "사용 가능한 닉네임 입니다.";
       checkObj.memberName = true;
-
-    }else{
-      alert("중복된 닉네임 입니다!");
-
+      nickNameMessage.style.color = "green";
+    }
+    else{
+      nickNameMessage.innerText = "중복된 닉네임 입니다.";
+      checkObj.memberName = false;
+      nickNameMessage.style.color = "red";
       return;
     }
   }).catch( error => {
@@ -137,29 +143,28 @@ memberPhone.addEventListener("input", function() {
 
   memberPhoneCheck.innerText = "";
 
-  if(inputPhone.value === 0) {
-    memberPhoneCheck.innerText = "전화번호를 입력해주세요";
-    memberPhoneCheck.classList.add("error");
-    memberPhoneCheck.classList.remove("confirm");
+    if(inputPhone === "") {
+        memberPhoneCheck.innerText = "전화번호를 입력해주세요.";
+        memberPhoneCheck.classList.add("error");
+        memberPhoneCheck.style.color = "red";
+        checkObj.memberPhone = false;
+        return;
+    }
 
-    return;
-  }
+    const regExp = /^\d{3}-\d{4}-\d{4}$/;
 
-  const regExp = /^\d{3}-\d{4}-\d{4}$/;
+    if(!regExp.test(inputPhone)) {
+        memberPhoneCheck.innerText = "알맞은 형식으로 입력해주세요.";
+        memberPhoneCheck.classList.add("error");
+        memberPhoneCheck.style.color = "red";
+        checkObj.memberPhone = false;
+        return;
+    }
 
-  if(!regExp.test(inputPhone)) {
-    memberPhoneCheck.innerText = "알맞은 형식으로 입력해주세요!";
-    memberPhoneCheck.classList.add("error");
-    memberPhoneCheck.classList.remove("confirm");
-    
-    return;
-  }
-
-  memberPhoneCheck.innerText = "유효한 전화번호 형식입니다!";
-  memberPhoneCheck.classList.add("confirm");
-  memberPhoneCheck.classList.remove("error");
-  checkObj.memberPhone = true;
-
+    memberPhoneCheck.innerText = "유효한 전화번호 형식입니다.";
+    memberPhoneCheck.classList.add("confirm");
+    memberPhoneCheck.style.color = "green";
+    checkObj.memberPhone = true;
 });
 
 const emailAuthMessage = document.querySelector("#emailAuthMessage");
@@ -321,7 +326,7 @@ signupForm.addEventListener("submit", function(e){
           str = "유효한 닉네임이 아닙니다";
           document.getElementById("memberName").focus();
           break;
-         
+        
         case "memberPhone" :
           str = "유효한 전화번호가 아닙니다";
           document.getElementById("memberPhone").focus();

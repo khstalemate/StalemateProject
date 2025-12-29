@@ -25,8 +25,8 @@
 
                     <div class="posts">
                         <article class="post-card">
-                            <div class="post-thumb">
-                                <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/e67b75d50f-1f86095ee2ce0d9ff111.png" alt="golden retriever" />
+                            <div class="post-thumb no-image">
+                                <i class="fa-solid fa-dog"></i>
                             </div>
                             <div>
                                 <div class="meta">
@@ -79,7 +79,7 @@
                             </div>
                             <div class="login-actions">
                                 <label><input id="loginKeep" name="loginKeep" type="checkbox" class="checkbox-spacing">로그인 유지</label>
-                                <a href="#" class="link-primary">비밀번호 초기화</a>
+                                <a href="/member/resetPw" class="link-primary">비밀번호 초기화</a>
                             </div>
                             <button type="submit" class="btn btn-primary login-btn">로그인</button>
                             <div class="membership-footer">
@@ -91,7 +91,10 @@
 
                 <th:block th:if="${session.loginMember != null}">
                     <aside class="section-card login-box">
-                        <div class="logo-badge logo-badge-large" style="margin:0 auto 12px;"><i class="fa-solid fa-paw"></i></div>
+                        <img th:if="${session.loginMember.profileImg != null}" th:src="@{${session.loginMember.profileImg}}" width="64px" height="64px" alt="프로필 이미지">
+                        <div th:if="${session.loginMember.profileImg == null}" class="logo-badge logo-badge-large" style="margin:0 auto 12px;">
+                                <i class="fa-solid fa-paw"></i>
+                        </div>
                         <h2 class="login-title" th:text="${session.loginMember.memberName} + 님">회원이름</h2>
                         <p class="login-subtitle">환영합니다!</p>
 
@@ -105,7 +108,7 @@
                         </div>
 
                         <div class="section user-menu">
-                            <a href="#mypage" class="post-card user-card">
+                            <a href="/myPage/info" class="post-card user-card">
                                 <i class="fa-solid fa-user user-card-icon"></i>
                                 <span class="list-title user-card-title">마이페이지</span>
                                 <i class="fa-solid fa-chevron-right user-card-arrow"></i>
@@ -129,7 +132,9 @@
 
                 <div class="missing-grid">
                     <article class="missing-card">
-                        <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/c0573afca3-177ff4b4008b40218d56.png" alt="missing dog" />
+                        <div class="no-image-card">
+                            <i class="fa-solid fa-dog"></i>
+                        </div>
                         <div class="missing-body">
                         <span class="pill pill-red">실종</span>
                         <h4 class="missing-title">갈색 믹스견 실종</h4>
@@ -139,7 +144,9 @@
                     </article>
 
                     <article class="missing-card">
-                        <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/8adbcef306-fe271f3d2137e6b16906.png" alt="spotted cat" />
+                        <div class="no-image-card">
+                            <i class="fa-solid fa-dog"></i>
+                        </div>
                         <div class="missing-body">
                         <span class="pill pill-green">목격</span>
                         <h4 class="missing-title">흰색 고양이 목격</h4>
@@ -172,7 +179,7 @@
         </main>
 
 
-      <th:block th:replace="~{common/footer :: footer}"></th:block>
+        <th:block th:replace="~{common/footer}"></th:block>
         <script src="js/main.js"></script>
         <script th:if="${message}" th:inline="javascript">
             alert(/*[[${message}]]*/"");
