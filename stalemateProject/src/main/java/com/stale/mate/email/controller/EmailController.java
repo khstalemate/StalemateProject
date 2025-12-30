@@ -49,4 +49,49 @@ public class EmailController {
 		return service.checkAuthKey(map);
 	}	
 	
+	/** 작성자 : 이승준
+	 * 작성일 : 2025-12-29
+	 * 비밀번호 초기화 인증메일 발송기능
+	 */
+	@ResponseBody
+	@PostMapping("resetPw")
+	public int resetPw(@RequestBody Map<String, String> map) {
+		
+		String memberId = map.get("memberId");
+		String memberPhone = map.get("memberPhone");
+		
+		String authKey = service.resetPwEmail("resetPw", memberId, memberPhone);
+		
+		if(authKey != null) {
+			
+			return 1;
+		}
+		
+		return 0;
+	}
+	
+	/** 작성자 : 이승준
+	 * 작성일 : 2025-12-29
+	 * 비밀번호 초기화 이메일 확인 기능
+	 */
+	@ResponseBody
+	@PostMapping("resetPwAuthKey")
+	public int resetPwAuthKey(@RequestBody Map<String, String> map) {
+		
+		return service.resetPwAuthKey(map);
+	}
+	
+	
+	/** 작성자 : 이승준
+	 * 작성일 : 2025-12-30
+	 * 비밀번호 초기화 발송
+	 */
+	@ResponseBody
+	@PostMapping("resetPwIssue")
+	public int resetPwIssue(@RequestBody Map<String, String> param) {
+		
+		String memberId = param.get("memberId");
+		
+		return service.resetPwIssue(memberId);
+	}
 }

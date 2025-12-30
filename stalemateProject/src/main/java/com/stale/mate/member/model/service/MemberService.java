@@ -14,6 +14,8 @@ public interface MemberService {
 
 	Member selectMemberByNo(int memberNo);
 
+	/*int userCheck(String memberId, String memberPhone);*/
+
 
 
 
