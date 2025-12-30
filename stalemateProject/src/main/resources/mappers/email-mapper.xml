@@ -21,4 +21,17 @@
 		AND AUTH_KEY = #{authKey}
 	</select>
 	
+	<select id="userCheck">
+		SELECT COUNT(*)
+		FROM "MEMBER"
+		WHERE MEMBER_ID = #{memberId}
+		AND MEMBER_PHONE = #{memberPhone}
+		AND MEMBER_DEL_FL = 'N'
+	</select>
+	
+	<update id="resetPassword">
+		UPDATE "MEMBER" SET
+		MEMBER_PW = #{enpPw}
+		WHERE MEMBER_ID = #{memberId}
+	</update>
 </mapper>

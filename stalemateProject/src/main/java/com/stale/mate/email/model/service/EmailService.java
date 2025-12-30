@@ -12,4 +12,8 @@ public interface EmailService {
 
 	int resetPwAuthKey(Map<String, String> map);
 
+	int resetPwIssue(String memberId);
+
+
+
 }

@@ -80,4 +80,18 @@ public class EmailController {
 		
 		return service.resetPwAuthKey(map);
 	}
+	
+	
+	/** 작성자 : 이승준
+	 * 작성일 : 2025-12-30
+	 * 비밀번호 초기화 발송
+	 */
+	@ResponseBody
+	@PostMapping("resetPwIssue")
+	public int resetPwIssue(@RequestBody Map<String, String> param) {
+		
+		String memberId = param.get("memberId");
+		
+		return service.resetPwIssue(memberId);
+	}
 }

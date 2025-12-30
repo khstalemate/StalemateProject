@@ -159,7 +159,7 @@ public class MemberController {
 	@GetMapping("resetPw")
 	public String resetPwPage() {
 		
-		return "common/resetPW";
+		return "email/resetPw";
 	}
 	
 	/** 작성자 : 이승준
