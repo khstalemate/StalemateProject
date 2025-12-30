@@ -26,10 +26,9 @@
                     <div class="profile-image">
                         <div class="profile-image-overflow" >
                             <img id="profilePreview"
-                                th:src="@{${session.loginMember != null and session.loginMember.profileImg != null} ? ${session.loginMember.profileImg} : ''}"
-                                alt="프로필 이미지"
-                                th:style="${session.loginMember != null and session.loginMember.profileImg != null} ? '' : 'visibility: hidden;'" />
-
+                                th:src="${session.loginMember != null and session.loginMember.profileImg != null}
+                                        ? @{'/myPage/profile/' + ${session.loginMember.profileImg.split('/')[3]}}
+                                        : ''" style="visibility:hidden;" alt="프로필 이미지">
                             <span class="default-profile"
                                 th:style="${session.loginMember == null or session.loginMember.profileImg == null} ? '' : 'visibility: hidden;'">
                                 <i class="fa-solid fa-paw"></i>
@@ -73,6 +72,7 @@
                         <label>가입일자</label>
                         <div class="value" th:text="${session.loginMember != null ? session.loginMember.enrollDate : '로그인 정보가 없어 가입일자를 표시할 수 없습니다.'}"></div>
                     </div>
+                    <input type="hidden" name="profileImgStatus" id="profileImgStatus" value="keep" />
                     <button class="btn btn-primary edit-btn">정보 수정하기</button>
                 </form>
             </section>
