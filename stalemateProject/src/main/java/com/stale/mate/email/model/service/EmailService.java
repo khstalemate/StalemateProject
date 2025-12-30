@@ -8,4 +8,12 @@ public interface EmailService {
 
 	int checkAuthKey(Map<String, String> map);
 
+	String resetPwEmail(String type, String memberId, String memberPhone);
+
+	int resetPwAuthKey(Map<String, String> map);
+
+	int resetPwIssue(String memberId);
+
+
+
 }

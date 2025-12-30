@@ -6,13 +6,13 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.stale.mate.common.interceptor.LoginCheckInterceptor;
-import com.stale.mate.common.interceptor.LoginKeepInterceptor;
+// import com.stale.mate.common.interceptor.LoginKeepInterceptor;
 
 @Configuration
 public class InterceptorConfig implements WebMvcConfigurer{
 	
-	@Autowired
-	private LoginKeepInterceptor loginInterceptor; 
+//	@Autowired
+//	private LoginKeepInterceptor loginInterceptor; 
 	
 	@Autowired
 	private LoginCheckInterceptor loginCheckInterceptor;
@@ -20,20 +20,21 @@ public class InterceptorConfig implements WebMvcConfigurer{
 	/** 작성자 : 이승준
 	 *  작성일 : 2025-12-24 
 	 *  인터셉터 객체 추가 기능
-	 *
+	 *	
 	 */
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		
-		registry.addInterceptor(loginInterceptor)
-		.addPathPatterns("/**")
-		.excludePathPatterns("/css/**", "/js/**", "/favicon.ico");
+		/*
+		 * registry.addInterceptor(loginInterceptor) .addPathPatterns("/**")
+		 * .excludePathPatterns("/css/**", "/js/**", "/favicon.ico");
+		 */
 		
 		registry.addInterceptor(loginCheckInterceptor)
 		.addPathPatterns("/**")
 		.excludePathPatterns("/", "/loginError", "/member/login", "/member/signup",
 							 "/member/checkId", "/member/checkName", "/email/**",
-							 "/member/resetPw/**",
+							 "/member/resetPw",
 							 "/css/**", "/js/**", "/favicon.ico");
 		
 	}
