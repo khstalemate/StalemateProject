@@ -53,6 +53,9 @@ function previewImage(input){
         input.value = "";
         return;
     }
+    
+    // 구분값 변경 (변경)
+    document.getElementById("profileImgStatus").value = "change";
 
     const preview = document.getElementById("profilePreview");
     const imageUrl = URL.createObjectURL(file);
@@ -70,6 +73,9 @@ function previewImage(input){
 function deleteImage(){
     const preview = document.getElementById("profilePreview");
     preview.setAttribute("src", "");
+
+    // 구분값 변경 (삭제)
+    document.getElementById("profileImgStatus").value = "delete";
 
     //해당 영역이 보이면 흰 배경이 보이기에, 비활성화
     document.getElementById("profilePreview").style.visibility="hidden";
