@@ -31,7 +31,7 @@
 	
 	<update id="resetPassword">
 		UPDATE "MEMBER" SET
-		MEMBER_PW = #{enpPw}
+		MEMBER_PW = #{encPw}
 		WHERE MEMBER_ID = #{memberId}
 	</update>
 </mapper>

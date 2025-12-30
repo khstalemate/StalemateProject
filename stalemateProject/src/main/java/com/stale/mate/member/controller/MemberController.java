@@ -38,7 +38,7 @@ public class MemberController {
 	@PostMapping("login")
 	public String login(Member inputMember,
 						RedirectAttributes ra,
-						@RequestParam(value = "loginKeep", required = false) String loginkeep,
+//						@RequestParam(value = "loginKeep", required = false) String loginkeep,
 						HttpServletResponse resp,
 						HttpServletRequest req) {
 		
@@ -54,20 +54,18 @@ public class MemberController {
 			
 			req.getSession().setAttribute("loginMember", loginMember);
 			
-			if(loginkeep != null) {
-				
-				Cookie cookie = new Cookie("loginKeep", String.valueOf(loginMember.getMemberNo()));
-				cookie.setPath("/");
-				cookie.setMaxAge(60*30);
-				resp.addCookie(cookie);
-				
-			}else {
-					
-				Cookie cookie = new Cookie("loginKeep", null);
-			    cookie.setPath("/");
-			    cookie.setMaxAge(0);
-			    resp.addCookie(cookie);
-			}
+			/*
+			 * if(loginkeep != null) {
+			 * 
+			 * Cookie cookie = new Cookie("loginKeep",
+			 * String.valueOf(loginMember.getMemberNo())); cookie.setPath("/");
+			 * cookie.setMaxAge(60*30); resp.addCookie(cookie);
+			 * 
+			 * }else {
+			 * 
+			 * Cookie cookie = new Cookie("loginKeep", null); cookie.setPath("/");
+			 * cookie.setMaxAge(0); resp.addCookie(cookie); }
+			 */
 			
 		}
 		

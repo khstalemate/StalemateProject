@@ -17,6 +17,7 @@ public interface EmailMapper {
 	int userCheck(@Param("memberId") String memberId,
 			      @Param("memberPhone") String memberPhone);
 
-	int resetPassword(String memberId, String encPw);
+	int resetPassword(@Param("memberId") String memberId, 
+					  @Param("encPw") String encPw);
 
 }

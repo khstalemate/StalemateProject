@@ -147,7 +147,7 @@ public class EmailServiceImpl implements EmailService{
 			
 			helper.setTo(memberId);
 			helper.setSubject("MatE 비밀번호 초기화 인증번호 메일입니다.");
-			helper.setText( loadhtml(authKey, type), true);
+			helper.setText( resetAuthKeyLoadhtml(authKey), true);
 			helper.addInline("logo", new ClassPathResource("static/images/logo.jpg"));
 			
 			mailSender.send(mimeMessage);
@@ -163,6 +163,18 @@ public class EmailServiceImpl implements EmailService{
 	}
 
 	/** 작성자 : 이승준
+	 *  작성일 : 2025-12-30
+	 *  비밀번호 초기화 인증용 html 발송 기능
+	 */
+	private String resetAuthKeyLoadhtml(String authKey) {
+		Context context = new Context();
+		context.setVariable("authKey", authKey);
+		
+		return templateEngine.process("email/signup", context);
+
+	}
+
+	/** 작성자 : 이승준
 	 * 작성일 : 2025-12-29
 	 * 비밀번호 초기화 확인 기능
 	 */
@@ -172,6 +184,11 @@ public class EmailServiceImpl implements EmailService{
 		return mapper.checkAuthKey(map);
 	}
 
+	/** 작성자 : 이승준
+	 *  작성일 : 2025-12-30
+	 *  비밀번호 초기화 DB업데이트 + 메일 발송 함수 호출기능
+	 *
+	 */
 	@Override
 	public int resetPwIssue(String memberId) {
 		
@@ -188,6 +205,10 @@ public class EmailServiceImpl implements EmailService{
 		 return 1;
 	}
 
+	/** 작성자 : 이승준
+	 *  작성일 : 2025-12-30
+	 *  비밀번호 초기화후 임시비밀번호 메일 발송 기능
+	 */
 	private void sendResetPasswordMail(String memberId, String tempPw) {
 		
 		MimeMessage mimeMessage = mailSender.createMimeMessage();
@@ -211,6 +232,10 @@ public class EmailServiceImpl implements EmailService{
 
 	}
 
+	/** 작성자 : 이승준
+	 *  작성일 : 2025-12-30
+	 *  임시비밀번호 발송 html 기능
+	 */
 	private String resetPasswordLoadhtml(String tempPw) {
 		
 		Context context = new Context();

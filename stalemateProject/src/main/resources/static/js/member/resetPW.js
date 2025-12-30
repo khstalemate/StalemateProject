@@ -162,6 +162,7 @@ inputAuthkey.addEventListener("input", function() {
 const signupForm = document.querySelector("#signup-form");
 
 signupForm.addEventListener("submit", function(e) {
+  e.preventDefault();
 
   for(let key in checkObj) {
 
