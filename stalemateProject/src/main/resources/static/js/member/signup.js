@@ -72,6 +72,7 @@ memberPw.addEventListener("input", function() {
     memberPwCheck.innerText = "비밀번호를 입력해주세요";
     memberPwCheck.classList.add("error");
     memberPwCheck.classList.remove("confirm");
+    checkObj.memberPw = false;
     return;
   }
 
@@ -81,6 +82,7 @@ memberPw.addEventListener("input", function() {
     memberPwCheck.innerText = "알맞은 형식으로 입력해주세요!";
     memberPwCheck.classList.add("error");
     memberPwCheck.classList.remove("confirm");
+    checkObj.memberPw = false;
     return;
   }
 
@@ -99,8 +101,8 @@ memberName.addEventListener("input", function() {
 
   if(inputName.length === 0) {
     nickNameMessage.innerText = "닉네임을 입력해주세요.";
-    checkObj.memberName = false;
     nickNameMessage.style.color = "red";
+    checkObj.memberName = false;
     return;
   }
 
@@ -108,8 +110,8 @@ memberName.addEventListener("input", function() {
 
   if(!regExp.test(inputName)) {
     nickNameMessage.innerText = "알맞는 닉네임 형식으로 입력해주세요!";
-    checkObj.memberName = false;
     nickNameMessage.style.color = "red";
+    checkObj.memberName = false;
     return;
   }
 

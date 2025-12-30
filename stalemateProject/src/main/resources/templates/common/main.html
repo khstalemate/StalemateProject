@@ -91,7 +91,7 @@
 
                 <th:block th:if="${session.loginMember != null}">
                     <aside class="section-card login-box">
-                        <img th:if="${session.loginMember.profileImg != null}" th:src="@{${session.loginMember.profileImg}}" width="64px" height="64px" alt="프로필 이미지">
+                        <img th:if="${session.loginMember.profileImg != null}" th:src="@{/myPage/profile/{file}(file=${session.loginMember.profileImg.split('/')[3]})}" width="64px" height="64px" alt="프로필 이미지">
                         <div th:if="${session.loginMember.profileImg == null}" class="logo-badge logo-badge-large" style="margin:0 auto 12px;">
                                 <i class="fa-solid fa-paw"></i>
                         </div>
