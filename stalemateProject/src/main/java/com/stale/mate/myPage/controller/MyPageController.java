@@ -55,15 +55,15 @@ public class MyPageController {
 	 * 작성일자 : 2025-12-28
 	 * 마이페이지 - 내정보 수정 기능
 	 */
-	@PostMapping("edit")
+@PostMapping("edit")
 	public String myPageEditInfo(@SessionAttribute(value = "loginMember") Member loginMember,
-								@RequestParam("memberName") String memberName, 
-								@RequestParam("memberPhone") String memberPhone, 
-								@RequestParam("profileImg") MultipartFile profileImg, RedirectAttributes ra,
-								HttpServletRequest req) {
+						@RequestParam("memberName") String memberName, 
+						@RequestParam("memberPhone") String memberPhone, 
+						@RequestParam("profileImg") MultipartFile profileImg, 
+						@RequestParam("profileImgStatus") String profileImgStatus, RedirectAttributes ra,
+						HttpServletRequest req) {
 		
 		String profileUploadResult = null;
-		
 		try {
 			profileUploadResult = service.profileUpload(profileImg);
 			
@@ -79,15 +79,15 @@ public class MyPageController {
 		
 		
 		// 프로필 이미지 처리 로직
-		if (profileUploadResult != null) {
-			// 1. 프로필 사진이 변경되었을 경우: 새로 업로드된 이미지 설정
-			updateMemberInfo.setProfileImg(profileUploadResult);
-		} else if (loginMember.getProfileImg() != null && !loginMember.getProfileImg().isEmpty()) {
-			// 2. 변경되지 않았을 경우: 기존 이미지 유지
-			updateMemberInfo.setProfileImg(loginMember.getProfileImg());
-		} else {
-			// 3. 사진이 없을 경우: null 또는 빈 문자열 설정
+		if (profileImgStatus.equals("delete")) {
+			// 삭제 요청 시
 			updateMemberInfo.setProfileImg(null);
+		} else if (profileImgStatus.equals("change")) {
+			// 새로 업로드된 이미지가 있는 경우
+			updateMemberInfo.setProfileImg(profileUploadResult);
+		} else {
+			// 유지(keep)일 경우 (변경 없음)
+			updateMemberInfo.setProfileImg(loginMember.getProfileImg());
 		}
 
 		//DB Update 구문 실행

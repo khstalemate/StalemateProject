@@ -24,8 +24,10 @@
                 <div class="profile-section">
                     <div class="profile-image">
                         <div class="profile-image-overflow">
-                            <img th:if="${session.loginMember != null and session.loginMember.profileImg != null}" th:src="@{${session.loginMember.profileImg}}" 
-                                alt="프로필 이미지">
+                            <img th:if="${session.loginMember != null and session.loginMember.profileImg != null}" 
+                            th:src="${session.loginMember != null and session.loginMember.profileImg != null}
+                            ? @{'/myPage/profile/' + ${session.loginMember.profileImg.split('/')[3]}}
+                            : ''" alt="프로필 이미지">
                             <span th:if="${session.loginMember == null or session.loginMember.profileImg == null}" class="default-profile">
                                 <i class="fa-solid fa-paw"></i>
                             </span>
