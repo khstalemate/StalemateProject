@@ -163,10 +163,10 @@ public class LostAndFoundServiceImpl implements LostAndFoundService {
 		if(result == uploadList.size()) {
 			for(PostImg img : uploadList) {
 				// transferTo(경로) : 메모리 또는 임시 저장 경로에 업로드된 파일을 원하는 경로에 실제로 전송(서버의 어떤 폴더에 저장할지 지정) 
-				img.getUploadFile.transferTo(new File(folderPath + getImgRename()));
-			} else {
-				throw new RuntimeException();
+				img.getUploadFile.transferTo(new File(folderPath + img.getImgRename()));
 			}
+		} else {
+			throw new RuntimeException();
 		}
 		
 		return postNo;
