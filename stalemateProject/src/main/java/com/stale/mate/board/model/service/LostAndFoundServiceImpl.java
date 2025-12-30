@@ -1,6 +1,7 @@
 package com.stale.mate.board.model.service;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -136,9 +137,11 @@ public class LostAndFoundServiceImpl implements LostAndFoundService {
 	 * 작성자 : 최보윤
 	 * 작성일자 : 2025-12-28
 	 * 게시글 작성하기
+	 * @throws IOException 
+	 * @throws IllegalStateException 
 	 */
 	@Override
-	public int insertPost(Post inputPost, List<MultipartFile> images) {
+	public int insertPost(Post inputPost, List<MultipartFile> images) throws IllegalStateException, IOException {
 		int result = mapper.insertPost(inputPost);
 		if(result == 0) return 0;
 		int postNo = inputPost.getPostNo();
@@ -163,7 +166,7 @@ public class LostAndFoundServiceImpl implements LostAndFoundService {
 		if(result == uploadList.size()) {
 			for(PostImg img : uploadList) {
 				// transferTo(경로) : 메모리 또는 임시 저장 경로에 업로드된 파일을 원하는 경로에 실제로 전송(서버의 어떤 폴더에 저장할지 지정) 
-				img.getUploadFile.transferTo(new File(folderPath + img.getImgRename()));
+				img.getUploadFile().transferTo(new File(folderPath + img.getImgRename()));
 			}
 		} else {
 			throw new RuntimeException();

@@ -1,5 +1,6 @@
 package com.stale.mate.board.model.service;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -65,6 +66,8 @@ public interface LostAndFoundService {
 	 * 작성자 : 최보윤
 	 * 작성일자 : 2025-12-28
 	 * 게시글 작성하기
+	 * @throws IOException 
+	 * @throws IllegalStateException 
 	 */
-	int insertPost(Post inputPost, List<MultipartFile> images);
+	int insertPost(Post inputPost, List<MultipartFile> images) throws IllegalStateException, IOException;
 }

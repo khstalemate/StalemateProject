@@ -1,5 +1,6 @@
 package com.stale.mate.board.controller;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -119,6 +120,17 @@ public class LostAndFoundController {
 		return path;
 	}
 	
+	
+	/**
+	 * 작성자 : 최보윤
+	 * 작성일자 : 2025-12-28
+	 * '글쓰기' 버튼을 눌렀을 때 게시글 작성 페이지로 이동시키기 
+	 */
+	@PostMapping("insert")
+	public String showInsertPost() {
+		return "lostandfound/lostandfound_edit";
+	}
+	
 	/**
 	 * 작성자 : 최보윤
 	 * 작성일자 : 2025-12-28
@@ -126,7 +138,7 @@ public class LostAndFoundController {
 	 */
 	@GetMapping("insert")
 	public String insertPost(@ModelAttribute Post inputPost, @SessionAttribute("loginMember") Member loginMember,
-						@RequestParam("images") List<MultipartFile> images, RedirectAttributes ra) {
+						@RequestParam("images") List<MultipartFile> images, RedirectAttributes ra) throws IllegalStateException, IOException {
 		inputPost.setMemberNo(loginMember.getMemberNo());
 		int postNo = service.insertPost(inputPost, images);
 		
