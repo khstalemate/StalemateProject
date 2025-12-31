@@ -16,7 +16,7 @@ public interface MemberMapper {
 
 	int signup(Member inputMember);
 
-	Member selectMemberByNo(int memberNo);
+	/*Member selectMemberByNo(int memberNo);*/
 
 	/*int userCheck(@Param("memberId") String memberId, 
 			      @Param("memberPhone") String memberPhone);*/
