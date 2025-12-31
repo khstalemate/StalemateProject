@@ -1,7 +1,7 @@
 package com.stale.mate.member.model.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
+//import org.apache.ibatis.annotations.Param;
 
 import com.stale.mate.member.model.dto.Member;
 

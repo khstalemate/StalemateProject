@@ -62,4 +62,151 @@
 		AND CATEGORY IN ('실종', '목격')
 		ORDER BY POST_NO DESC
 	</select>
+	
+	<!-- 작성자 : 최보윤
+		작성일자 : 2025-12-24
+		검색 결과에 부합하는 게시글 개수 가져오는 SQL -->
+	<select id="getSearchCount">
+		SELECT COUNT(*)
+		FROM POST
+		JOIN MEMBER USING (MEMBER_NO)
+		WHERE POST_DELETE = 'N'
+		AND MENU_NO = 2
+		<if test="title != null and title != ''">
+			AND POST_TITLE LIKE '%'||#{title}||'%'
+		</if>
+		<if test="writer != null and writer != ''">
+			AND MEMBER_NAME LIKE '%'||#{writer}||'%'
+		</if>
+		<choose>
+			<when test='category=="missing"'>
+				AND CATEGORY = '실종'
+			</when>
+			<when test='category=="witness"'>
+				AND CATEGORY = '목격'
+			</when>
+			<otherwise>
+				AND CATEGORY IN ('실종', '목격')
+			</otherwise>
+		</choose>
+		<if test="status != null and status != ''">
+			AND STATUS = #{status}
+		</if>
+		<if test="species != null and species != ''">
+			AND SPECIES = #{species}
+		</if>
+		<if test="gender != null and gender != ''">
+			AND GENDER = #{gender}
+		</if>
+		<if test="age != null and age != ''">
+			AND AGE = #{age}
+		</if>
+		<if test="weight != null and weight != ''">
+			AND WEIGHT = #{weight}
+		</if>
+		ORDER BY POST_NO DESC
+	</select>
+	
+	<!-- 작성자 : 최보윤
+		작성일자 : 2025-12-24
+		검색 결과에 부합하는 게시글 목록 조회하기 -->
+	<select id="selectSearchList">
+		SELECT CATEGORY, POST_TITLE, MEMBER_NAME AS "memberName", VIEWS, STATUS,
+      	<![CDATA[
+		CASE
+			WHEN SYSDATE - CAST(POST_DATE AS DATE) < 1 / 24 / 60
+			THEN FLOOR((SYSDATE - CAST(POST_DATE AS DATE)) * 24 * 60 * 60) || '초 전'
+			
+			WHEN SYSDATE - CAST(POST_DATE AS DATE) < 1 / 24
+			THEN FLOOR((SYSDATE - CAST(POST_DATE AS DATE)) * 24 * 60) || '분 전'
+			
+			WHEN SYSDATE - CAST(POST_DATE AS DATE) < 1
+			THEN FLOOR((SYSDATE - CAST(POST_DATE AS DATE)) * 24) || '시간 전' 
+			
+			ELSE TO_CHAR(POST_DATE, 'YYYY.MM.DD')
+		END POST_DATE
+		]]>
+      	FROM POST
+      	JOIN MEMBER USING (MEMBER_NO)
+      	WHERE POST_DELETE = 'N'
+      	AND MENU_NO = 2
+      	<if test="title != null and title != ''">
+        	 AND POST_TITLE LIKE '%'||#{title}||'%'
+      	</if>
+      	<if test="writer != null and writer != ''">
+      	   AND MEMBER_NAME LIKE '%'||#{writer}||'%'
+      	</if>
+      	<choose>
+        	 <when test='category=="missing"'>
+            	AND CATEGORY = '실종'
+         	</when>
+         	<when test='category=="witness"'>
+            	AND CATEGORY = '목격'
+         	</when>
+         	<otherwise>
+	            AND CATEGORY IN ('실종', '목격')
+         	</otherwise>
+      	</choose>
+      	<if test="status != null and status != ''">
+        	 AND STATUS = #{status}
+      	</if>
+      	<if test="species != null and species != ''">
+         	AND SPECIES = #{species}
+      	</if>
+      	<if test="gender != null and gender != ''">
+         	AND GENDER = #{gender}
+      	</if>
+      	<if test="age != null and age != ''">
+         	AND AGE = #{age}
+      	</if>
+      	<if test="weight != null and weight != ''">
+         	AND WEIGHT = #{weight}
+      	</if>
+      	ORDER BY POST_NO DESC
+	</select>
+	
+	<!-- 작성자 : 최보윤
+	작성일자 : 2025-12-28
+	게시글 상세 조회 -->
+	<select id="getPost">
+		SELECT POST_TITLE, CATEGORY, STATUS, VIEWS, LOCATION, DETAIL_LOCATION, SPECIES, GENDER, AGE, WEIGHT, CONTENT, MEMBER_NAME AS "memberName",
+		TO_CHAR(MISSING_DATE, 'YYYY"년" MM"월" DD"일"') AS MISSING_DATE,
+		TO_CHAR(MISSING_TIME, 'HH24:MI') AS MISSING_TIME,
+		TO_CHAR(POST_DATE, 'YYYY"년" MM"월" DD"일"') AS POST_DATE
+		FROM POST
+		JOIN MEMBER USING(MEMBER_NO)
+		WHERE POST_NO = #{postNo}
+		AND MENU_NO = 2
+		AND POST_DELETE = 'N'
+	</select>
+	
+	<!-- 작성자 : 최보윤
+	작성일자 : 2025-12-28
+	게시글 삽입(이미지 제외) -->
+	<insert id="insertPost" parameterType="Post">
+		<selectKey order="BEFORE" resultType="_int" keyProperty="postNo">
+			SELECT SEQ_POST.NEXTVAL FROM DUAL
+		</selectKey>
+		INSERT INTO POST (POST_NO, POST_TITLE, CATEGORY, MISSING_DATE, MISSING_TIME, LOCATION, DETAIL_LOCATION,
+						SPECIES, GENDER, AGE, WEIGHT, CONTENT, MENU_NO, MEMBER_NO)
+		VALUES (#{postNo}, #{postTitle}, #{category},
+			TO_DATE(#{missingDate}, 'YYYY-MM-DD'),
+			TO_DATE(#{missingTime}, 'HH24:MI'),
+			#{location}, #{detailLocation}, #{species}, #{gender}, #{age}, #{weight}, #{content}, 2, #{memberNo})
+	</insert>
+		
+	<!-- 작성자 : 최보윤
+	작성일자 : 2025-12-28
+	게시글 삽입(이미지) -->
+	<insert id="insertUploadList">
+		INSERT INTO POST_IMG
+		<foreach collection="list" item="img" open="(" close=")" separator=" UNION ">
+			SELECT NEXT_IMG_NO(), 
+			#{img.imgPath}, 
+			#{img.imgOriginalName}, 
+			#{img.imgRename},
+			#{img.postNo} 
+			FROM DUAL
+		</foreach>
+	</insert>
 </mapper>

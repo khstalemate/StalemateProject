@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>실종,목격 게시판 - 상세</title>
+    <title th:text="${post.postTitle}">게시판 이름</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/common.css">
@@ -13,29 +13,33 @@
 <body>
     <th:block th:replace="~{common/header}"></th:block>
 
-    <main class="page">
+    <main class="page" th:object="${post}">
         <article class="section-card">
             <div class="section-head section-head-spacing">
                 <div>
                     <div class="detail-meta">
-                        <span class="badge badge-primary">실종</span>
+                        <span th:text="*{category == '실종'} ? '실종' : '목격'"
+                        class="badge" th:classappend="*{category == '실종'} ? 'badge-primary' : 'badge-secondary'">카테고리</span>
                         <span class="muted">실종 &amp; 목격 게시판</span>
                     </div>
-                    <h1 class="title-lg detail-title-spacing">골든 리트리버 "골디" 실종</h1>
+                    <h1 class="title-lg detail-title-spacing" th:text="*{postTitle}">제목</h1>
                     <div class="detail-meta detail-meta-spacing">
                         <span class="profile-info-small">
                             <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-2.jpg" alt="Author" class="profile-avatar">
-                            <strong>김민수</strong>
+                            <strong th:text="*{memberName}">작성자</strong>
                         </span>
-                        <span class="detail-meta-item"><i class="fa-solid fa-calendar"></i> 2024-12-10 15:30</span>
-                        <span class="detail-meta-item"><i class="fa-solid fa-eye"></i> 조회 127</span>
+                        <span class="detail-meta-item" th:text="*{postDate}"><i class="fa-solid fa-calendar"></i>작성일</span>
+                        <span class="detail-meta-item" th:text="*{views}"><i class="fa-solid fa-eye"></i> 조회수</span>
                     </div>
                 </div>
             </div>
-
-            <div class="detail-cover">
-                <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/bf79f81fb7-87b0aff859977c97e0ce.png" alt="">
-            </div>
+            <!-- 사용자가 등록한 사진 -->
+            <!-- <th:block th:if="${#lists.size(post.imageList) > 0}">
+                <th:each="i:"></th:each=>
+                <div class="detail-cover">
+                    <img  alt="">
+                </div>
+            </th:block> -->
 
             <div class="section" id="post-info">
                 <div class="info-grid">
@@ -43,55 +47,54 @@
                         <span class="info-icon info-icon-red"><i class="fa-solid fa-location-dot"></i></span>
                         <div>
                             <p class="muted info-label">실종 위치</p>
-                            <strong>서울시 성동구 서울숲길</strong>
-                            <p class="muted info-desc">서울숲 입구 근처</p>
+                            <strong th:text="*{location}">주소</strong>
+                            <p class="muted info-desc" th:text="*{detailLocation}">상세 주소</p>
                         </div>
                     </div>
                     <div class="info-box">
                         <span class="info-icon info-icon-red"><i class="fa-solid fa-clock"></i></span>
                         <div>
                             <p class="muted info-label">실종 일시</p>
-                            <strong>2024년 12월 9일</strong>
-                            <p class="muted info-desc">오후 3시경</p>
+                            <strong th:text="*{missingDate}">실종 날짜</strong>
+                            <p class="muted info-desc" th:text="*{missingTime}">실종 시간</p>
                         </div>
                     </div>
                     <div class="info-box">
                         <span class="info-icon"><i class="fa-solid fa-dog"></i></span>
                         <div>
                             <p class="muted info-label">반려동물 정보</p>
-                            <strong>골든 리트리버 / 수컷</strong>
-                            <p class="muted info-desc">나이 3세, 체중 30kg</p>
+                            <strong th:text="|*{speciesText} / *{genderText}|">개 / 수컷</strong>
+                            <p class="muted info-desc" th:text="|나이 *{ageText}|">나이</p>
+                            <p class="muted info-desc" th:text="|체중 *{weightText}|">체중</p>
                         </div>
                     </div>
                     <div class="info-box">
                         <span class="info-icon info-icon-red"><i class="fa-solid fa-exclamation-triangle"></i></span>
                         <div>
                             <p class="muted info-label">해결 여부</p>
-                            <strong class="info-text-primary">미해결</strong>
-                            <p class="muted info-desc">적극 수색 중</p>
+                            <div th:switch="*{status}">
+                                <span th:case="'NOT_START'" class="badge badge-primary">미해결</span>
+                                <span th:case="'IN_PROGRESS'" class="badge badge-green">진행중</span>
+                                <span th:case="'COMPLETE'" class="badge badge-dark">완료</span>
+                            </div>
+                            <th:block th:switch="*{status}">
+                                <p th:case="'NOT_START'" class="muted info-desc">수색 시작 전</p>
+                                <p th:case="'IN_PROGRESS'" class="muted info-desc">적극 수색 중</p>
+                                <p th:case="'COMPLETE'" class="muted info-desc">수색 완료</p>
+                            </th:block>
                         </div>
                     </div>
                 </div>
             </div>
 
             <section class="section" id="post-content">
-                <div class="post-content">
-                    <p>안녕하세요. 12월 9일 오후 3시경 서울숲 근처에서 저희 골든 리트리버 "골디"가 실종되었습니다.</p>
-                    <p>산책 중 갑자기 놀라서 목줄을 빠져나가 달아났습니다. 파란색 목줄을 하고 있었고, 목에 인식표가 달려있습니다. 골디는 사람을 매우 잘 따라서 누군가와 함께 있을 가능성이 높습니다.</p>
-                    <p>특징:<br>
-                    - 밝은 황금색 털<br>
-                    - 왼쪽 귀에 작은 흰색 반점<br>
-                    - 꼬리를 자주 흔듦<br>
-                    - "골디", "이리와" 명령어에 반응</p>
-                    <p style="font-weight:700;">발견하시면 즉시 연락 부탁드립니다. 사례금 있습니다.<br>
-                    연락처: 010-1234-5678</p>
-                </div>
+                <div class="post-content" th:text="*{content}">내용</div>
             </section>
 
             <div class="section action-buttons">
                 <button class="btn btn-primary">수정</button>
                 <button class="btn btn-primary">삭제</button>
-                <button class="btn btn-secondary">목록</button>
+                <button type="button" class="btn btn-secondary" id="goToList">목록</button>
             </div>
         </article>
 
@@ -116,33 +119,12 @@
                         <p class="comment-text">서울숲 자주 가는데 주의깊게 살펴보겠습니다. 꼭 찾으시길 바랍니다!</p>
                     </div>
                 </div>
-
-                <div class="comment-item">
-                    <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-3.jpg" alt="Commenter" class="profile-avatar-large">
-                    <div>
-                        <div class="detail-meta comment-meta">
-                            <strong>김지현</strong>
-                            <span>3시간 전</span>
-                        </div>
-                        <p class="comment-text">골디님 정말 아름답고 귀여운 반려동물이에요! 혹시 털색이 밝은 황금색이에요?</p>
-                    </div>
                 </div>
-
-                <div class="comment-item">
-                    <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-4.jpg" alt="Commenter" class="profile-avatar-large">
-                    <div>
-                        <div class="detail-meta comment-meta">
-                            <strong>박지현</strong>
-                            <span>4시간 전</span>
-                        </div>
-                        <p class="comment-text">골디님의 특징을 잘 알려주셔서 감사합니다! 왼쪽 귀에 작은 흰색 반점이 있구요, 꼬리를 자주 흔드는 행동이 특징이에요.</p>
-                    </div>
-                </div>
-            </div>
         </section>
     </main>
 
     <th:block th:replace="~{common/footer}"></th:block>
+    <script src="/js/board/lostandfound_detail.js"></script>
 </body>
 </html>
 
