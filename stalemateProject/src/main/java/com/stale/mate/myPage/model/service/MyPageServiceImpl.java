@@ -5,12 +5,14 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import com.stale.mate.member.model.dto.Member;
 import com.stale.mate.myPage.model.mapper.MyPageMapper;
 
 @Service
+@Transactional (rollbackFor = Exception.class)
 public class MyPageServiceImpl implements MyPageService{
 
 	@Autowired
@@ -76,5 +78,14 @@ public class MyPageServiceImpl implements MyPageService{
 	@Override
 	public int deleteMember(Member loginMember) {
 		return mapper.deleteMember(loginMember);
+	}
+
+	/** 작성자 : 유건우
+	 * 작성일자 : 2025-12-28
+	 * 마이페이지 - 회원정보 수정 후, session 재설정
+	 */
+	@Override
+	public Member setLoginMemberInfo(Member loginMember) {
+		return mapper.getLoginMemberInfo(loginMember.getMemberId());
 	}
 }
