@@ -1,11 +1,13 @@
 package com.stale.mate.board.model.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.session.RowBounds;
 
 import com.stale.mate.board.model.dto.Post;
+import com.stale.mate.board.model.dto.PostImg;
 
 @Mapper
 public interface LostAndFoundMapper {
@@ -50,4 +52,42 @@ public interface LostAndFoundMapper {
 	 * @return
 	 */
 	List<Post> selectPostList(RowBounds rowBounds);
+
+	/**
+	 * 작성자 : 최보윤
+	 * 작성일자 : 2025-12-24
+	 * 검색 결과에 부합하는 게시글 개수 가져오는 SQL
+	 * @param paramMap (사용자가 입력한 검색 조건이 담긴 맵)
+	 */
+	int getSearchCount(Map<String, Object> paramMap);
+
+	/**
+	 * 작성자 : 최보윤
+	 * 작성일자 : 2025-12-24
+	 * 검색 결과에 부합하는 게시글 목록 조회 SQL
+	 * @param paramMap (사용자가 입력한 검색 조건이 담긴 맵)
+	 * @param rowBounds
+	 */
+	List<Post> selectSearchList(Map<String, Object> paramMap, RowBounds rowBounds);
+
+	/**
+	 * 작성자 : 최보윤
+	 * 작성일자 : 2025-12-28
+	 * 게시글 상세 정보 가져오는 SQL
+	 */
+	Post getPost(int postNo);
+
+	/**
+	 * 작성자 : 최보윤
+	 * 작성일자 : 2025-12-28
+	 * 게시글을 삽입한 후 삽입된 게시글의 시퀀스 번호 가져오는 SQL 
+	 */
+	int insertPost(Post inputPost);
+
+	/**
+	 * 작성자 : 최보윤
+	 * 작성일자 : 2025-12-28
+	 * 삽입하고자 하는 게시글에 이미지 등록하는 SQL 
+	 */
+	int insertUploadList(List<PostImg> uploadList);
 }
