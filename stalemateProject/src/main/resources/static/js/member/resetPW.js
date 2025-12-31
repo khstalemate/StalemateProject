@@ -7,6 +7,7 @@ const checkObj = {
 const memberId = document.querySelector("#memberId");
 const memberPhone = document.querySelector("#memberPhone");
 const sendAuthKeyBtn = document.querySelector("#sendAuthKeyBtn");
+const sendResetKey = document.querySelector("#sendResetKey");
 const emailAuthMessage = document.querySelector("#emailAuthMessage");
 const initMin = 2; 
 const initSec = 0; 
@@ -19,12 +20,17 @@ let authTimer;
 
 sendAuthKeyBtn.addEventListener("click", function() {
 
+  if(sendAuthKeyBtn.disabled) return;
+
+  sendAuthKeyBtn.disabled = true;
+
   const inputId = memberId.value.trim();
   const inputPhone = memberPhone.value.trim();
 
   if(inputId.length === 0){
 
     alert("아이디(이메일)을 입력해주세요!");
+    sendAuthKeyBtn.disabled = false;
 
     return;
   }
@@ -33,12 +39,14 @@ sendAuthKeyBtn.addEventListener("click", function() {
 
   if(!regExpId.test(inputId)) {
     alert("알맞은 이메일 형식으로 입력해주세요!");
+    sendAuthKeyBtn.disabled = false;
 
     return;
   }
 
   if(inputPhone === "") {
     alert("전화번호를 입력해주세요!");
+    sendAuthKeyBtn.disabled = false;
 
     return;
   }
@@ -47,6 +55,7 @@ sendAuthKeyBtn.addEventListener("click", function() {
 
  if(!regExpPhone.test(inputPhone)) {
     alert("알맞은 전화번호 형식으로 입력해주세요!");
+    sendAuthKeyBtn.disabled = false;
     
     return;
   }
@@ -67,10 +76,14 @@ sendAuthKeyBtn.addEventListener("click", function() {
 
     }else{
       alert("존재하지 않는 회원정보 입니다.");
+      sendAuthKeyBtn.disabled = false;
 
       return;
     }
   });
+
+  min = initMin;
+  sec = initSec;
 
   emailAuthMessage.innerText = initTime;
 
@@ -86,6 +99,7 @@ sendAuthKeyBtn.addEventListener("click", function() {
       emailAuthMessage.classList.add("error");
       emailAuthMessage.classList.remove("confirm");
       alert("인증 제한시간 초과! 다시 번호를 발급받아주세요")
+      sendAuthKeyBtn.disabled = false;
 
       return;
     }
@@ -144,8 +158,8 @@ inputAuthkey.addEventListener("input", function() {
       emailAuthMessage.classList.remove("error");
       clearInterval(authTimer);
       checkObj.authKey = true;
-
       inputAuthkey.disabled = true;
+
 
     }else {
       emailAuthMessage.innerText = "이메일 인증 오류";   
@@ -162,7 +176,12 @@ inputAuthkey.addEventListener("input", function() {
 const signupForm = document.querySelector("#signup-form");
 
 signupForm.addEventListener("submit", function(e) {
+  
   e.preventDefault();
+
+  if(sendResetKey.disabled) return;
+
+  sendResetKey.disabled = true;
 
   for(let key in checkObj) {
 
@@ -185,8 +204,7 @@ signupForm.addEventListener("submit", function(e) {
 
       alert(str);
 
-      e.preventDefault();
-
+      sendResetKey.disabled = false;
       return;
     }
   }
@@ -202,7 +220,8 @@ signupForm.addEventListener("submit", function(e) {
   .then( result => {
 
     if(result == 1) {
-      alert("임시 비밀번호를 이메일로 발송했습니다");
+      alert("비밀번호 초기화 성공!!! 이메일을 확인해주세요~");
+      location.href="/";
 
     }else {
       alert("임시 비밀번호 발송에 실패했습니다");
