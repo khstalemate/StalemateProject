@@ -121,7 +121,6 @@ public class LostAndFoundController {
 		return path;
 	}
 	
-	
 	/**
 	 * 작성자 : 최보윤
 	 * 작성일자 : 2025-12-28
@@ -148,10 +147,10 @@ public class LostAndFoundController {
 		
 		if(postNo > 0) {
 			message = "게시글이 작성되었습니다.";
-			path = "/detail?postNo=" + postNo;
+			path = "/lostandfound/detail?postNo=" + postNo;
 		} else {
-			path = "insert";
 			message = "게시글 작성에 실패하였습니다.";
+			path = "insert";
 		}
 		
 		ra.addFlashAttribute("message", message);

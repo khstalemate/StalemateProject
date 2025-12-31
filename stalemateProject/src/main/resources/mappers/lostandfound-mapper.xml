@@ -183,14 +183,16 @@
 	<!-- 작성자 : 최보윤
 	작성일자 : 2025-12-28
 	게시글 삽입(이미지 제외) -->
-	<insert id="insertPost" useGeneratedKeys="true" parameterType="Post">
+	<insert id="insertPost" parameterType="Post">
 		<selectKey order="BEFORE" resultType="_int" keyProperty="postNo">
 			SELECT SEQ_POST.NEXTVAL FROM DUAL
 		</selectKey>
 		INSERT INTO POST (POST_NO, POST_TITLE, CATEGORY, MISSING_DATE, MISSING_TIME, LOCATION, DETAIL_LOCATION,
-						SPECIES, GENDER, AGE, WEIGHT, CONTENT)
-		VALUES (#{postTitle}, #{category}, #{missingDate}, #{missingTime}, #{location},
-		#{detailLocation}, #{species}, #{gender}, #{age}, #{weight}, #{content})
+						SPECIES, GENDER, AGE, WEIGHT, CONTENT, MENU_NO, MEMBER_NO)
+		VALUES (#{postNo}, #{postTitle}, #{category},
+			TO_DATE(#{missingDate}, 'YYYY-MM-DD'),
+			TO_DATE(#{missingTime}, 'HH24:MI'),
+			#{location}, #{detailLocation}, #{species}, #{gender}, #{age}, #{weight}, #{content}, 2, #{memberNo})
 	</insert>
 		
 	<!-- 작성자 : 최보윤
@@ -203,8 +205,7 @@
 			#{img.imgPath}, 
 			#{img.imgOriginalName}, 
 			#{img.imgRename},
-			#{img.imgOrder}, 
-			#{img.boardNo} 
+			#{img.postNo} 
 			FROM DUAL
 		</foreach>
 	</insert>

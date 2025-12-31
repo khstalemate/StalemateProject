@@ -34,9 +34,12 @@
                 </div>
             </div>
             <!-- 사용자가 등록한 사진 -->
-            <div class="detail-cover">
-                <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/bf79f81fb7-87b0aff859977c97e0ce.png" alt="">
-            </div>
+            <!-- <th:block th:if="${#lists.size(post.imageList) > 0}">
+                <th:each="i:"></th:each=>
+                <div class="detail-cover">
+                    <img  alt="">
+                </div>
+            </th:block> -->
 
             <div class="section" id="post-info">
                 <div class="info-grid">
@@ -116,29 +119,7 @@
                         <p class="comment-text">서울숲 자주 가는데 주의깊게 살펴보겠습니다. 꼭 찾으시길 바랍니다!</p>
                     </div>
                 </div>
-
-                <div class="comment-item">
-                    <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-3.jpg" alt="Commenter" class="profile-avatar-large">
-                    <div>
-                        <div class="detail-meta comment-meta">
-                            <strong>김지현</strong>
-                            <span>3시간 전</span>
-                        </div>
-                        <p class="comment-text">골디님 정말 아름답고 귀여운 반려동물이에요! 혹시 털색이 밝은 황금색이에요?</p>
-                    </div>
                 </div>
-
-                <div class="comment-item">
-                    <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-4.jpg" alt="Commenter" class="profile-avatar-large">
-                    <div>
-                        <div class="detail-meta comment-meta">
-                            <strong>박지현</strong>
-                            <span>4시간 전</span>
-                        </div>
-                        <p class="comment-text">골디님의 특징을 잘 알려주셔서 감사합니다! 왼쪽 귀에 작은 흰색 반점이 있구요, 꼬리를 자주 흔드는 행동이 특징이에요.</p>
-                    </div>
-                </div>
-            </div>
         </section>
     </main>
 
