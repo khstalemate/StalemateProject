@@ -99,7 +99,7 @@ function checkName(){
         return;
     }
 
-    const regExp = /^[가-힣A-Za-z0-9]{8,15}$/;
+    const regExp = /^[가-힣A-Za-z0-9]{1,10}$/;
 
     if(!regExp.test(inputName)) {
         nickNameMessage.innerText = "알맞는 닉네임 형식으로 입력해주세요!";
