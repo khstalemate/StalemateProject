@@ -26,13 +26,21 @@
                 <label class="membership-label">아이디(이메일)</label>
                 <div class="input-wrap">
                     <i class="fa-solid fa-envelope"></i>
-                    <input id="memberId" name="memberId" type="email" class="membership-email" placeholder="example@email.com">
+                    <input id="memberId" name="memberId" type="email" class="form-control membership-input-flex" placeholder="example@email.com">
+                    <button id="sendAuthKeyBtn" class="btn btn-ghost" type="button">인증하기</button>
                 </div>
                 <div>
                     <label id="emailMessage" class="membership-label"></label>
                 </div>
+                <label class="membership-label">이메일 인증번호</label>
+                <div class="membership-input-group">
+                    <input id="inputAuthKey" maxlength="6" class="form-control3" placeholder="이메일 인증번호를 입력하세요">
+                </div>
+                <div>
+                    <label id="emailAuthMessage" class="membership-label"></label>
+                </div>
                 <label class="membership-label">비밀번호 
-                    <div class="membership-notice">(최대 15글자, 한글, 영어 대소문자, 숫자 조합가능)</div>
+                    <div class="membership-notice">(최소 8글자, 최대 15글자, 한글, 영어 대소문자, 숫자 조합가능)</div>
                 </label>
                 <div class="input-wrap">
                     <i class="fa-solid fa-lock"></i>
@@ -40,6 +48,14 @@
                 </div>
                 <div>
                     <label id="memberPwCheck" class="membership-label"></label>
+                </div>
+                <label class="membership-label">비밀번호 재입력</label>
+                <div class="input-wrap">
+                    <i class="fa-solid fa-lock"></i>
+                    <input id="memberPwConfirm" name="memberPwConfirm" type="password" placeholder="비밀번호를 재입력하세요">
+                </div>
+                <div>
+                    <label id="memberPwConfirmCheck" class="membership-label"></label>
                 </div>
                 <label class="membership-label">닉네임 
                     <div class="membership-notice">(최대 10글자, 한글, 영어 대소문자, 숫자 조합가능)</div>
@@ -54,14 +70,6 @@
                 <input id="memberPhone" name="memberPhone" type="tel" class="form-control3" placeholder="010-0000-0000">
                 <div>
                     <label id="memberPhoneCheck" class="membership-label"></label>
-                </div>
-                <label class="membership-label">이메일 인증번호</label>
-                <div class="membership-input-group">
-                    <input id="inputAuthKey" maxlength="6" class="form-control membership-input-flex" placeholder="이메일 인증번호를 입력하세요">
-                    <button id="sendAuthKeyBtn" class="btn btn-ghost" type="button">인증하기</button>
-                </div>
-                <div>
-                    <label id="emailAuthMessage" class="membership-label"></label>
                 </div>
                 <div id="authKeyMessage"></div>
                 <label class="membership-checkbox-group">

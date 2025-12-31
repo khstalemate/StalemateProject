@@ -1,6 +1,7 @@
 const checkObj = {
   "memberId" : false,
   "memberPw" : false,
+  "memberPwPermit" : false,
   "memberName" : false,
   "memberPhone" : false,
   "authKey" : false,
@@ -72,17 +73,15 @@ memberPw.addEventListener("input", function() {
     memberPwCheck.innerText = "비밀번호를 입력해주세요";
     memberPwCheck.classList.add("error");
     memberPwCheck.classList.remove("confirm");
-    checkObj.memberPw = false;
     return;
   }
 
-  const regExp = /^[가-힣A-Za-z0-9]{1,15}$/;
+  const regExp = /^[가-힣A-Za-z0-9]{8,15}$/;
 
   if(!regExp.test(inputPw)) {
     memberPwCheck.innerText = "알맞은 형식으로 입력해주세요!";
     memberPwCheck.classList.add("error");
     memberPwCheck.classList.remove("confirm");
-    checkObj.memberPw = false;
     return;
   }
 
@@ -93,6 +92,33 @@ memberPw.addEventListener("input", function() {
 
 });
 
+const memberPwConfirm = document.querySelector("#memberPwConfirm");
+const memberPwConfirmCheck = document.querySelector("#memberPwConfirmCheck");
+
+memberPwConfirm.addEventListener("input", function() {
+
+  const inputPw = memberPw.value.trim();
+  const inputPwConfirm = memberPwConfirm.value.trim();
+
+  memberPwConfirmCheck.innerText = "";
+
+  if(inputPw === inputPwConfirm) {
+    memberPwConfirmCheck.innerText = "비밀번호가 일치합니다.";
+    memberPwConfirmCheck.classList.add("confirm");
+    memberPwConfirmCheck.classList.remove("error");
+    checkObj.memberPwPermit = true;
+
+    return;
+  }
+
+  memberPwConfirmCheck.innerText = "비밀번호가 일치하지 않습니다.";
+  memberPwConfirmCheck.classList.add("error");
+  memberPwConfirmCheck.classList.remove("confirm");
+  checkObj.memberPwPermit = false;
+
+});
+
+
 const memberName = document.querySelector("#memberName");
 const nickNameMessage = document.querySelector("#nickNameMessage");
 
@@ -101,8 +127,8 @@ memberName.addEventListener("input", function() {
 
   if(inputName.length === 0) {
     nickNameMessage.innerText = "닉네임을 입력해주세요.";
-    nickNameMessage.style.color = "red";
     checkObj.memberName = false;
+    nickNameMessage.style.color = "red";
     return;
   }
 
@@ -110,8 +136,8 @@ memberName.addEventListener("input", function() {
 
   if(!regExp.test(inputName)) {
     nickNameMessage.innerText = "알맞는 닉네임 형식으로 입력해주세요!";
-    nickNameMessage.style.color = "red";
     checkObj.memberName = false;
+    nickNameMessage.style.color = "red";
     return;
   }
 
@@ -183,9 +209,9 @@ memberPhone.addEventListener("input", function() {
 });
 
 const emailAuthMessage = document.querySelector("#emailAuthMessage");
-const initMin = 2; 
+const initMin = 5; 
 const initSec = 0; 
-const initTime = "02:00";
+const initTime = "05:00";
 
 let min = initMin;
 let sec = initSec;
@@ -224,6 +250,8 @@ sendAuthKeyBtn.addEventListener("click", function() {
 
     });
 
+  sendAuthKeyBtn.disabled = true;
+
   emailAuthMessage.innerText = initTime;
 
   alert("인증번호 발송완료! 시간안에 입력해주세요");
@@ -240,6 +268,7 @@ sendAuthKeyBtn.addEventListener("click", function() {
       emailAuthMessage.classList.add("error");
       emailAuthMessage.classList.remove("confirm");
       alert("인증 제한시간 초과! 다시 번호를 발급받아주세요")
+      sendAuthKeyBtn = false;
 
       return;
     }
@@ -337,6 +366,11 @@ signupForm.addEventListener("submit", function(e){
           document.getElementById("memberPw").focus();
           break;
 
+        case "memberPwPermit" :
+          str = "비밀번호가 일치하지 않습니다";
+          document.getElementById("memberPwConfirm").focus();
+          break;
+
         case "memberName" :
           str = "유효한 닉네임이 아닙니다";
           document.getElementById("memberName").focus();
@@ -350,6 +384,7 @@ signupForm.addEventListener("submit", function(e){
         case "authKey" :
           str = "유효한 인증번호가 아닙니다";
           document.getElementById("inputAuthKey").focus();
+          sendAuthKeyBtn.disabled = false;
           break;
 
         case "agreeTerms" :
@@ -361,6 +396,7 @@ signupForm.addEventListener("submit", function(e){
       alert(str);
 
       e.preventDefault();
+      
       return;
     }
   }

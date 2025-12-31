@@ -9,9 +9,9 @@ const memberPhone = document.querySelector("#memberPhone");
 const sendAuthKeyBtn = document.querySelector("#sendAuthKeyBtn");
 const sendResetKey = document.querySelector("#sendResetKey");
 const emailAuthMessage = document.querySelector("#emailAuthMessage");
-const initMin = 2; 
+const initMin = 5; 
 const initSec = 0; 
-const initTime = "02:00";
+const initTime = "05:00";
 
 let min = initMin;
 let sec = initSec;

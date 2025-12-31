@@ -39,13 +39,13 @@
 			   NULL)
 	</insert>
 	
-	<select id="selectMemberByNo">
+	<!-- <select id="selectMemberByNo">
    	 	SELECT MEMBER_NO, MEMBER_ID, MEMBER_NAME,
         MEMBER_PW, AUTHORITY, PROFILE_IMG
    		FROM "MEMBER"
    		WHERE MEMBER_NO = #{memberNo}
      	AND MEMBER_DEL_FL = 'N'	
-	</select>
+	</select> -->
 	
 	<!-- <select id="userCheck">
 		SELECT COUNT(*)
