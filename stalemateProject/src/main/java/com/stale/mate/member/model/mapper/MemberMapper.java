@@ -1,7 +1,7 @@
 package com.stale.mate.member.model.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
+//import org.apache.ibatis.annotations.Param;
 
 import com.stale.mate.member.model.dto.Member;
 
@@ -16,7 +16,7 @@ public interface MemberMapper {
 
 	int signup(Member inputMember);
 
-	Member selectMemberByNo(int memberNo);
+	/*Member selectMemberByNo(int memberNo);*/
 
 	/*int userCheck(@Param("memberId") String memberId, 
 			      @Param("memberPhone") String memberPhone);*/
