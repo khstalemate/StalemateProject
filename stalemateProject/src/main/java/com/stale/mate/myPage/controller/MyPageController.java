@@ -99,12 +99,12 @@ public class MyPageController {
 			ra.addFlashAttribute("message", "정보 수정에 성공하였습니다!");
 			
 			result = 0; // 초기화 및 재사용
-			result = service.setLoginMemberInfo(loginMember);
+			Member updatedInfoMember = service.setLoginMemberInfo(loginMember);
 
 			// 세션 정보 수정
-			if(result > 0){
+			if(updatedInfoMember != null){
 				log.info("세션 정보 수정 완료");
-				
+				req.getSession().setAttribute("loginMember", updatedInfoMember);
 				path = "/myPage/info";
 			}else{
 				log.info("세션 정보 수정 실패, 세션 삭제 및 메인페이지 리다이렉트");

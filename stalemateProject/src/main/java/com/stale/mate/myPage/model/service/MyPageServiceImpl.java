@@ -85,8 +85,7 @@ public class MyPageServiceImpl implements MyPageService{
 	 * 마이페이지 - 회원정보 수정 후, session 재설정
 	 */
 	@Override
-	public int setLoginMemberInfo(Member loginMember) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'setLoginMemberInfo'");
+	public Member setLoginMemberInfo(Member loginMember) {
+		return mapper.getLoginMemberInfo(loginMember.getMemberId());
 	}
 }

@@ -32,5 +32,11 @@ public interface MyPageMapper {
 	 * 마이페이지 - 회원탈퇴 기능
 	 */
 	int deleteMember(Member loginMember);
+
+	/** 작성자 : 유건우
+	 * 작성일자 : 2025-12-28
+	 * 마이페이지 - 회원정보 수정 후, session 재설정
+	 */
+    Member getLoginMemberInfo(String memberId);
 	
 }

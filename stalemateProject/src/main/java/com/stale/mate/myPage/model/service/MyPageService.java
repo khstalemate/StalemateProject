@@ -37,6 +37,6 @@ public interface MyPageService {
 	 * 마이페이지 - 회원정보 수정 후, session 재설정
 	 * @return 
 	 */
-    int setLoginMemberInfo(Member loginMember);
+    Member setLoginMemberInfo(Member loginMember);
 
 }
