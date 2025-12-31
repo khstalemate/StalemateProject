@@ -26,18 +26,16 @@
                         <i class="fa-solid fa-search"></i>
                         <input type="text" class="input" placeholder="제목, 내용으로 검색" readonly>
                     </div>
-                    <a class="btn btn-primary" id="insertBtn" th:onclick="|location.href='@{/lostandfound/lostandfound_edit}'|">
+                    <button type="button" class="btn btn-primary" id="insertBtn">
                         <i class="fa-solid fa-plus"></i> 글쓰기
-                    </a>
+                    </button>
                 </div>
             </div>
 
-            <div class="popup-overlay popup-hidden"></div>
-            <form class="popup popup-hidden" method="get">
             <!-- 제목, 내용으로 검색 input창을 눌렀을 때 생성되는 팝업 레이어 -->
             <div class="popup-overlay popup-hidden"></div>
 
-            <div class="popup popup-hidden">
+            <form class="popup popup-hidden" method="get">
                 <div class="popup-row setting">
                     <label>검색 조건 설정</label>
                     <label id="popup-close">&times;</label>
@@ -46,14 +44,12 @@
                     <div class="popup-row-item">
                         <label>제목</label>
                         <input type="text" name="title" class="popup-input" placeholder="제목">
-                        <input type="text" class="popup-input" placeholder="제목">
                     </div>
                 </div>
                 <div class="popup-row">
                     <div class="popup-row-item">
                         <label>작성자</label>
                         <input type="text" name="writer" class="popup-input" placeholder="작성자">
-                        <input type="text" class="popup-input" placeholder="작성자">
                     </div>
                 </div>
                 <div class="popup-row">
@@ -63,9 +59,6 @@
                             <option value="">전체</option>
                             <option value="missing">실종</option>
                             <option value="witness">목격</option>
-                        <select class="popup-select">
-                            <option>실종</option>
-                            <option>목격</option>
                         </select>
                     </div>
                     <div class="popup-row-item">
@@ -75,10 +68,6 @@
                             <option value="NOT_START">미해결</option>
                             <option value="IN_PROGRESS">진행중</option>
                             <option value="COMPLETE">완료</option>
-                        <select class="popup-select">
-                            <option>미해결</option>
-                            <option>진행중</option>
-                            <option>완료</option>
                         </select>
                     </div>
                 </div>  
@@ -90,10 +79,6 @@
                             <option value="dog">개</option>
                             <option value="cat">고양이</option>
                             <option value="etc">기타</option>
-                        <select class="popup-select">
-                            <option>개</option>
-                            <option>고양이</option>
-                            <option>기타</option>
                         </select>
                     </div>
                     
@@ -105,11 +90,6 @@
                             <option value="F">암컷</option>
                             <option value="neutering">중성화</option>
                             <option value="unknown">기타</option>
-                        <select class="popup-select">
-                            <option>수컷</option>
-                            <option>암컷</option>
-                            <option>중성화</option>
-                            <option>기타</option>
                         </select>
                     </div>
                 </div>
@@ -131,20 +111,6 @@
                             <option value="10">6살~7살</option>
                             <option value="11">7살~8살</option>
                             <option value="12">8살 이상</option>
-                        <select class="popup-select">
-                            <option>알 수 없음</option>
-                            <option>0~3개월</option>
-                            <option>4~6개월</option>
-                            <option>7~12개월(1살)</option>
-                            <option>13~18개월</option>
-                            <option>19~24개월(2살)</option>
-                            <option>2살~3살</option>
-                            <option>3살~4살</option>
-                            <option>4살~5살</option>
-                            <option>5살~6살</option>
-                            <option>6살~7살</option>
-                            <option>7살~8살</option>
-                            <option>8살 이상</option>
                         </select>   
                     </div>
                     <div class="popup-row-item">
@@ -157,13 +123,6 @@
                             <option value="3">중형(8~15kg)</option>
                             <option value="4">대형(25~40kg)</option>
                             <option value="5">초대형(40kg 초과)</option>
-                        <select class="popup-select">
-                            <option>알 수 없음</option>
-                            <option>초소형(3kg 미만)</option>
-                            <option>소형(3~8kg)</option>
-                            <option>중형(8~15kg)</option>
-                            <option>대형(25~40kg)</option>
-                            <option>초대형(40kg 미만)</option>
                         </select>
                     </div>
                 </div>
@@ -171,7 +130,6 @@
                     <button>검색하기</button>
                 </div>
             </form>  
-            </div>  
 
             <div class="stat-grid">
                 <div class="stat-card">

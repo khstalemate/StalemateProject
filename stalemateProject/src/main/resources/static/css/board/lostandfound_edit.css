@@ -1,7 +1,3 @@
-#fileInput {
+input[type="file"] {
   display: none;
-}
-
-.custom-file-upload {
-  
 }

@@ -21,6 +21,7 @@ import com.stale.mate.board.model.dto.Post;
 import com.stale.mate.board.model.service.LostAndFoundService;
 import com.stale.mate.member.model.dto.Member;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
@@ -126,7 +127,7 @@ public class LostAndFoundController {
 	 * 작성일자 : 2025-12-28
 	 * '글쓰기' 버튼을 눌렀을 때 게시글 작성 페이지로 이동시키기 
 	 */
-	@PostMapping("insert")
+	@GetMapping("insert")
 	public String showInsertPost() {
 		return "lostandfound/lostandfound_edit";
 	}
@@ -136,9 +137,9 @@ public class LostAndFoundController {
 	 * 작성일자 : 2025-12-28
 	 * 게시글 작성하기
 	 */
-	@GetMapping("insert")
+	@PostMapping("insert")
 	public String insertPost(@ModelAttribute Post inputPost, @SessionAttribute("loginMember") Member loginMember,
-						@RequestParam("images") List<MultipartFile> images, RedirectAttributes ra) throws IllegalStateException, IOException {
+						@RequestParam("uploadImg") List<MultipartFile> images, RedirectAttributes ra) throws IllegalStateException, IOException {
 		inputPost.setMemberNo(loginMember.getMemberNo());
 		int postNo = service.insertPost(inputPost, images);
 		
@@ -147,7 +148,7 @@ public class LostAndFoundController {
 		
 		if(postNo > 0) {
 			message = "게시글이 작성되었습니다.";
-			path = "";
+			path = "/detail?postNo=" + postNo;
 		} else {
 			path = "insert";
 			message = "게시글 작성에 실패하였습니다.";

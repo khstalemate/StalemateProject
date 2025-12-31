@@ -17,30 +17,30 @@
             <h1 class="title-lg">실종 &amp; 목격 게시글 작성</h1>
             <form action="/lostandfound/insert" method="POST" enctype="multipart/form-data">
                 <div class="upload-box upload-box-spacing">
-                    <label for="fileInput" class="custom-file-upload">📷 사진 업로드 (클릭하여 파일 선택)</label>
-                    <input type="file" name="uploadImg" id="fileInput">
+                    <label for="uploadImg" class="custom-file-upload">📷 사진 업로드 (클릭하여 파일 선택)</label>
+                    <input type="file" name="uploadImg" id="uploadImg" multiple>
                 </div>
 
                 <div class="form-field">
                     <label>제목</label>
-                    <input type="text" class="form-control" name="images" placeholder="예: 골든 리트리버 '곰디' 실종">
+                    <input type="text" class="form-control" name="postTitle" placeholder="예: 골든 리트리버 '곰디' 실종">
                 </div>
 
                 <div class="form-row">
                     <div class="form-field">
                         <label>실종 / 목격 구분</label>
-                        <select class="form-control">
-                            <option>실종</option>
-                            <option>목격</option>
+                        <select class="form-control" name="category">
+                            <option value="실종">실종</option>
+                            <option value="목격">목격</option>
                         </select>
                     </div>
                     <div class="form-field">
                         <label>실종/목격 날짜</label>
-                        <input type="date" class="form-control">
+                        <input type="date" class="form-control" name="missingDate">
                     </div>
                     <div class="form-field">
                         <label>시간</label>
-                        <input type="time" class="form-control">
+                        <input type="time" class="form-control" name="missingTime">
                     </div>
                 </div>
 
@@ -50,22 +50,26 @@
                         <input type="button" onclick="sample4_execDaumPostcode()" value="주소 찾기" class="btn btn-ghost"><br>
                     </label>
                     
-                    <input type="text" id="sample4_roadAddress" placeholder="도로명주소" class="form-control2">
-                    <input type="text" id="sample4_detailAddress" placeholder="상세주소" class="form-control2">
+                    <input type="text" id="sample4_roadAddress" placeholder="도로명주소" class="form-control2" name="location">
+                    <input type="text" id="sample4_detailAddress" placeholder="상세주소" class="form-control2" name="detailLocation">
                 </div>
 
                 <div class="form-row">
                     <div class="form-field">
                         <label>동물 정보 (종)</label>
-                        <input type="text" class="form-control" placeholder="예: 골든 리트리버">
+                        <select class="form-control" name="species">
+                            <option value="dog">개</option>
+                            <option value="cat">고양이</option>
+                            <option value="etc">기타</option>
+                        </select>
                     </div>
                     <div class="form-field">
                         <label>성별</label>
-                        <select class="form-control">
-                            <option>수컷</option>
-                            <option>암컷</option>
-                            <option>중성화</option>
-                            <option>알 수 없음</option>
+                        <select class="form-control" name="gender">
+                            <option value="M">수컷</option>
+                            <option value="F">암컷</option>
+                            <option value="neutering">중성화</option>
+                            <option value="unknown">알 수 없음</option>
                         </select>
                     </div>
                 </div>
@@ -73,43 +77,44 @@
                 <div class="form-row">
                     <div class="form-field">
                         <label>나이</label>
-                        <select class="form-control">
-                            <option>알 수 없음</option>
-                            <option>0~3개월</option>
-                            <option>4~6개월</option>
-                            <option>7~12개월(1살)</option>
-                            <option>13~18개월</option>
-                            <option>19~24개월(2살)</option>
-                            <option>2살~3살</option>
-                            <option>3살~4살</option>
-                            <option>4살~5살</option>
-                            <option>5살~6살</option>
-                            <option>6살~7살</option>
-                            <option>7살~8살</option>
-                            <option>8살 이상</option>
+                        <select class="form-control" name="age">
+                            <option value="0">알 수 없음</option>
+                            <option value="1">0~3개월</option>
+                            <option value="2">4~6개월</option>
+                            <option value="3">7~12개월(1살)</option>
+                            <option value="4">13~18개월</option>
+                            <option value="5">19~24개월(2살)</option>
+                            <option value="6">2살~3살</option>
+                            <option value="7">3살~4살</option>
+                            <option value="8">4살~5살</option>
+                            <option value="9">5살~6살</option>
+                            <option value="10">6살~7살</option>
+                            <option value="11">7살~8살</option>
+                            <option value="12">8살 이상</option>
                         </select>
                     </div>
                     <div class="form-field">
                         <label>체중</label>
-                        <select class="form-control">
-                            <option>알 수 없음</option>
-                            <option>초소형(3kg 미만)</option>
-                            <option>소형(3~8kg)</option>
-                            <option>중형(8~15kg)</option>
-                            <option>대형(25~40kg)</option>
-                            <option>초대형(40kg 미만)</option>
+                        <select class="form-control" name="weight">
+                            <option value="0">알 수 없음</option>
+                            <option value="1">초소형(3kg 미만)</option>
+                            <option value="2">소형(3~8kg)</option>
+                            <option value="3">중형(8~15kg)</option>
+                            <option value="4">대형(25~40kg)</option>
+                            <option value="5">초대형(40kg 미만)</option>
                         </select>
                     </div>
                 </div>
 
                 <div class="form-field">
                     <label>특징</label>
-                    <textarea class="form-control" rows="4" placeholder="예: 밝은 황금색 털, 왼쪽 귀에 작은 흰색 반점, 겁이 많고 사람을 잘 따름"></textarea>
+                    <textarea class="form-control" rows="4" name="content"
+                    placeholder="예: 밝은 황금색 털, 왼쪽 귀에 작은 흰색 반점, 겁이 많고 사람을 잘 따름"></textarea>
                 </div>
 
                 <div class="form-actions">
                     <button class="btn btn-primary">등록</button>
-                    <button class="btn btn-ghost">취소</button>
+                    <button type="button" class="btn btn-ghost" onclick="location.href='lostandfound/'">취소</button>
                 </div>
             </form>
         </section>
@@ -117,6 +122,7 @@
 
     <th:block th:replace="~{common/footer}"></th:block>
 
+    <script src="/js/board/lostandfound_edit.js"></script>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script>
         //본 예제에서는 도로명 주소 표기 방식에 대한 법령에 따라, 내려오는 데이터를 조합하여 올바른 주소를 구성하는 방법을 설명합니다.
@@ -135,7 +141,6 @@
             }).open();
         }
     </script>
-    
 </body>
 </html>
 

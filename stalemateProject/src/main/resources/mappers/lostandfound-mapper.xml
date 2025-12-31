@@ -187,9 +187,10 @@
 		<selectKey order="BEFORE" resultType="_int" keyProperty="postNo">
 			SELECT SEQ_POST.NEXTVAL FROM DUAL
 		</selectKey>
-		INSERT INTO POST
+		INSERT INTO POST (POST_NO, POST_TITLE, CATEGORY, MISSING_DATE, MISSING_TIME, LOCATION, DETAIL_LOCATION,
+						SPECIES, GENDER, AGE, WEIGHT, CONTENT)
 		VALUES (#{postTitle}, #{category}, #{missingDate}, #{missingTime}, #{location},
-		#{detail_location}, #{species}, #{gender}, #{age}, #{weight}, #{content})
+		#{detailLocation}, #{species}, #{gender}, #{age}, #{weight}, #{content})
 	</insert>
 		
 	<!-- 작성자 : 최보윤
