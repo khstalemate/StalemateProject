@@ -149,17 +149,30 @@ memberPhone.addEventListener("input", function() {
         memberPhoneCheck.innerText = "전화번호를 입력해주세요.";
         memberPhoneCheck.classList.add("error");
         memberPhoneCheck.style.color = "red";
+<<<<<<< Updated upstream
         checkObj.memberPhone = false;
         return;
     }
 
     const regExp = /^\d{3}-\d{4}-\d{4}$/;
 
+=======
+
+        return;
+    }
+
+    const regExp = /^\d{3}-\d{4}-\d{4}$/;
+
+>>>>>>> Stashed changes
     if(!regExp.test(inputPhone)) {
         memberPhoneCheck.innerText = "알맞은 형식으로 입력해주세요.";
         memberPhoneCheck.classList.add("error");
         memberPhoneCheck.style.color = "red";
+<<<<<<< Updated upstream
         checkObj.memberPhone = false;
+=======
+        
+>>>>>>> Stashed changes
         return;
     }
 

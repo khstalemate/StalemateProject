@@ -32,4 +32,11 @@ public interface MyPageService {
 	 */
 	int deleteMember(Member loginMember);
 
+	/** 작성자 : 유건우
+	 * 작성일자 : 2025-12-28
+	 * 마이페이지 - 회원정보 수정 후, session 재설정
+	 * @return 
+	 */
+    int setLoginMemberInfo(Member loginMember);
+
 }

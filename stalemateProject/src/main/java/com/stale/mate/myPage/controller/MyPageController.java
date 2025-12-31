@@ -92,16 +92,31 @@ public class MyPageController {
 
 		//DB Update 구문 실행
 		int result = service.profileUpdate(updateMemberInfo);
+		String path = null;
 
+		//DB 정보 수정
 		if(result > 0) {
-			ra.addFlashAttribute("message", "정보 수정에 성공하였습니다. 다시 로그인 해주세요!");
-			//세션제거
-			req.getSession().invalidate();
+			ra.addFlashAttribute("message", "정보 수정에 성공하였습니다!");
+			
+			result = 0; // 초기화 및 재사용
+			result = service.setLoginMemberInfo(loginMember);
+
+			// 세션 정보 수정
+			if(result > 0){
+				log.info("세션 정보 수정 완료");
+				
+				path = "/myPage/info";
+			}else{
+				log.info("세션 정보 수정 실패, 세션 삭제 및 메인페이지 리다이렉트");
+				req.getSession().invalidate();
+				path = "/";
+			}
 		} else {
 			ra.addFlashAttribute("message", "정보 수정에 실패하였습니다.");
+			path = "/myPage/edit"; 
 		}
-		
-		return "redirect:/"; 
+
+		return "redirect:" + path;
 	}
 
 	/** 마이페이지 중복검사 기능
@@ -132,12 +147,13 @@ public class MyPageController {
 
 	/** 작성자 : 유건우
 	 * 작성일자 : 2025-12-28
-	 * 마이페잊비 - 비밀번호 변경 기능
+	 * 마이페이지 - 비밀번호 변경 기능
 	 */
 	@PostMapping("changePw")
 	public String changePw(@RequestParam Map<String, Object> paramMap,
 						@SessionAttribute("loginMember") Member loginMember,
-						RedirectAttributes ra ) {
+						RedirectAttributes ra,
+						HttpServletRequest req ) {
 	
 		int memberNo = loginMember.getMemberNo();
 		
@@ -149,12 +165,13 @@ public class MyPageController {
 		
 		if(result > 0) {
 			//변경 성공 시 
-			message = "비밀번호가 변경 되었습니다";
-			path = "/myPage/info";
+			message = "비밀번호가 변경 되었습니다. 다시 로그인 해주세요!";
+			path = "/";
+			req.getSession().invalidate();
 			
 		} else {
 			//변경 실패 시
-			message = "현재 비밀번호가 일치하지 않습니다";
+			message = "현재 비밀번호가 일치하지 않습니다.";
 			path = "/myPage/changePW";
 		}
 
