@@ -27,75 +27,61 @@
                             <div>번호</div>
                             <div>구분</div>
                             <div>제목</div>
-                            <div>작성자</div>
-                            <div>작성일</div>
+                            <div>신고자</div>
+                            <div>신고사유</div></divL>
+                            <div>신고일</div>
                         </div>
         
-                        <div class="report-list-row">
-                            <div class="report-list-meta">1247</div>
-                            <div><span class="badge badge-primary">실종</span></div>
-                            <div>
-                                <h4 class="report-list-title">귀여운 골든리트리버 찾아주세요 ㅠㅠ (2개월, 수컷)</h4>
-                                <p class="report-list-desc">건강하고 활발한 골든리트리버 강아지입니다. 예방접종 완료...</p>
-                            </div>
-                            <div class="report-list-meta">김민수</div>
-                            <div class="report-list-meta">2024.03.15</div>
-                        </div>
-        
-                        <div class="report-list-row">
-                            <div class="report-list-meta">1246</div>
-                            <div><span class="badge badge-secondary">목격</span></div>
-                            <div>
-                                <h3 class="report-list-title">고양이 찾았습니다 (페르시안, 3살)</h3>
-                                <p class="report-list-desc">약간 꼬질꼬질한데 괜찮은 것 같아요...</p>
-                            </div>
-                            <div class="report-list-meta">박지영</div>
-                            <div class="report-list-meta">2024.03.15</div>
-                        </div>
-        
-                        <div class="report-list-row">
-                            <div class="report-list-meta">1245</div>
-                            <div><span class="badge badge-primary">실종</span></div>
-                            <div>
-                                <h3 class="report-list-title">믹스견 실종 (1개월, 암컷 2마리)</h3>
-                                <p class="report-list-desc">건강한 믹스견 두 마리 찾아요. 사례합니다...</p>
-                            </div>
-                            <div class="report-list-meta">이현우</div>
-                            <div class="report-list-meta">2024.03.14</div>
-                        </div>
-        
-                        <div class="report-list-row">
-                            <div class="report-list-meta">1244</div>
-                            <div><span class="badge badge-secondary">목격</span></div>
-                            <div>
-                                <h3 class="report-list-title">토끼 가족을 찾아요 (네덜란드드워프)</h3>
-                                <p class="report-list-desc">길가다가 토끼를 발견했습니다...</p>
-                            </div>
-                            <div class="report-list-meta">정수현</div>
-                            <div class="report-list-meta">2024.03.14</div>
-                        </div>
-        
-                        <div class="report-list-row">
-                            <div class="report-list-meta">1243</div>
-                            <div><span class="badge badge-primary">실종</span></div>
-                            <div>
-                                <h3 class="report-list-title">시바견 찾아요 (3개월, 수컷)</h3>
-                                <p class="report-list-desc">우리 시바견 찾아요. 혈통서 있음...</p>
-                            </div>
-                            <div class="report-list-meta">최영호</div>
-                            <div class="report-list-meta">2024.03.13</div>
-                        </div>
-                    </div>
-                </div>
+                        <th:block th:if="${#lists.isEmpty(reportList)}">
+                            <div>게시글이 존재하지 않습니다.</div>
+                        </th:block>
 
-                <div class="pagination">
-                    <button class="page-btn"><i class="fa-solid fa-chevron-left"></i></button>
-                    <button class="page-btn active">1</button>
-                    <button class="page-btn">2</button>
-                    <button class="page-btn">3</button>
-                    <button class="page-btn">4</button>
-                    <button class="page-btn">5</button>
-                    <button class="page-btn"><i class="fa-solid fa-chevron-right"></i></button>
+                        <th:block th:unless="${#lists.isEmpty(reportList)}">
+                            <div th:each="report, iter : ${reportList}" th:object="${report}" class="report-list-row">
+                                <div th:text="${pagination.listCount - ((pagination.currentPage - 1) * pagination.limit) - iter.index}" class="report-list-meta">1</div>
+                                <div>
+                                    <div>
+                                        <div th:switch="*{category}">
+                                            <span th:case="'분양'" class="badge badge-secondary">분양</span>
+                                            <span th:case="'입양'" class="badge badge-primary">입양</span>
+                                            <span th:case="'실종'" class="badge badge-primary">실종</span>
+                                            <span th:case="'목격'" class="badge badge-secondary">목격</span>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                                <div>   
+                                    <h3 th:text="*{postTitle}"
+                                        class="report-list-title"
+                                        th:onclick="|location.href='@{${category == '분양' || category == '입양'
+                                            ? '/adoption/detail'
+                                            : '/lostandfound/detail'}(postNo=*{postNo})}'|">
+                                    </h3>
+                                    <p th:text="*{content}" class="report-list-desc character-limit" data-limit="30">내용</p>
+                                </div>
+                                <div th:text="*{reporterName}" class="report-list-meta">신고자</div>
+                                <div th:text="*{reportReason}" class="report-list-meta">신고사유</div>
+                                <div th:text="*{reportDate}" class="report-list-meta">2024.03.15</div>
+                            </div>
+                        </th:block>
+
+                        <div class="pagination" th:object="${pagination}">
+                            <button class="page-btn" th:onclick="|location.href='@{/myPage/report(cp=*{prevPage})}'|">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </button>
+                            <th:block th:each="i : ${#numbers.sequence(pagination.startPage, pagination.endPage)}">
+                                <button th:if="${i} == *{currentPage}" class="page-btn active" th:text="${i}">1</button>
+                                <button th:unless="${i} == *{currentPage}" th:onclick="|location.href='@{/myPage/report(cp=${i})}'|" th:text="${i}" class="page-btn">2</button>
+                            </th:block>
+                            <th:block th:unless="*{startPage lt endPage}">
+                                <a class="current">1</a>
+                            </th:block>
+                            <button class="page-btn" th:onclick="|location.href='@{/myPage/report(cp=*{nextPage})}'|">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </button>
+                        </div>
+                        
+                    </div>
                 </div>
             </section>
         </div>
