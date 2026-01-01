@@ -1,14 +1,20 @@
 package com.stale.mate.myPage.model.service;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+import com.stale.mate.board.model.dto.Pagination;
 import com.stale.mate.member.model.dto.Member;
+import com.stale.mate.myPage.model.dto.Report;
 import com.stale.mate.myPage.model.mapper.MyPageMapper;
 
 @Service
@@ -87,5 +93,26 @@ public class MyPageServiceImpl implements MyPageService{
 	@Override
 	public Member setLoginMemberInfo(Member loginMember) {
 		return mapper.getLoginMemberInfo(loginMember.getMemberId());
+	}
+
+	/** 작성자 : 유건우
+	 * 작성일자 : 2025-12-22
+	 * 마이페이지 - 신고 데이터 가져오기
+	 */
+	@Override
+	public Map<String, Object> selectReportList(int cp) {
+		int listCount = mapper.getReportCount();
+		Pagination pagination = new Pagination(cp, listCount);
+		int limit = pagination.getLimit();
+		
+		int offset = (cp - 1) * limit;
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		List<Report> reportList = mapper.selectReportList(rowBounds);
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("pagination", pagination);
+		map.put("reportList", reportList);
+		
+		return map;
 	}
 }

@@ -39,4 +39,10 @@ public interface MyPageService {
 	 */
     Member setLoginMemberInfo(Member loginMember);
 
+	/** 작성자 : 유건우
+	 * 작성일자 : 2025-12-22
+	 * 마이페이지 - 신고 데이터 가져오기
+	 */
+    Map<String, Object> selectReportList(int cp);
+
 }

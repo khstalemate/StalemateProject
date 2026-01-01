@@ -4,6 +4,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -185,7 +186,19 @@ public class MyPageController {
 	 * 마이페이지 - 신고페이지 이동
 	 */
 	@GetMapping("report")
-	public String myPageReport(){
+	public String myPageReport(@SessionAttribute("loginMember") Member loginMember, RedirectAttributes ra, 
+								@RequestParam(value = "cp", required = false, defaultValue = "1") int cp, Model model){
+		if(loginMember.getAuthority() == 1) {
+			log.info("일반 사용자의 비정상적 URL 접근 시도 : " + loginMember.getMemberId() + " - " + loginMember.getMemberName());	
+			ra.addFlashAttribute("message", "비정상적인 접근이 관측되었습니다.\n 관리자만이 신고 기능을 이용할 수 있습니다.");
+			return "redirect:/";
+		}
+
+		Map<String, Object> map = null;
+		map = service.selectReportList(cp);
+		model.addAttribute("pagination", map.get("pagination"));
+		model.addAttribute("reportList", map.get("reportList"));
+
 		return "myPage/mypage_report";
 	}
 

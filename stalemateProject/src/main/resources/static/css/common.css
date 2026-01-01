@@ -236,9 +236,9 @@ input.form-control { width: 270px; }
 
 /* 마이페이지 신고리스트  */
 .report-list-panel { background: #fff; border: 1px solid var(--border); border-radius: 14px; overflow: hidden; }
-.report-list-head { padding: 14px 16px; border-bottom: 1px solid var(--border); display: grid; grid-template-columns: 70px 70px 1.7fr 0.5fr 100px; gap: 10px; font-weight: 700; font-size: 13px; color: var(--muted); }
-.report-list-row { padding: 16px; display: grid; grid-template-columns: 65px 70px 1.7fr 0.5fr 100px; gap: 10px; align-items: flex-start; border-bottom: 1px solid var(--border); }
+.report-list-head { padding: 14px 16px; border-bottom: 1px solid var(--border); display: grid; grid-template-columns: 70px 70px 215px 70px 200px 100px; gap: 10px; font-weight: 700; font-size: 13px; color: var(--muted); }
+.report-list-row { padding: 16px; display: grid; grid-template-columns: 67px 70px 215px 70px 200px 100px; gap: 10px; align-items: flex-start; border-bottom: 1px solid var(--border); }
 .report-list-row:last-child { border-bottom: none; }
-.report-list-title { margin: 0 0 4px; font-weight: 700; color: var(--text); }
+.report-list-title { margin: 0 0 4px; font-weight: 700; color: var(--text); cursor: pointer;}
 .report-list-desc { margin: 0; color: var(--muted); font-size: 13px; }
 .report-list-meta { font-size: 13px; color: var(--muted); }
