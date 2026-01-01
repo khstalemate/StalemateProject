@@ -102,7 +102,7 @@
                             <div class="section-card user-stats-card">
                                 <div class="user-stats-header">
                                     <span class="muted user-stats-label">내 게시글</span>
-                                    <span class="stat-value user-stats-value">12</span>
+                                    <span id="myPostCount" class="stat-value user-stats-value"></span>
                                 </div>
                             </div>
                         </div>
@@ -181,6 +181,7 @@
 
         <th:block th:replace="~{common/footer}"></th:block>
         <script src="js/main.js"></script>
+        <script src="js/member/mypage.js"></script>
         <script th:if="${message}" th:inline="javascript">
             alert(/*[[${message}]]*/"");
         </script>

@@ -38,5 +38,4 @@ public interface MyPageMapper {
 	 * 마이페이지 - 회원정보 수정 후, session 재설정
 	 */
     Member getLoginMemberInfo(String memberId);
-	
 }
