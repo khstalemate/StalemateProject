@@ -4,8 +4,6 @@
     마이페이지 로드 시, 경로 및 기능에 따른 CSS, js 컨트롤
 */
 
-//내 게시글 개수 조회
-loadMyPostCount();
 
 //사이드바 CSS 수정
 window.onload = function() {
@@ -214,17 +212,3 @@ function memberexit() {
     }
 }
 
-// 내 게시글 개수 불러오기
-function loadMyPostCount() {
-    fetch("/member/myPostCount")
-        .then(resp => {
-            if(resp.ok) return resp.text();
-            throw new Error("요청 실패");
-        })
-        .then(count => {
-            console.log("가져온 갯수 : " + count);
-            const display = document.getElementById("myPostCount");
-            if (display) display.innerText = count;
-        })
-
-}
