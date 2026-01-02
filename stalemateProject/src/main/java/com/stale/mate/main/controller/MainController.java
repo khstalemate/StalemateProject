@@ -28,6 +28,7 @@ public class MainController {
 	  
 		return "redirect:/"; 
 	}
+<<<<<<< Updated upstream
 
 	/** 작성자 : 한명호
 	 * 작성일자 : 2025-12-29
@@ -67,4 +68,8 @@ public class MainController {
 	public String termsnagreement(){
 		return "common/termsnagreement";
 	}
+=======
+	
+	
+>>>>>>> Stashed changes
 }
