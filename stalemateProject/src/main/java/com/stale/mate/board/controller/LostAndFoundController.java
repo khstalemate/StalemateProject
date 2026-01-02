@@ -30,7 +30,6 @@ import jakarta.servlet.http.HttpServletResponse;
 
 @Controller
 @RequestMapping("lostandfound")
-@Slf4j
 public class LostAndFoundController {
 
     private final AdoptionServiceImpl adoptionServiceImpl;

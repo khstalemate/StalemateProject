@@ -33,17 +33,9 @@
                     </div>
                 </div>
             </div>
-<<<<<<< Updated upstream
-            <!-- 사용자가 등록한 사진 -->
-            <!-- <th:block th:if="${#lists.size(post.imageList) > 0}">
-                <th:each="i:"></th:each=>
-                <div class="detail-cover">
-                    <img  alt="">
-=======
             <th:block th:if="${imgList != null and #lists.size(imgList) > 0}">
                 <div th:each="img:${imgList}" class="detail-cover">
                     <img th:src="|${img.imgPath}${img.imgRename}|">
->>>>>>> Stashed changes
                 </div>
             </th:block> -->
 
@@ -112,8 +104,8 @@
                     <button class="btn btn-primary">삭제</button>
                 </th:block>
                 <button type="button" class="btn btn-secondary" id="goToList">목록</button>
+                <button type="button" class="btn btn-secondary" id="goToList">신고</button>
             </div>
-            
         </article>
 
         <section class="section-card section" id="comment-section" th:object="${post.replyList}">

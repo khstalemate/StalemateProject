@@ -25,7 +25,6 @@ import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Transactional(rollbackFor = Exception.class)
-@Slf4j
 @PropertySource("classpath:/config.properties")
 public class LostAndFoundServiceImpl implements LostAndFoundService {
 	
