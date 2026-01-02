@@ -38,5 +38,4 @@ public interface MyPageService {
 	 * @return 
 	 */
     Member setLoginMemberInfo(Member loginMember);
-
 }

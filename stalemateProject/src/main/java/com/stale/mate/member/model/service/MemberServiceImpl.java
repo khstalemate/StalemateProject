@@ -97,7 +97,11 @@ public class MemberServiceImpl implements MemberService{
 		return mapper.userCheck(memberId, memberPhone);
 	}*/
 
-
+	
+	@Override
+	public int selectMyPostCount(int memberNo) {
+		return mapper.selectMyPostCount(memberNo);
+	}
 
 
 
