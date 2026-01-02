@@ -329,7 +329,14 @@ const agreeTerms = document.querySelector("#agreeTerms");
 
 agreeTerms.addEventListener("change", function() {
 
-  checkObj.agreeTerms = true;
+  if(agreeTerms.checked) {
+    checkObj.agreeTerms = true;
+
+  }else {
+    checkObj.agreeTerms = false;
+
+  }
+
 });
 
 const signupForm = document.querySelector("#signup-form");

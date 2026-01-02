@@ -138,47 +138,15 @@
                             </div>
                         </a>
                         <div class="missing-body">
-                        <span class="pill pill-red">실종</span>
+                        <span class="pill" th:text="${post.category}" th:classappend="${post.category == '실종'} ? 'pill-red' : 'pill-green'"></span>
                             
                         <h4 class="missing-title">
-                            <a th:href="@{/lostandfound/detail(postNo=${post.postNo})}">
-                                갈색 믹스견 실종
-                            </a>
+                            <a th:href="@{/lostandfound/detail(postNo=${post.postNo})}" th:text="${post.postTitle}"></a>
                         </h4>
-                        <p class="missing-location">서울 강남구 역삼동</p>
-                        <p class="missing-date">2024.01.15 실종</p>
-                        </div>
-                    </article>
-
-                    <article class="missing-card">
-                        <div class="no-image-card">
-                            <i class="fa-solid fa-dog"></i>
-                        </div>
-                        <div class="missing-body">
-                        <span class="pill pill-green">목격</span>
-                        <h4 class="missing-title">흰색 고양이 목격</h4>
-                        <p class="missing-location">경기 성남시 분당구</p>
-                        <p class="missing-date">1시간 전</p>
-                        </div>
-                    </article>
-
-                    <article class="missing-card">
-                        <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/79fae936d9-1d721bc050517d5ad727.png" alt="white poodle" />
-                        <div class="missing-body">
-                        <span class="pill pill-red">실종</span>
-                        <h4 class="missing-title">흰색 푸들 실종</h4>
-                        <p class="missing-location">부산 해운대구</p>
-                        <p class="missing-date">2024.01.18 실종</p>
-                        </div>
-                    </article>
-
-                    <article class="missing-card">
-                        <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/d33f68661f-840df79051754bd311dd.png" alt="gray cat" />
-                        <div class="missing-body">
-                        <span class="pill pill-green">목격</span>
-                        <h4 class="missing-title">회색 고양이 목격</h4>
-                        <p class="missing-location">인천 남동구</p>
-                        <p class="missing-date">3시간 전</p>
+                        <p class="missing-location" th:text="${post.location}"></p>
+                        <p class="missing-date">
+                            <span th:text="${post.missingTime}"></span>
+                        </p>
                         </div>
                     </article>
                 </div>
