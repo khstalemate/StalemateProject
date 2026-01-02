@@ -133,8 +133,11 @@
                 <div class="missing-grid" th:if="${postList != null}">
                     <article class="missing-card" th:each="post : ${postList}">
                         <a th:href="@{/lostandfound/detail(postNo=${post.postNo})}">
-                            <div class="no-image-card">
-                                <i class="fa-solid fa-dog"></i>
+                            <img th:if="${post.thumbnail != null}" th:src="@{${post.thumbnail}}"
+                            alt="게시글 이미지" class="post-thumb">
+                            
+                            <div class="no-image-card" th:if="${post.thumbnail == null}">
+                                <i class="fa-solid fa-paw"></i>
                             </div>
                         </a>
                         <div class="missing-body">

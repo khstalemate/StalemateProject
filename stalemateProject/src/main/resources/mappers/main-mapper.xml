@@ -9,13 +9,15 @@
         		P.POST_NO,
         		P.POST_TITLE,
 				P.LOCATION,
-        		P.MISSING_DATE,
+				P.MISSING_DATE,
+        		P.MISSING_TIME,
         		P.CATEGORY,
         	   (
             	SELECT I.IMG_PATH
             	FROM POST_IMG I
            		WHERE I.POST_NO = P.POST_NO
-             	AND I.IMG_RENAME = 0
+             	ORDER BY I.IMG_NO ASC
+            	FETCH FIRST 1 ROWS ONLY
         	   ) AS thumbnail
     	FROM POST P
     	WHERE P.CATEGORY IN ('실종', '목격')
