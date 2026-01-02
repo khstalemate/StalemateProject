@@ -54,7 +54,7 @@
                         <div class="membership-notice">(최대 10글자, 한글, 영어 대소문자, 숫자 조합가능)</div>
                         <div class="membership-input-group">
                             <div class="input-wrap">
-                                <input type="text" class="form-control" placeholder="닉네임을 입력하세요" id="memberName" name="memberName" onkeyup="checkName()"></label>
+                                <input type="text" class="form-control" placeholder="닉네임을 입력하세요" id="memberName" name="memberName" onkeyup="checkName()" th:value="${session.loginMember != null ? session.loginMember.memberName : ''}">
                             </div>
                             <label id="nickNameMessage" class="membership-label mypage-label"></label>
                         </div>
@@ -62,7 +62,7 @@
 
                     <div class="info-item">
                         <label>전화번호</label>
-                        <input id="memberPhone" name="memberPhone" type="text" class="form-control" placeholder="010-0000-0000" onkeyup="checkPhoneNumber()">
+                        <input id="memberPhone" name="memberPhone" type="text" class="form-control" th:value="${session.loginMember != null ? session.loginMember.memberPhone : ''}" placeholder="010-0000-0000" onkeyup="checkPhoneNumber()">
                     </div>
                     <div class="info-edit">
                         <label id="memberPhoneCheck" class="membership-label"></label>
