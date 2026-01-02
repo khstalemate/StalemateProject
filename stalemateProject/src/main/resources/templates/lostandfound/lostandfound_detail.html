@@ -25,7 +25,7 @@
                     <h1 class="title-lg detail-title-spacing" th:text="*{postTitle}">제목</h1>
                     <div class="detail-meta detail-meta-spacing">
                         <span class="profile-info-small">
-                            <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-2.jpg" alt="Author" class="profile-avatar">
+                            <img th:src="*{profileImg} ?: '/images/logo.jpg'" alt="Author" class="profile-avatar"> 
                             <strong th:text="*{memberName}">작성자</strong>
                         </span>
                         <span class="detail-meta-item" th:text="*{postDate}"><i class="fa-solid fa-calendar"></i>작성일</span>
@@ -33,13 +33,11 @@
                     </div>
                 </div>
             </div>
-            <!-- 사용자가 등록한 사진 -->
-            <!-- <th:block th:if="${#lists.size(post.imageList) > 0}">
-                <th:each="i:"></th:each=>
-                <div class="detail-cover">
-                    <img  alt="">
+            <th:block th:if="${imgList != null and #lists.size(imgList) > 0}">
+                <div th:each="img:${imgList}" class="detail-cover">
+                    <img th:src="|${img.imgPath}${img.imgRename}|">
                 </div>
-            </th:block> -->
+            </th:block> 
 
             <div class="section" id="post-info">
                 <div class="info-grid">
@@ -92,34 +90,52 @@
             </section>
 
             <div class="section action-buttons">
-                <button class="btn btn-primary">수정</button>
-                <button class="btn btn-primary">삭제</button>
+                <th:block th:if="${session.loginMember != null and post.memberNo == session.loginMember.memberNo}">
+                    <form th:action="@{/lostandfound/updateStatus}" method="post">
+                        <input type="hidden" name="postNo" th:value="${post.postNo}">
+                        <select name="status" style="display: none;" id="statusSelect" onchange="this.form.submit()">
+                            <option th:value="'NOT_START'" th:selected="${post.status == 'NOT_START'}">미해결</option>
+                            <option th:value="'IN_PROGRESS'" th:selected="${post.status == 'IN_PROGRESS'}">진행중</option>
+                            <option th:value="'COMPLETE'" th:selected="${post.status == 'COMPLETE'}">완료</option>
+                        </select>
+                        <button type = "button" class="btn btn-primary" id="statusChangeBtn">상태 변경</button>
+                    </form>
+                    <button class="btn btn-primary">수정</button>
+                    <button class="btn btn-primary">삭제</button>
+                </th:block>
                 <button type="button" class="btn btn-secondary" id="goToList">목록</button>
+                <button type="button" class="btn btn-secondary" id="goToList">신고</button>
             </div>
         </article>
 
         <section class="section-card section" id="comment-section">
-            <h3 class="title-lg comment-title">댓글 <span class="link-primary">3</span></h3>
+            <h3 class="title-lg comment-title">
+                댓글 <span class="link-primary" th:text="${post.replyList.size()}">0</span>
+            </h3>
 
             <div class="section">
-                <textarea class="form-control comment-textarea" rows="3" placeholder="응원의 댓글을 남겨주세요..."></textarea>
+                <textarea class="form-control comment-textarea" rows="3" placeholder="응원의 댓글을 남겨주세요..." id="replyContent"></textarea>
                 <div class="comment-actions">
-                    <button class="btn btn-primary">댓글 작성</button>
+                    <button id="insertReplyBtn" class="btn btn-primary">댓글 작성</button>
                 </div>
             </div>
 
-            <div class="section comment-list">
+            <div class="section comment-list" th:each="reply : ${post.replyList}">
                 <div class="comment-item">
-                    <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-6.jpg" alt="Commenter" class="profile-avatar-large">
+                    <button id="updateReplyBtn" class="btn btn-primary">수정</button>
+                    <button id="deleteReplyBtn" class="btn btn-primary">삭제</button>
+                    <!-- <img th:src="${reply.profileImg} ?: @{/images/logo.jpg}" alt="Commenter" class="profile-avatar-large">
+ -->
+                    <img src="${reply.profileImg} ?: @{/images/logo.jpg}" alt="Commenter" class="profile-avatar-large">
                     <div>
                         <div class="detail-meta comment-meta">
-                            <strong>이수진</strong>
-                            <span>2시간 전</span>
+                            <strong th:text="${reply.memberName}">이름</strong>
+                            <span th:text="${reply.replyTime}">시간</span>
                         </div>
-                        <p class="comment-text">서울숲 자주 가는데 주의깊게 살펴보겠습니다. 꼭 찾으시길 바랍니다!</p>
+                        <p class="comment-text" th:text="${reply.replyContent}">내용</p>
                     </div>
                 </div>
-                </div>
+            </div>
         </section>
     </main>
 

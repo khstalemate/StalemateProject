@@ -1,5 +1,7 @@
 package com.stale.mate.board.model.dto;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -31,6 +33,10 @@ public class Post {
 	private int memberNo;
 	private String memberName;
 	private int replyCount;
+	private String profileImg;
+	// 사용자가 업로드한 이미지 리스트
+	private List<PostImg> imgList;
+	private List<Reply> replyList;
 	
 	public String getSpeciesText() {
         if (species == null) return "알 수 없음";
