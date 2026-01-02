@@ -1,12 +1,20 @@
 package com.stale.mate.main.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.stale.mate.main.service.MainService;
+
+import lombok.RequiredArgsConstructor;
+
 @Controller
+@RequiredArgsConstructor
 public class MainController {
+	
+	private final MainService service;
 
 	/** 작성자 : 유건우
 	 * 작성일자 : 2025-12-22
@@ -14,7 +22,9 @@ public class MainController {
 	 * @return
 	 */
 	@RequestMapping("/")
-	public String mainPage() {
+	public String mainPage(Model model) {
+		model.addAttribute("postList", service.selectLostandfoundList());
+		
 		return "common/main";
 	}
 	

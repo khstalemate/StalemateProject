@@ -130,8 +130,8 @@
                     </div>
                 </div>
 
-                <div class="missing-grid">
-                    <article class="missing-card">
+                <div class="missing-grid" th:if="${postList != null}">
+                    <article class="missing-card" th:each="post : ${postList}">
                         <a th:href="@{/lostandfound/detail(postNo=${post.postNo})}">
                             <div class="no-image-card">
                                 <i class="fa-solid fa-dog"></i>
@@ -139,7 +139,7 @@
                         </a>
                         <div class="missing-body">
                         <span class="pill pill-red">실종</span>
-
+                            
                         <h4 class="missing-title">
                             <a th:href="@{/lostandfound/detail(postNo=${post.postNo})}">
                                 갈색 믹스견 실종
