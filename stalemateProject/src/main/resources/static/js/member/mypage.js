@@ -16,6 +16,8 @@ window.onload = function() {
     else if(path==("/myPage/edit")) {
         sidebar[1].classList.add("active");
         pageImageLoad();
+        checkName();
+        checkPhoneNumber();
     }
     else if(path==("/myPage/changePW")) {
         sidebar[2].classList.add("active");
