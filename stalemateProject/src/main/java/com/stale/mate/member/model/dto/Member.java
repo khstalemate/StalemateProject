@@ -19,7 +19,5 @@ public class Member {
 	private String enrollDate;
 	private String updateDate;
 	private int authority;
-	private String profileImg;
-	
+	private String profileImg;	
 }
-	

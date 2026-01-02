@@ -25,7 +25,6 @@ import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Transactional(rollbackFor = Exception.class)
-@Slf4j
 @PropertySource("classpath:/config.properties")
 public class LostAndFoundServiceImpl implements LostAndFoundService {
 	
@@ -173,5 +172,35 @@ public class LostAndFoundServiceImpl implements LostAndFoundService {
 		}
 		
 		return postNo;
+	}
+
+	/**
+	 * 작성자 : 최보윤
+	 * 작성일자 : 2025-01-01
+	 * 상태값 변경하기
+	 */
+	@Override
+	public int updateStatus(int postNo, String status) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("postNo", postNo);
+		map.put("status", status);
+		
+		return mapper.updateStatus(map);
+	}
+
+	/**
+	 * 작성자 : 최보윤
+	 * 작성일자 : 2026-01-02
+	 * 조회수 증가하기
+	 */
+	@Override
+	public int updateViews(int postNo) {
+		int result = mapper.updateViews(postNo);
+		
+		if(result > 0) {
+			return mapper.selectViews(postNo);
+		}
+		
+		return -1;
 	}
 }

@@ -70,4 +70,18 @@ public interface LostAndFoundService {
 	 * @throws IllegalStateException 
 	 */
 	int insertPost(Post inputPost, List<MultipartFile> images) throws IllegalStateException, IOException;
+
+	/**
+	 * 작성자 : 최보윤
+	 * 작성일자 : 2026-01-01
+	 * 상태값 변경하기
+	 */
+	int updateStatus(int postNo, String status);
+
+	/**
+	 * 작성자 : 최보윤
+	 * 작성일자 : 2026-01-02
+	 * 조회수 증가하기
+	 */
+	int updateViews(int postNo);
 }
