@@ -102,7 +102,7 @@
                             <div class="section-card user-stats-card">
                                 <div class="user-stats-header">
                                     <span class="muted user-stats-label">내 게시글</span>
-                                    <span class="stat-value user-stats-value">12</span>
+                                    <span id="myPostCount" class="stat-value user-stats-value"></span>
                                 </div>
                             </div>
                         </div>
@@ -132,12 +132,19 @@
 
                 <div class="missing-grid">
                     <article class="missing-card">
-                        <div class="no-image-card">
-                            <i class="fa-solid fa-dog"></i>
-                        </div>
+                        <a th:href="@{/lostandfound/detail(postNo=${post.postNo})}">
+                            <div class="no-image-card">
+                                <i class="fa-solid fa-dog"></i>
+                            </div>
+                        </a>
                         <div class="missing-body">
                         <span class="pill pill-red">실종</span>
-                        <h4 class="missing-title">갈색 믹스견 실종</h4>
+
+                        <h4 class="missing-title">
+                            <a th:href="@{/lostandfound/detail(postNo=${post.postNo})}">
+                                갈색 믹스견 실종
+                            </a>
+                        </h4>
                         <p class="missing-location">서울 강남구 역삼동</p>
                         <p class="missing-date">2024.01.15 실종</p>
                         </div>

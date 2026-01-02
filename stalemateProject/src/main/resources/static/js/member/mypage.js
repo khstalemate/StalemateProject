@@ -4,11 +4,12 @@
     마이페이지 로드 시, 경로 및 기능에 따른 CSS, js 컨트롤
 */
 
+
 //사이드바 CSS 수정
 window.onload = function() {
     let path = window.location.pathname;
     let sidebar = document.querySelectorAll(".sidebar-item");
-
+    
     if(path==("/myPage/info")) {
         sidebar[0].classList.add("active");
     }
@@ -210,3 +211,4 @@ function memberexit() {
         alert("취소되었습니다.");
     }
 }
+

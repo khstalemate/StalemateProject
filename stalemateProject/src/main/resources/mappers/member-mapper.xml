@@ -54,4 +54,12 @@
 		AND MEMBER_PHONE = #{memberPhone}
 		AND MEMBER_DEL_FL = 'N'
 	</select> -->
+			
+	<select id="selectMyPostCount" resultType="int">
+	    SELECT COUNT(*)
+	    FROM POST
+	    WHERE MEMBER_NO = #{memberNo}
+	    AND POST_DELETE = 'N'
+	</select>
+
 </mapper>
