@@ -37,7 +37,7 @@
                 <div th:each="img:${imgList}" class="detail-cover">
                     <img th:src="|${img.imgPath}${img.imgRename}|">
                 </div>
-            </th:block> -->
+            </th:block> 
 
             <div class="section" id="post-info">
                 <div class="info-grid">
@@ -108,25 +108,31 @@
             </div>
         </article>
 
-        <section class="section-card section" id="comment-section" th:object="${post.replyList}">
-            <h3 class="title-lg comment-title">댓글 <span class="link-primary" th:text="${post.replyList.size()}">개수</span></h3>
+        <section class="section-card section" id="comment-section">
+            <h3 class="title-lg comment-title">
+                댓글 <span class="link-primary" th:text="${post.replyList.size()}">0</span>
+            </h3>
 
             <div class="section">
-                <textarea class="form-control comment-textarea" rows="3" placeholder="응원의 댓글을 남겨주세요..."></textarea>
+                <textarea class="form-control comment-textarea" rows="3" placeholder="응원의 댓글을 남겨주세요..." id="replyContent"></textarea>
                 <div class="comment-actions">
-                    <button class="btn btn-primary">댓글 작성</button>
+                    <button id="insertReplyBtn" class="btn btn-primary">댓글 작성</button>
                 </div>
             </div>
 
             <div class="section comment-list" th:each="reply : ${post.replyList}">
                 <div class="comment-item">
-                    <img src="${reply.profileImg} ?: '/images/logo.jpg'" alt="Commenter" class="profile-avatar-large">
+                    <button id="updateReplyBtn" class="btn btn-primary">수정</button>
+                    <button id="deleteReplyBtn" class="btn btn-primary">삭제</button>
+                    <!-- <img th:src="${reply.profileImg} ?: @{/images/logo.jpg}" alt="Commenter" class="profile-avatar-large">
+ -->
+                    <img src="${reply.profileImg} ?: @{/images/logo.jpg}" alt="Commenter" class="profile-avatar-large">
                     <div>
                         <div class="detail-meta comment-meta">
                             <strong th:text="${reply.memberName}">이름</strong>
                             <span th:text="${reply.replyTime}">시간</span>
                         </div>
-                        <p class="comment-text" th:text="${reply.content}">내용</p>
+                        <p class="comment-text" th:text="${reply.replyContent}">내용</p>
                     </div>
                 </div>
             </div>

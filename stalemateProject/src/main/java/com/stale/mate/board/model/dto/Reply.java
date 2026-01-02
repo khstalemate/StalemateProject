@@ -1,5 +1,14 @@
 package com.stale.mate.board.model.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Reply {
 	private int replyNo;
 	private String replyContent;
@@ -9,5 +18,5 @@ public class Reply {
 	private int postNo;
 	private int memberNo;
 	private String memberName;
-	private String imgPath;
+	private String profileImg;
 }
