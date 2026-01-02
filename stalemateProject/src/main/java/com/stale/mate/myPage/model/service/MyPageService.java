@@ -45,4 +45,5 @@ public interface MyPageService {
 	 */
     Map<String, Object> selectReportList(int cp);
 
+
 }

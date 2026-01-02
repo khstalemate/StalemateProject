@@ -42,6 +42,7 @@ public interface MyPageMapper {
 	 */
     Member getLoginMemberInfo(String memberId);
 
+
 	/** 작성자 : 유건우
 	 * 작성일자 : 2025-12-22
 	 * 마이페이지 - 신고 데이터 총 개수
@@ -54,4 +55,5 @@ public interface MyPageMapper {
 	 */
     List<Report> selectReportList(RowBounds rowBounds);
 	
+
 }
