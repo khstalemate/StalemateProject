@@ -90,4 +90,25 @@ public interface LostAndFoundMapper {
 	 * 삽입하고자 하는 게시글에 이미지 등록하는 SQL 
 	 */
 	int insertUploadList(List<PostImg> uploadList);
+
+	/**
+	 * 작성자 : 최보윤
+	 * 작성일자 : 2025-01-01
+	 * 게시글의 상태값을 수정하는 SQL 
+	 */
+	int updateStatus(Map<String, Object> map);
+
+	/**
+	 * 작성자 : 최보윤
+	 * 작성일자 : 2025-01-02
+	 * 게시글의 조회수를 증가하는 SQL 
+	 */
+	int updateViews(int postNo);
+
+	/**
+	 * 작성자 : 최보윤
+	 * 작성일자 : 2025-01-01
+	 * 게시글의 조회수를 조회하는 SQL 
+	 */
+	int selectViews(int postNo);
 }

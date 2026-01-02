@@ -168,8 +168,29 @@
 	<!-- 작성자 : 최보윤
 	작성일자 : 2025-12-28
 	게시글 상세 조회 -->
-	<select id="getPost">
-		SELECT POST_TITLE, CATEGORY, STATUS, VIEWS, LOCATION, DETAIL_LOCATION, SPECIES, GENDER, AGE, WEIGHT, CONTENT, MEMBER_NAME AS "memberName",
+	<resultMap id="postResultMap" type="Post">
+	    <id property="postNo" column="POST_NO"/>
+	
+	    <collection
+	        property="imgList"
+	        select="selectImgList"
+	        column="POST_NO"
+	        javaType="java.util.ArrayList"
+	        ofType="PostImg"
+	    />
+	    
+	    <collection
+	    	property="replyList"
+	    	select = "selectReplyList"
+	    	column = "POST_NO"
+	    	javaType="java.util.ArrayList"
+	    	ofType="Reply"
+	    />
+	</resultMap>
+
+	<select id="getPost" resultMap="postResultMap">
+		SELECT POST_NO, POST_TITLE, CATEGORY, STATUS, VIEWS, LOCATION, DETAIL_LOCATION, SPECIES, GENDER, AGE, WEIGHT, CONTENT,
+		MEMBER_NAME AS "memberName", PROFILE_IMG AS "profileImg", MEMBER_NO,
 		TO_CHAR(MISSING_DATE, 'YYYY"년" MM"월" DD"일"') AS MISSING_DATE,
 		TO_CHAR(MISSING_TIME, 'HH24:MI') AS MISSING_TIME,
 		TO_CHAR(POST_DATE, 'YYYY"년" MM"월" DD"일"') AS POST_DATE
@@ -179,6 +200,37 @@
 		AND MENU_NO = 2
 		AND POST_DELETE = 'N'
 	</select>
+	
+	<!-- 이미지 조회 -->	
+	<select id="selectImgList" resultType="PostImg">
+	    SELECT * FROM POST_IMG
+	    WHERE POST_NO = #{value}
+	</select>
+	
+	<!-- 댓글 조회 -->
+	<select id="selectReplyList" resultType="Reply">
+		SELECT REPLY_CONTENT, 
+		MEMBER_NAME AS "memberName", PROFILE_IMG AS "profileImg",
+		<![CDATA[
+			CASE
+			WHEN SYSDATE - CAST(REPLY_TIME AS DATE) < 1 / 24 / 60
+			THEN FLOOR((SYSDATE - CAST(REPLY_TIME AS DATE)) * 24 * 60 * 60) || '초 전'
+			
+			WHEN SYSDATE - CAST(REPLY_TIME AS DATE) < 1 / 24
+			THEN FLOOR((SYSDATE - CAST(REPLY_TIME AS DATE)) * 24 * 60) || '분 전'
+			
+			WHEN SYSDATE - CAST(REPLY_TIME AS DATE) < 1
+			THEN FLOOR((SYSDATE - CAST(REPLY_TIME AS DATE)) * 24) || '시간 전' 
+			
+			ELSE TO_CHAR(REPLY_TIME, 'YYYY.MM.DD')
+		END REPLY_TIME
+		]]>
+		FROM REPLY
+		JOIN MEMBER USING(MEMBER_NO)
+		WHERE POST_NO = #{value}
+		AND REPLY_DELETE = 'N'
+	</select>
+
 	
 	<!-- 작성자 : 최보윤
 	작성일자 : 2025-12-28
@@ -209,4 +261,32 @@
 			FROM DUAL
 		</foreach>
 	</insert>
+	
+	<!-- 작성자 : 최보윤
+	작성일자 : 2025-01-01
+	게시글 상태값 수정 -->
+	<update id="updateStatus">
+		UPDATE POST
+		SET STATUS = #{status}
+		WHERE POST_NO = #{postNo}
+		AND MENU_NO = 2
+		AND POST_DELETE = 'N'
+	</update>
+	
+	<!-- 작성자 : 최보윤
+	작성일자 : 2025-01-02
+	게시글 조회수 증가 -->
+	<update id="updateViews">
+		UPDATE POST
+		SET VIEWS = VIEWS+1
+		WHERE POST_NO = #{postNo}
+	</update>
+	
+	<!-- 작성자 : 최보윤
+	작성일자 : 2025-01-02
+	게시글 조회수 조회 -->
+	<select id="selectViews">
+		SELECT VIEWS FROM POST
+		WHERE POST_NO = #{postNo}
+	</select>
 </mapper>

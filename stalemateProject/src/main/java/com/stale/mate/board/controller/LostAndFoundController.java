@@ -1,6 +1,8 @@
 package com.stale.mate.board.controller;
 
 import java.io.IOException;
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -18,19 +20,30 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.stale.mate.board.model.dto.Post;
+import com.stale.mate.board.model.service.AdoptionServiceImpl;
 import com.stale.mate.board.model.service.LostAndFoundService;
 import com.stale.mate.member.model.dto.Member;
 
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 @Controller
 @RequestMapping("lostandfound")
 @Slf4j
 public class LostAndFoundController {
 
+    private final AdoptionServiceImpl adoptionServiceImpl;
+
+    private final AdoptionController adoptionController;
+
 	@Autowired
 	private LostAndFoundService service;
+
+    LostAndFoundController(AdoptionController adoptionController, AdoptionServiceImpl adoptionServiceImpl) {
+        this.adoptionController = adoptionController;
+        this.adoptionServiceImpl = adoptionServiceImpl;
+    }
 	
 	/**
 	 * 작성자 : 최보윤
@@ -106,19 +119,59 @@ public class LostAndFoundController {
 	 */
 	@GetMapping("detail")
 	public String getPost(@RequestParam("postNo") int postNo, @SessionAttribute(value = "loginMember", required = false) Member loginMember,
-						Model model, RedirectAttributes ra) {
+						Model model, RedirectAttributes ra,
+						HttpServletRequest req, HttpServletResponse resp) {
 		Post post = service.getPost(postNo);
 		
 		String path = null;
 		if(post == null) {
-			path = "redirect:/lostandfound/";
 			ra.addFlashAttribute("message", "해당 번호의 게시글이 존재하지 않습니다.");
+			return "redirect:/lostandfound/";
 		} else {
-			path = "lostandfound/lostandfound_detail";
+			if(loginMember == null || post.getMemberNo() != loginMember.getMemberNo()) {
+				Cookie[] cookies = req.getCookies();
+				Cookie c = null;
+				
+				for(Cookie temp : cookies) {
+					if(temp.getName().equals("viewPostNo")) {
+						c = temp;
+						break;
+					}
+				}
+				
+				int result = 0;
+				if(c == null) {
+					c = new Cookie("viewPostNo", "[" + postNo + "]");
+					result = service.updateViews(postNo);
+				} else {
+					if(c.getValue().indexOf("[" + postNo + "]") == -1) {
+						c.setValue(c.getValue() + "[" + postNo + "]");
+						result = service.updateViews(postNo);
+					}
+				}
+				
+				if(result > 0) {
+					post.setViews(result);
+					c.setPath("/");
+					LocalDateTime now = LocalDateTime.now();
+					
+					LocalDateTime nextDayMidnight = now.plusDays(1).withHour(0).withMinute(0).withSecond(0).withNano(0);
+					long secondsUntilNextDay = Duration.between(now, nextDayMidnight).getSeconds();
+					c.setMaxAge((int)secondsUntilNextDay);
+					
+					resp.addCookie(c);
+				}
+			}
+			
+			path = "detail?postNo=" + postNo;
 			model.addAttribute("post", post);
+			
+			if(!post.getImgList().isEmpty()) {
+				model.addAttribute("imgList", post.getImgList());
+			}
 		}	
 		
-		return path;
+		return "lostandfound/lostandfound_detail";
 	}
 	
 	/**
@@ -126,7 +179,7 @@ public class LostAndFoundController {
 	 * 작성일자 : 2025-12-28
 	 * '글쓰기' 버튼을 눌렀을 때 게시글 작성 페이지로 이동시키기 
 	 */
-	@GetMapping("insert")
+	@GetMapping("insert")	
 	public String showInsertPost() {
 		return "lostandfound/lostandfound_edit";
 	}
@@ -154,6 +207,30 @@ public class LostAndFoundController {
 		}
 		
 		ra.addFlashAttribute("message", message);
+		
 		return "redirect:" + path;
 	} 	
+	
+	/**
+	 * 작성자 : 최보윤
+	 * 작성일자 : 2026-01-01
+	 * 게시글의 상태값 변경
+	 */
+	@PostMapping("updateStatus")
+	public String updateStatus(@RequestParam("postNo") int postNo, @RequestParam("status") String status,
+							@SessionAttribute("loginMember") Member loginMember, RedirectAttributes ra) {
+		
+		int result = service.updateStatus(postNo, status);
+		
+		String message = null;
+		if(result > 0) {
+			message = "상태가 변경되었습니다.";
+		} else {
+			message = "상태 변경에 실패하였습니다.";
+		}
+		
+		ra.addFlashAttribute("message", message);
+		
+		return "redirect:/lostandfound/detail?postNo=" + postNo;
+	}
 }
