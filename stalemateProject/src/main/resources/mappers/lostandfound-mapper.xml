@@ -181,7 +181,6 @@
 	    
 	    <collection
 	    	property="replyList"
-	    	select = "selectReplyList"
 	    	column = "POST_NO"
 	    	javaType="java.util.ArrayList"
 	    	ofType="Reply"
@@ -253,8 +252,8 @@
 	<insert id="insertUploadList">
 		INSERT INTO POST_IMG
 		<foreach collection="list" item="img" open="(" close=")" separator=" UNION ">
-			SELECT NEXT_IMG_NO(), 
-			#{img.imgPath}, 
+			SELECT NEXT_IMG_NO() AS IMG_NO, 
+			#{img.imgPath} AS IMG_PATH,  
 			#{img.imgOriginalName}, 
 			#{img.imgRename},
 			#{img.postNo} 
