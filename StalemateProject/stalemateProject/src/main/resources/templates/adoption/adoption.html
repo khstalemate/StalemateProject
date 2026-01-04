@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>실종,목격 게시판</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/common.css">
+    <script> window.FontAwesomeConfig = { autoReplaceSvg: "nest"};</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+<body>
+    <th:block th:replace="~{common/header}"></th:block>
+
+    <main class="page">
+        <section class="section-card">
+            <div class="section-head">
+                <div>
+                    <h1 class="title-lg">분양&입양 게시판</h1>
+                    <p class="subtext">사랑스러운 반려동물과의 만남을 도와드립니다</p>
+                </div>
+                <div class="controls">
+                    <select class="input">
+                        <option>전체</option>
+                        <option>실종</option>
+                        <option>목격</option>
+                    </select>
+                    <div class="search">
+                        <i class="fa-solid fa-search"></i>
+                        <input type="text" class="input" placeholder="제목, 내용으로 검색">
+                    </div>
+                    <button class="btn btn-primary" id="insertBtn">
+                        <i class="fa-solid fa-plus"></i> 글쓰기
+                    </button>
+                </div>
+            </div>
+
+            <div class="stat-grid">
+                <div class="stat-card">
+                    <div>   
+                        <p class="stat-label">총 게시글</p>
+                        <p class="stat-value" id="allPostCount"></p>
+                    </div>
+                    <div class="stat-icon"><i class="fa-solid fa-list"></i></div>
+                </div>
+                <div class="stat-card">
+                    <div>
+                        <p class="stat-label">분양</p>
+                        <p class="stat-value stat-value-primary" id="salePostCount"></p>
+                    </div>
+                    <div class="stat-icon stat-icon-primary"><i class="fa-solid fa-search"></i></div>
+                </div>
+                <div class="stat-card">
+                    <div>
+                        <p class="stat-label">입양</p>
+                        <p class="stat-value stat-value-secondary" id="adoptionPostCount"></p>
+                    </div>
+                    <div class="stat-icon stat-icon-secondary"><i class="fa-solid fa-eye"></i></div>
+                </div>
+                <div class="stat-card">
+                    <div>
+                        <p class="stat-label">오늘 등록</p>
+                        <p class="stat-value stat-value-green" id="todayPostCount"></p>
+                    </div>
+                    <div class="stat-icon stat-icon-green"><i class="fa-solid fa-plus"></i></div>
+                </div>
+            </div>
+
+            <div class="list-panel" id="missing-board">
+                <div class="list-head">
+                    <div>번호</div>
+                    <div>구분</div>
+                    <div>제목</div>
+                    <div>작성자</div>
+                    <div>작성일</div>
+                    <div>조회</div>
+                    <div>상태</div>
+                </div>
+
+                <th:block th:if="${#lists.isEmpty(postList)}">
+                    <div>게시글이 존재하지 않습니다.</div>
+                </th:block>
+
+                <th:block th:unless="${#lists.isEmpty(postList)}">
+                    <div th:each="post, iter : ${postList}" th:object="${post}" class="list-row">
+                        <div th:text="${pagination.listCount - ((pagination.currentPage - 1) * pagination.limit) - iter.index}" class="list-meta">1</div>
+                        <div><span th:text="*{category == '분양'} ? '분양' : '입양'" class="badge"
+                                th:classappend="*{category == '입양'} ? 'badge-primary' : 'badge-secondary'">실종</span></div>
+                        <div>   
+                            <h3 th:text="*{postTitle}" class="list-title character-limit" data-limit="20">제목</h3>
+                            <p th:text="*{content}" class="list-desc character-limit" data-limit="30">내용</p>
+                        </div>
+                        <div th:text="*{memberName}" class="list-meta">작성자</div>
+                        <div th:text="*{postDate}" class="list-meta">2024.03.15</div>
+                        <div th:text="*{views}" class="list-meta">1</div>
+                        <div th:switch="*{status}">
+                            <span th:case="*{'NOT_START'}" class="badge badge-primary">대기중</span>
+                            <span th:case="*{'IN_PROGRESS'}" class="badge badge-green">진행중</span>
+                            <span th:case="*{'COMPLETE'}" class="badge badge-dark">완료</span>
+                        </div>
+                    </div>
+                </th:block>
+
+            <div class="pagination" th:object="${pagination}">
+                <button class="page-btn" th:onclick="|location.href='@{/adoption/(cp=*{prevPage})}'|">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </button>
+                <th:block th:each="i : ${#numbers.sequence(pagination.startPage, pagination.endPage)}">
+                    <button th:if="${i} == *{currentPage}" class="page-btn active" th:text="${i}">1</button>
+                    <button th:unless="${i} == *{currentPage}" th:onclick="|location.href='@{/adoption/(cp=${i})}'|" th:text="${i}" class="page-btn">2</button>
+                </th:block>
+                <th:block th:unless="*{startPage lt endPage}">
+                    <a class="current">1</a>
+                </th:block>
+                <button class="page-btn" th:onclick="|location.href='@{/adoption/(cp=*{nextPage})}'|">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <th:block th:replace="~{common/footer}"></th:block>
+
+    <script src="/js/board/adoption.js"></script>
+</body>
+</html>

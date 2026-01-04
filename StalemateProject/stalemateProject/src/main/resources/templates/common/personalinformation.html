@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>개인정보처리방침 필수 포함 내용</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* 기본 설정 */
+        :root {
+            --primary-color: #FF9F43; /* 브랜드 컬러 */
+            --text-dark: #333333;
+            --text-gray: #555555;
+            --bg-light: #f4f6f8;
+            --white: #ffffff;
+            --border-color: #e0e0e0;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .doc-container {
+            width: 100%;
+            max-width: 800px;
+            background-color: var(--white);
+            padding: 50px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        }
+
+        /* 헤더 영역 */
+        .doc-header {
+            text-align: center;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 20px;
+            margin-bottom: 40px;
+        }
+
+        .doc-header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 10px;
+        }
+
+        .doc-header p {
+            color: var(--text-gray);
+            font-size: 14px;
+        }
+
+        /* 본문 내용 (필수 항목 리스트) */
+        .policy-list {
+            display: grid;
+            gap: 20px;
+        }
+
+        .policy-item {
+            display: flex;
+            flex-direction: column;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            background-color: #fff;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .policy-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            border-color: var(--primary-color);
+        }
+
+        .item-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+        }
+
+        .item-title::before {
+            content: '';
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            background-color: var(--primary-color);
+            border-radius: 50%;
+            margin-right: 10px;
+            margin-bottom: 2px;
+        }
+
+        .item-desc {
+            font-size: 15px;
+            color: var(--text-gray);
+            padding-left: 16px; /* 불릿 포인트만큼 들여쓰기 */
+            word-break: keep-all;
+        }
+
+        .example-text {
+            display: block;
+            margin-top: 5px;
+            font-size: 13px;
+            color: #888;
+            background-color: #f9f9f9;
+            padding: 8px;
+            border-radius: 4px;
+        }
+
+        /* 하단 팁 박스 */
+        .tip-section {
+            margin-top: 40px;
+            background-color: #fff8f0; /* 아주 연한 오렌지 배경 */
+            border: 1px dashed var(--primary-color);
+            border-radius: 8px;
+            padding: 25px;
+        }
+
+        .tip-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #d35400;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .tip-list li {
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 8px;
+            list-style-type: disc;
+            margin-left: 20px;
+        }
+        
+        .link-text {
+            color: #2980b9;
+            text-decoration: underline;
+            font-weight: 500;
+        }
+
+        /* 모바일 대응 */
+        @media (max-width: 600px) {
+            .doc-container { padding: 30px 20px; }
+            .doc-header h1 { font-size: 22px; }
+            .policy-item { padding: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="doc-container">
+        <div class="doc-header">
+            <h1>개인정보처리방침 필수 포함 내용</h1>
+            <p>법적으로 반드시 포함되어야 할 항목들을 확인하세요 (간략화 버전)</p>
+        </div>
+
+        <div class="policy-list">
+            
+            <div class="policy-item">
+                <div class="item-title">개인정보의 처리 목적</div>
+                <div class="item-desc">
+                    왜 개인정보를 수집하는지 명확히 밝혀야 합니다.
+                    <span class="example-text">예: 회원 관리, 서비스 제공, 문의 응대, 마케팅 활용 등</span>
+                </div>
+            </div>
+
+            <div class="policy-item">
+                <div class="item-title">처리하는 개인정보 항목</div>
+                <div class="item-desc">
+                    수집하는 구체적인 정보의 종류를 나열해야 합니다.
+                    <span class="example-text">예: 이름, 이메일, 휴대전화번호, 주소, 접속 로그 등</span>
+                </div>
+            </div>
+
+            <div class="policy-item">
+                <div class="item-title">개인정보의 처리 및 보유 기간</div>
+                <div class="item-desc">
+                    정보를 언제까지 보관하고 이용할 것인지 명시합니다.
+                    <span class="example-text">예: 회원 탈퇴 시까지, 법령에 따른 보존 기간(5년) 등</span>
+                </div>
+            </div>
+
+            <div class="policy-item">
+                <div class="item-title">개인정보의 파기 절차 및 방법</div>
+                <div class="item-desc">
+                    보유 기간이 끝난 후 어떻게 없애는지 설명합니다.
+                    <span class="example-text">예: 전자적 파일은 영구 삭제, 종이 문서는 파쇄</span>
+                </div>
+            </div>
+
+            <div class="policy-item">
+                <div class="item-title">정보주체의 권리 및 행사 방법</div>
+                <div class="item-desc">
+                    고객(정보주체)이 자신의 정보를 어떻게 통제할 수 있는지 안내합니다.
+                    <span class="example-text">예: 정보 열람, 정정, 삭제, 처리정지 요구 방법 안내</span>
+                </div>
+            </div>
+
+            <div class="policy-item">
+                <div class="item-title">개인정보 보호책임자</div>
+                <div class="item-desc">
+                    개인정보 관리를 책임지는 사람의 연락처를 기재합니다.
+                    <span class="example-text">예: 성명(홍길동), 이메일, 전화번호 등</span>
+                </div>
+            </div>
+
+            <div class="policy-item">
+                <div class="item-title">개인정보의 제3자 제공 및 위탁 (해당 시)</div>
+                <div class="item-desc">
+                    외부 업체에 정보를 제공하거나 맡기는 경우 작성합니다.
+                    <span class="example-text">※ 해당 사항이 없으면 "제3자 제공 없음"으로 표기 가능</span>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

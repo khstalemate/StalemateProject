@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>분양,입양 게시판 - 글 작성</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/common.css">
+</head>
+<body>
+    <th:block th:replace="~{common/header}"></th:block>
+
+    <main class="page">
+        <section class="form-shell">
+            <h1 class="title-lg">분양 &amp; 입양 게시글 작성</h1>
+            <div class="upload-box upload-box-spacing">📷 사진 업로드 (클릭하여 파일 선택)</div>
+
+            <div class="form-field">
+                <label>제목</label>
+                <input type="text" class="form-control" placeholder="예: 골든 리트리버 '골디' 분양">
+            </div>
+
+            <div class="form-row">
+                <div class="form-field">
+                    <label>분양 / 입양 구분</label>
+                    <select class="form-control">
+                        <option>분양</option>
+                        <option>입양</option>
+                    </select>
+                </div>
+                <div class="form-field">
+                    <label>입양 비용</label>
+                    <input type="text" class="form-control" placeholder="예: 무료 입양">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-field">
+                    <label>동물 정보 (종)</label>
+                    <input type="text" class="form-control" placeholder="예: 골든 리트리버">
+                </div>
+                <div class="form-field">
+                    <label>성별</label>
+                    <select class="form-control">
+                        <option>수컷</option>
+                        <option>암컷</option>
+                        <option>중성화</option>
+                        <option>알 수 없음</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-field">
+                    <label>나이</label>
+                    <select class="form-control">
+                        <option>알 수 없음</option>
+                        <option>0~6개월</option>
+                        <option>6~12개월 (1년)</option>
+                        <option>12~18개월</option>
+                        <option>18~24개월 (2년)</option>
+                        <option>24~30개월</option>
+                        <option>30~36개월 (3년)</option>
+                        <option>36~42개월</option>
+                        <option>42~48개월 (4년)</option>
+                        <option>48~54개월</option>
+                        <option>54~60개월 (5년)</option>
+                        <option>60~66개월</option>
+                        <option>66~72개월 (6년)</option>
+                        <option>72~78개월</option>
+                        <option>78~84개월 (8년)</option>
+                        <option>84~90개월</option>
+                        <option>90~96개월 (9년)</option>
+                        <option>96~102개월</option>
+                        <option>102~108개월 (10년)</option>
+                        <option>108~114개월</option>
+                        <option>114~120개월 (11년)</option>
+                        <option>120~126개월</option>
+                        <option>126~132개월 (12년)</option>
+                        <option>132~138개월</option>
+                        <option>138~144개월 (14년)</option>
+                        <option>144~150개월</option>
+                        <option>150~156개월 (15년)</option>
+                    </select>
+                </div>
+                <div class="form-field">
+                    <label>체중</label>
+                    <select class="form-control">
+                        <option>알 수 없음</option>
+                        <option>0~500g</option>
+                        <option>500~1000g</option>
+                        <option>1000~1500g</option>
+                        <option>1500~2000g</option>
+                        <option>2000~2500g</option>
+                        <option>2500~3000g</option>
+                        <option>3000~3500g</option>
+                        <option>3500~4000g</option>
+                        <option>4000~4500g</option>
+                        <option>4500~5000g</option>
+                        <option>5000~5500g</option>
+                        <option>5500~6000g</option>
+                        <option>6000~6500g</option>
+                        <option>6500~7000g</option>
+                        <option>7000~7500g</option>
+                        <option>7500~8000g</option>
+                        <option>8000~8500g</option>
+                        <option>8500~9000g</option>
+                        <option>9000~9500g</option>
+                        <option>9500~10000g</option>
+                        <option>10000~10500g</option>
+                        <option>10500~11000g</option>
+                        <option>11000~11500g</option>
+                        <option>11500~12000g</option>
+                        <option>12000~12500g</option>
+                        <option>12500~13000g</option>
+                        <option>13000~13500g</option>
+                        <option>13500~14000g</option>
+                        <option>14000~14500g</option>
+                        <option>14500~15000g</option>
+                        <option>15000~15500g</option>
+                        <option>15500~16000g</option>
+                        <option>16000~16500g</option>
+                        <option>16500~17000g</option>
+                        <option>17000~17500g</option>
+                        <option>17500~18000g</option>
+                        <option>18000~18500g</option>
+                        <option>18500~19000g</option>
+                        <option>19000~19500g</option>
+                        <option>19500~20000g</option>
+                        <option>20000~20500g</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-field">
+                <label>특징</label>
+                <textarea class="form-control" rows="4" placeholder="예: 밝은 황금색 털, 왼쪽 귀에 작은 흰색 반점, 겁이 많고 사람을 잘 따름"></textarea>
+            </div>
+
+            <div class="form-actions">
+                <button class="btn btn-primary">등록</button>
+                <button class="btn btn-ghost">취소</button>
+            </div>
+        </section>
+    </main>
+
+    <th:block th:replace="~{common/footer}"></th:block>
+</body>
+</html>
+

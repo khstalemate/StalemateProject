@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>분양,입양 게시판 - 상세</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/common.css">
+    <script>window.FontAwesomeConfig = { autoReplaceSvg: "nest"};</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+<body>
+    <th:block th:replace="~{common/header}"></th:block>
+
+    <main class="page">
+        <article class="section-card">
+            <div class="section-head section-head-spacing">
+                <div>
+                    <div class="detail-meta">
+                        <span class="badge badge-secondary">입양</span>
+                        <span class="muted">분양 &amp; 입양 게시판</span>
+                    </div>
+                    <h1 class="title-lg detail-title-spacing">사랑스러운 말티즈같은 골댕이 "봄이" 입양하세요</h1>
+                    <div class="detail-meta detail-meta-spacing">
+                        <span class="profile-info-small">
+                            <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-6.jpg" alt="Author" class="profile-avatar">
+                            <strong>박지은</strong>
+                        </span>
+                        <span class="detail-meta-item"><i class="fa-solid fa-calendar"></i> 2024-12-10 10:20</span>
+                        <span class="detail-meta-item"><i class="fa-solid fa-eye"></i> 조회 256</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="detail-cover">
+                <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/bf79f81fb7-87b0aff859977c97e0ce.png" alt="">
+            </div>
+
+            <div class="section" id="post-info">
+                <div class="info-grid">
+                    <div class="info-box">
+                        <span class="info-icon"><i class="fa-solid fa-dog"></i></span>
+                        <div>
+                            <p class="muted info-label">품종 / 성별</p>
+                            <strong>골든리트리버 / 암컷</strong>
+                            <p class="muted info-desc">나이 6개월, 체중 5kg</p>
+                        </div>
+                    </div>
+                    <div class="info-box">
+                        <span class="info-icon info-icon-green"><i class="fa-solid fa-heart"></i></span>
+                        <div>
+                            <p class="muted info-label">입양 상태</p>
+                            <strong class="info-text-primary">대기중</strong>
+                        </div>
+                    </div>
+                    <div class="info-box">
+                        <span class="info-icon"><i class="fa-solid fa-won-sign"></i></span>
+                        <div>
+                            <p class="muted info-label">입양 비용</p>
+                            <strong>무료 입양</strong>
+                            <p class="muted info-desc">책임감 있는 가정 우선</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <section class="section" id="post-content">
+                <div class="post-content">
+                    <p>안녕하세요. 6개월 된 골댕이 "봄이"를 책임감 있게 키워주실 가정을 찾습니다.</p>
+                    <p>봄이는 매우 온순하고 사람을 잘 따릅니다. 아이들과도 잘 지내며, 배변 훈련도 완료되었습니다. 현재까지 모든 예방접종을 완료했으며, 건강 검진 결과도 매우 양호합니다.</p>
+                    <p><strong>봄이의 특징:</strong><br>
+                    - 활발하고 장난기 많은 성격<br>
+                    - 사람을 매우 좋아하고 애교가 많음<br>
+                    - 짖음이 적고 조용한 편<br>
+                    - 산책을 좋아하며 사회성이 좋음</p>
+                    <p><strong>입양 조건:</strong><br>
+                    - 반려동물과 함께 생활한 경험이 있으신 분<br>
+                    - 안정적인 주거 환경 (반려동물 사육 가능)<br>
+                    - 정기적인 건강 검진 및 예방접종 약속<br>
+                    - 평생 책임지고 키우실 수 있는 분</p>
+                    <p style="font-weight:700;">관심 있으신 분은 연락 주시면 상세히 안내해드리겠습니다.<br>
+                    입양 전 방문하셔서 봄이와 직접 만나보실 수 있습니다.<br>
+                    연락처: 010-5678-1234</p>
+                </div>
+            </section>
+
+            <div class="section action-buttons">
+                <button class="btn btn-primary">수정</button>
+                <button class="btn btn-primary">삭제</button>
+                <button class="btn btn-secondary">목록</button>
+            </div>
+        </article>
+
+        <section class="section-card section" id="comment-section">
+            <h3 class="title-lg comment-title">댓글 <span class="link-primary">3</span></h3>
+
+            <div class="section">
+                <textarea class="form-control comment-textarea" rows="3" placeholder="따뜻한 댓글을 남겨주세요..."></textarea>
+                <div class="comment-actions">
+                    <button class="btn btn-primary">댓글 작성</button>
+                </div>
+            </div>
+
+            <div class="section comment-list">
+                <div class="comment-item">
+                    <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-7.jpg" alt="Commenter" class="profile-avatar-large">
+                    <div>
+                        <div class="detail-meta comment-meta">
+                            <strong>최민지</strong>
+                            <span>1시간 전</span>
+                        </div>
+                        <p class="comment-text">정말 사랑스럽네요! 입양에 관심이 많습니다. 연락드려도 될까요?</p>
+                    </div>
+                </div>
+
+                <div class="comment-item">
+                    <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-3.jpg" alt="Commenter" class="profile-avatar-large">
+                    <div>
+                        <div class="detail-meta comment-meta">
+                            <strong>김지현</strong>
+                            <span>2시간 전</span>
+                        </div>
+                        <p class="comment-text">정말 귀여워요! 봄이가 애교 많아서 정말 마음에 듭니다. 입양 문의 드릴게요!</p>
+                    </div>
+                </div>
+
+                <div class="comment-item">
+                    <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-4.jpg" alt="Commenter" class="profile-avatar-large">
+                    <div>
+                        <div class="detail-meta comment-meta">
+                            <strong>박지현</strong>
+                            <span>3시간 전</span>
+                        </div>
+                        <p class="comment-text">입양에 관심이 많아요! 봄이의 특징을 잘 알려주셔서 감사합니다. 애교 많고 조용한 편이 정말 좋은 점이에요.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <th:block th:replace="~{common/footer}"></th:block>
+</body>
+</html>
+

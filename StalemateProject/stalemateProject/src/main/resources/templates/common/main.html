@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+    <html lang="ko" xmlns:th="http://www.thymeleaf.org">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>MatE</title>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+            <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+            <link rel="stylesheet" href="/css/common.css">
+            <script>window.FontAwesomeConfig = { autoReplaceSvg: "nest"};</script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        </head>
+    <body>
+        <th:block th:replace="~{common/header}"></th:block>
+
+        <main class="page">
+            <div class="layout">
+                <section id="adoption-board" class="section-card">
+                    <div class="section-head">
+                        <div class="section-title">
+                            <i class="fa-solid fa-heart" style="color:var(--primary);"></i>
+                            <span>분양&입양 게시판</span>
+                        </div>
+                    </div>
+
+                    <div class="posts">
+                        <article class="post-card">
+                            <div class="post-thumb">
+                                <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/e67b75d50f-1f86095ee2ce0d9ff111.png" alt="golden retriever" />
+                            </div>
+                            <div>
+                                <div class="meta">
+                                    <span class="pill pill-primary">분양</span>
+                                    <span>2시간 전</span>
+                                </div>
+                            <h3 class="post-title">골든 리트리버 분양합니다</h3>
+                            <p class="post-desc">건강한 골든 리트리버 강아지 분양합니다. 접종 완료, 건강검진 완료...</p>
+                                <div class="meta"><span><i class="fa-solid fa-eye"></i> 234</span><span><i class="fa-solid fa-comment"></i> 12</span><span><i class="fa-solid fa-heart"></i> 45</span></div>
+                            </div>
+                        </article>
+
+                        <article class="post-card">
+                            <div class="post-thumb">
+                                <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/eff255a17d-f595d139c828e9b26cc3.png" alt="persian cat" />
+                            </div>
+                            <div>
+                                <div class="meta">
+                                    <span class="pill pill-secondary">입양</span>
+                                    <span>5시간 전</span>
+                                </div>
+                            <h3 class="post-title">페르시안 고양이 입양 원해요</h3>
+                            <p class="post-desc">사랑으로 키울 준비가 되어있습니다. 실내에서만 키울 예정...</p>
+                                <div class="meta"><span><i class="fa-solid fa-eye"></i> 156</span><span><i class="fa-solid fa-comment"></i> 8</span><span><i class="fa-solid fa-heart"></i> 23</span></div>
+                            </div>
+                        </article>
+                    </div>
+                </section>
+            
+                <th:block th:if="${session.loginMember == null}">
+                    <aside id="login-form" class="section-card login-box">
+                        <div class="logo-badge"><i class="fa-solid fa-paw"></i></div>
+                    <h2 class="login-title">로그인</h2>
+                    <p class="login-subtitle">MatE에 오신 것을 환영합니다</p>
+
+                        <form action="/member/login" method="post" id="loginForm">
+                            <div class="field">
+                                <label>이메일</label>
+                                <div class="input-wrap">
+                                    <i class="fa-solid fa-envelope"></i>
+                                    <input type="email" name="memberId" placeholder="example@email.com">
+                                </div>
+                            </div>
+                            <div class="field login-field-spacing">
+                                <label>비밀번호</label>
+                                <div class="input-wrap">
+                                    <i class="fa-solid fa-lock"></i>
+                                    <input type="password" name="memberPw" placeholder="••••••••">
+                                </div>
+                            </div>
+                            <div class="login-actions">
+                                <label><input id="loginKeep" name="loginKeep" type="checkbox" class="checkbox-spacing">로그인 유지</label>
+                                <a href="#" class="link-primary">비밀번호 초기화</a>
+                            </div>
+                            <button type="submit" class="btn btn-primary login-btn">로그인</button>
+                            <div class="membership-footer">
+                                계정이 없으신가요? <a href="/member/signup" class="link-primary-bold">회원가입</a>
+                            </div>
+                        </form>
+                    </aside>
+                </th:block>
+
+                <th:block th:if="${session.loginMember != null}">
+                    <aside class="section-card login-box">
+                        <div class="logo-badge logo-badge-large" style="margin:0 auto 12px;"><i class="fa-solid fa-paw"></i></div>
+                        <h2 class="login-title" th:text="${session.loginMember.memberName} + 님">회원이름</h2>
+                        <p class="login-subtitle">환영합니다!</p>
+
+                        <div class="section">
+                            <div class="section-card user-stats-card">
+                                <div class="user-stats-header">
+                                    <span class="muted user-stats-label">내 게시글</span>
+                                    <span class="stat-value user-stats-value">12</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="section user-menu">
+                            <a href="#mypage" class="post-card user-card">
+                                <i class="fa-solid fa-user user-card-icon"></i>
+                                <span class="list-title user-card-title">마이페이지</span>
+                                <i class="fa-solid fa-chevron-right user-card-arrow"></i>
+                            </a>
+
+                            <form action="/member/logout">
+                                <button class="btn btn-ghost user-card-full">로그아웃</button>
+                            </form>
+                        </div>
+                    </aside>            
+                </th:block>    
+            </div>
+
+            <section id="missing-board" class="section-card section-spacing">
+                <div class="section-head">
+                    <div class="section-title">
+                        <i class="fa-solid fa-search" style="color:var(--secondary);"></i>
+                        <span>실종&목격 게시판</span>
+                    </div>
+                </div>
+
+                <div class="missing-grid">
+                    <article class="missing-card">
+                        <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/c0573afca3-177ff4b4008b40218d56.png" alt="missing dog" />
+                        <div class="missing-body">
+                        <span class="pill pill-red">실종</span>
+                        <h4 class="missing-title">갈색 믹스견 실종</h4>
+                        <p class="missing-location">서울 강남구 역삼동</p>
+                        <p class="missing-date">2024.01.15 실종</p>
+                        </div>
+                    </article>
+
+                    <article class="missing-card">
+                        <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/8adbcef306-fe271f3d2137e6b16906.png" alt="spotted cat" />
+                        <div class="missing-body">
+                        <span class="pill pill-green">목격</span>
+                        <h4 class="missing-title">흰색 고양이 목격</h4>
+                        <p class="missing-location">경기 성남시 분당구</p>
+                        <p class="missing-date">1시간 전</p>
+                        </div>
+                    </article>
+
+                    <article class="missing-card">
+                        <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/79fae936d9-1d721bc050517d5ad727.png" alt="white poodle" />
+                        <div class="missing-body">
+                        <span class="pill pill-red">실종</span>
+                        <h4 class="missing-title">흰색 푸들 실종</h4>
+                        <p class="missing-location">부산 해운대구</p>
+                        <p class="missing-date">2024.01.18 실종</p>
+                        </div>
+                    </article>
+
+                    <article class="missing-card">
+                        <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/d33f68661f-840df79051754bd311dd.png" alt="gray cat" />
+                        <div class="missing-body">
+                        <span class="pill pill-green">목격</span>
+                        <h4 class="missing-title">회색 고양이 목격</h4>
+                        <p class="missing-location">인천 남동구</p>
+                        <p class="missing-date">3시간 전</p>
+                        </div>
+                    </article>
+                </div>
+            </section>
+        </main>
+
+
+        <th:block th:replace="~{common/footer}"></th:block>
+        <script src="js/main.js"></script>
+        <script th:if="${message}" th:inline="javascript">
+            alert(/*[[${message}]]*/"");
+        </script>
+    </body>
+    
+</html>
