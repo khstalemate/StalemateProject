@@ -21,6 +21,7 @@
         	   ) AS thumbnail
     	FROM POST P
     	WHERE P.CATEGORY IN ('실종', '목격')
+    	AND P.POST_DELETE = 'N'
     	ORDER BY P.POST_NO DESC
   				)
 		WHERE ROWNUM <![CDATA[<=]]> 4
@@ -56,6 +57,7 @@
         	   ) AS thumbnail
     	FROM POST P
     	WHERE P.CATEGORY IN ('분양', '입양')
+    	AND P.POST_DELETE = 'N'
     	ORDER BY P.POST_NO DESC
   				)
 		WHERE ROWNUM <![CDATA[<=]]> 2		
