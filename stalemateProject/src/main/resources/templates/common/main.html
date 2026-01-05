@@ -40,7 +40,7 @@
                                 </div>
                             <h3 class="post-title" th:href="@{/adoption/{postNo}(postNo=${adoption.postNo})}" th:text="${adoption.postTitle}"></h3>
                             <p class="post-desc" th:text="${adoption.preview}"></p>
-                                <div class="meta"><span><i class="fa-solid fa-eye"></i><span th:text="${adoption.views}"></span></span><span><i class="fa-solid fa-comment"></i><span th:text="${adoption.replyCount}"></span></span></div>
+                                <div class="meta"><span><i class="fa-solid fa-eye"></i>&nbsp;<span th:text="${adoption.views}"></span></span><span><i class="fa-solid fa-comment"></i>&nbsp;<span th:text="${adoption.replyCount}"></span></span></div>
                             </div>
                         </article>
                     </div>

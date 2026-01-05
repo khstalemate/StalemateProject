@@ -25,6 +25,8 @@ nav a:hover { color: var(--primary); }
 .section-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
 .section-title { display: flex; align-items: center; gap: 10px; font-size: 24px; font-weight: 800; }
 .btn { border: none; cursor: pointer; padding: 10px 18px; border-radius: 999px; font-weight: 700; color: #fff; }
+.detail-btn { border: none; cursor: pointer; padding: 1px 10px; border-radius: 10px; font-weight: 700; color: #fff; height: 30px; width: 50px; margin-left: 5px; margin-top: 20px;}
+.edit-comment-btn { border: none; cursor: pointer; padding: 10px 18px; border-radius: 10px; font-weight: 700; color: #fff; margin-left: 5px; width: 70px;}
 .btn-primary { background: var(--primary); }
 .btn-secondary { background: var(--secondary); }
 .posts { display: flex; flex-direction: column; gap: 12px; }
@@ -185,10 +187,11 @@ footer { margin-top: 56px; background: #111827; color: #d1d5db; padding: 32px 0 
 .detail-meta-item { margin-top: 5px; }
 .info-label { margin: 0 0 4px; }
 .info-desc { margin: 4px 0 0; }
-.post-content { color: #374151; line-height: 1.7; font-size: 15px; }
+/* 2026-01-06 유건우 수정 - 본문내용 개행처리 */
+.post-content { color: #374151; line-height: 1.7; font-size: 15px; white-space: pre-line;}
 .action-buttons { display: flex; gap: 8px; justify-content: center; }
 .comment-title { font-size: 20px; }
-.comment-textarea { resize: none; }
+.comment-textarea { resize: none; height: 80px;}
 .comment-actions { display: flex; justify-content: flex-end; margin-top: 8px; }
 .comment-list { display: grid; gap: 14px; }
 .comment-item { display: flex; gap: 10px; }

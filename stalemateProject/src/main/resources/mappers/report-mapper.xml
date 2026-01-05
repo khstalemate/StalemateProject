@@ -20,4 +20,28 @@
             #{memberNo}
         )
     </insert>
+
+    <!-- 작성자 : 유건우
+	작성일자 : 2025-01-06
+	신고글이 있는지 확인 -->
+    <select id="checkReport">
+        SELECT COUNT(*)
+        FROM REPORT
+        WHERE POST_NO = #{postNo}
+    </select>
+
+    <!-- 작성자 : 유건우
+	작성일자 : 2025-01-06
+	글 가져와서 DTO에 세팅 하기 위한 메소드 -->
+    <select id="getPost">
+        SELECT POST_NO, POST_TITLE, CATEGORY, STATUS, VIEWS, LOCATION, DETAIL_LOCATION, SPECIES, GENDER, AGE, WEIGHT, CONTENT,
+		MEMBER_NAME AS "memberName", PROFILE_IMG AS "profileImg", MEMBER_NO,
+		TO_CHAR(MISSING_DATE, 'YYYY"년" MM"월" DD"일"') AS MISSING_DATE,
+		TO_CHAR(MISSING_TIME, 'HH24:MI') AS MISSING_TIME,
+		TO_CHAR(POST_DATE, 'YYYY"년" MM"월" DD"일"') AS POST_DATE
+		FROM POST
+		JOIN MEMBER USING(MEMBER_NO)
+		WHERE POST_NO = #{postNo}
+		AND POST_DELETE = 'N'
+    </select>
 </mapper>
