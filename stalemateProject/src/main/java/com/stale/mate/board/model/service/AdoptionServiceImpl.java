@@ -1,17 +1,24 @@
 package com.stale.mate.board.model.service;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.stale.mate.board.model.dto.Pagination;
 import com.stale.mate.board.model.dto.Post;
+import com.stale.mate.board.model.dto.PostImg;
 import com.stale.mate.board.model.mapper.AdoptionMapper;
+import com.stale.mate.common.Utility;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -22,6 +29,12 @@ public class AdoptionServiceImpl implements AdoptionService{
 	
 	@Autowired
 	private AdoptionMapper mapper;
+	
+	@Value("${board.web-path}")
+	private String webPath;
+	
+	@Value("${board.folder-path}")
+	private String folderPath;
 	
 	/**
 	 * 작성자 : 최보윤
@@ -138,5 +151,120 @@ public class AdoptionServiceImpl implements AdoptionService{
 		return -1;
 	}
 
+	/**
+	 * 작성자 : 최보윤
+	 * 작성일자 : 2026-01-05
+	 * 게시글 작성하기
+	 * @throws IOException 
+	 * @throws IllegalStateException 
+	 */
+	@Override
+	public int insertPost(Post inputPost, List<MultipartFile> images) throws IllegalStateException, IOException {
+		int result = mapper.insertPost(inputPost);
+		if(result == 0) return 0;
+		int postNo = inputPost.getPostNo();
+		
+		List<PostImg> uploadList = new ArrayList<>();
+		int order = 1;
+		
+		for(int  i = 0; i < images.size(); i++) {
+			if(!images.get(i).isEmpty()) {
+				String originalName = images.get(i).getOriginalFilename();
+				String rename = Utility.fileRename(originalName, order);
+				PostImg img = PostImg.builder().imgOriginalName(originalName).imgRename(rename).imgPath(webPath)
+						.postNo(postNo).uploadFile(images.get(i)).build();
+				uploadList.add(img);
+				order++;
+			}
+		}
+		
+		if(uploadList.isEmpty()) {
+			return postNo;
+		}
+		
+		result = mapper.insertUploadList(uploadList);
+		if(result == uploadList.size()) {
+			for(PostImg img : uploadList) {
+				img.getUploadFile().transferTo(new File(folderPath + img.getImgRename()));
+			}
+		} else {
+			throw new RuntimeException();
+		}
+		
+		return postNo;
+	}
 	
+	/**
+	 * 작성자 : 최보윤
+	 * 작성일자 : 2026-01-05
+	 * 상태값 변경하기
+	 */
+	public int updateStatus(int postNo, String status) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("postNo", postNo);
+		map.put("status", status);
+		
+		return mapper.updateStatus(map);
+	}
+
+	/**
+	 * 작성자 : 최보윤
+	 * 작성일자 : 2026-01-04
+	 * 게시글 수정
+	 * @throws IOException 
+	 * @throws IllegalStateException 
+	 */
+	@Override
+	public int updatePost(Post inputPost, List<MultipartFile> images) throws IllegalStateException, IOException {
+		int result = mapper.updatePost(inputPost);
+		
+		if(result == 0) {
+			return 0;
+		}
+		
+		List<PostImg> uploadList = new ArrayList<>();
+		int order = 1;
+		for(int i = 0; i < images.size(); i++ ) {
+			if(!images.get(i).isEmpty()) {
+				String originalName = images.get(i).getOriginalFilename();
+				String rename = Utility.fileRename(originalName, order);
+				
+				PostImg img = PostImg.builder().imgOriginalName(originalName).imgRename(rename)
+						.imgPath(webPath).postNo(inputPost.getPostNo()).uploadFile(images.get(i)).build();
+				uploadList.add(img);
+				
+				result = mapper.updatePostImg(img);
+				if(result == 0) {
+					result = mapper.insertPostImg(img);
+				}
+				
+				order++;
+			}
+			
+			if(result == 0) {
+				throw new RuntimeException();
+			}
+			
+			if(uploadList.isEmpty()) {
+				return result;
+			}
+			
+			for(PostImg img : uploadList) {
+				img.getUploadFile().transferTo(new File(folderPath + img.getImgRename()));
+			}
+		}
+		
+		return result;
+	}
+
+	/**
+	 * 작성자 : 최보윤
+	 * 작성일자 : 2026-01-05
+	 * 게시글 삭제
+	 */
+	@Override
+	public int deletePost(Map<String, Integer> map) {
+		return mapper.deletePost(map);
+	}
+
 }

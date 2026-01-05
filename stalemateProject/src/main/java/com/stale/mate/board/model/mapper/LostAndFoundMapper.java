@@ -92,14 +92,14 @@ public interface LostAndFoundMapper {
 
 	/**
 	 * 작성자 : 최보윤
-	 * 작성일자 : 2025-01-01
+	 * 작성일자 : 2026-01-01
 	 * 게시글의 상태값을 수정하는 SQL 
 	 */
 	int updateStatus(Map<String, Object> map);
 
 	/**
 	 * 작성자 : 최보윤
-	 * 작성일자 : 2025-01-02
+	 * 작성일자 : 2026-01-02
 	 * 게시글의 조회수를 증가하는 SQL 
 	 */
 	int updateViews(int postNo);

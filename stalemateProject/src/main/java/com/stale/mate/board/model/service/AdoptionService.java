@@ -1,6 +1,10 @@
 package com.stale.mate.board.model.service;
 
+import java.io.IOException;
+import java.util.List;
 import java.util.Map;
+
+import org.springframework.web.multipart.MultipartFile;
 
 import com.stale.mate.board.model.dto.Post;
 
@@ -70,5 +74,37 @@ public interface AdoptionService {
 	 * 조회수 증가하기
 	 */
 	int updateViews(int postNo);
+
+	/**
+	 * 작성자 : 최보윤
+	 * 작성일자 : 2026-01-05
+	 * 게시글을 삽입한 후 삽입된 게시글의 시퀀스 번호 가져오는 SQL 
+	 * @throws IOException 
+	 * @throws IllegalStateException 
+	 */
+	int insertPost(Post inputPost, List<MultipartFile> images) throws IllegalStateException, IOException;
+
+	/**
+	 * 작성자 : 최보윤
+	 * 작성일자 : 2026-01-05
+	 * 상태값 변경하기
+	 */
+	int updateStatus(int postNo, String status);
+
+	/**
+	 * 작성자 : 최보윤
+	 * 작성일자 : 2026-01-04
+	 * 게시글 수정
+	 * @throws IOException 
+	 * @throws IllegalStateException 
+	 */
+	int updatePost(Post inputPost, List<MultipartFile> images) throws IllegalStateException, IOException;
+
+	/**
+	 * 작성자 : 최보윤
+	 * 작성일자 : 2026-01-04
+	 * 게시글 삭제
+	 */
+	int deletePost(Map<String, Integer> map);
 
 }

@@ -3,6 +3,7 @@ package com.stale.mate.board.controller;
 import java.io.IOException;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -12,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -186,9 +188,15 @@ public class AdoptionController {
 		return "adoption/adoption_edit";
 	}
 	
+	/**
+	 * 작성자 : 최보윤
+	 * 작성일자 : 2026-01-05
+	 * 게시글 작성하기
+	 */
+	@PostMapping("insert")
 	public String insertPost(@ModelAttribute Post inputPost, @SessionAttribute("loginMember") Member loginMember,
 							@RequestParam("uploadImg") List<MultipartFile> images, RedirectAttributes ra) throws IllegalStateException, IOException{
-		inputPost.setMemberName(loginMember.getMemberNo());
+		inputPost.setMemberNo(loginMember.getMemberNo());
 		int postNo = service.insertPost(inputPost, images);
 		
 		String path = null;
@@ -199,11 +207,119 @@ public class AdoptionController {
 			path = "/adoption/" + postNo;
 		} else {
 			message = "게시글 작성에 실패하였습니다.";
-			path = "/lostandfound/insert";
+			path = "/adoption/insert";
 		}
 		
-		ra.addFlashAttribute("message", message)
+		ra.addFlashAttribute("message", message);
 		
 		return "redirect:" + path;
+	}
+	
+	/**
+	 * 작성자 : 최보윤
+	 * 작성일자 : 2026-01-05
+	 * 게시글의 상태값 변경
+	 */
+	@PostMapping("updateStatus")
+	public String updateStatus(@RequestParam("postNo") int postNo, @RequestParam("status") String status,
+							@SessionAttribute("loginMember") Member loginMember, RedirectAttributes ra) {
+		
+		int result = service.updateStatus(postNo, status);
+		
+		String message = null;
+		if(result > 0) {
+			message = "상태가 변경되었습니다.";
+		} else {
+			message = "상태 변경에 실패하였습니다.";
+		}
+		
+		ra.addFlashAttribute("message", message);
+		
+		return "redirect:/adoption/" + postNo;
+	}
+	
+	/**
+	 * 작성자 : 최보윤
+	 * 작성일자 : 2026-01-05
+	 * 게시글 수정 화면으로 전환
+	 */
+	@GetMapping("{postNo:[0-9]+}/update")
+	public String updatePost(@PathVariable("postNo") int postNo, @SessionAttribute("loginMember") Member loginMember,
+							Model model, RedirectAttributes ra) {
+		Post post = service.getPost(postNo);
+		String message = null;
+		String path = null;
+		
+		if(post == null) {
+			message = "해당 게시글이 존재하지 않습니다.";
+			path = "redirect:/adoption";
+		} else if (post.getMemberNo() != loginMember.getMemberNo()) {
+			message = "자신이 작성한 글만 수정할 수 있습니다.";
+			path = "redirect:/adoption";
+		} else {
+			path = "adoption/adoption_edit";
+			model.addAttribute("post", post);
+		}
+		
+		ra.addFlashAttribute("message", message);
+		
+		return path;
+	}
+	
+	/**
+	 * 작성자 : 최보윤
+	 * 작성일자 : 2026-01-04
+	 * 게시글 수정
+	 */
+	@PostMapping("{postNo:[0-9]+}/update")
+	public String updatePost(@PathVariable("postNo") int postNo, @ModelAttribute Post inputPost,
+						@RequestParam("uploadImg") List<MultipartFile> images, @RequestParam(value = "cp", required = false, defaultValue = "1") int cp,
+						@SessionAttribute("loginMember") Member loginMember, RedirectAttributes ra) throws Exception {
+		inputPost.setPostNo(postNo);
+		inputPost.setMemberNo(loginMember.getMemberNo());
+		int result = service.updatePost(inputPost, images);
+		
+		String message = null;
+		String path = null;
+		
+		if(result > 0) {
+			message = "게시글이 수정되었습니다.";
+			path = "/adoption/" + postNo;
+		} else {
+			message = "게시글 수정에 실패하였습니다.";
+			path = "update";
+		}
+		
+		ra.addFlashAttribute("message", message);
+		
+		return "redirect:" + path;
+	}
+	
+	/**
+	 * 작성자 : 최보윤
+	 * 작성일자 : 2026-01-04
+	 * 게시글 삭제
+	 */
+	@PostMapping("{postNo:[0-9]+}/delete")
+	public String deletePost(@PathVariable("postNo") int postNo, @RequestParam(value="cp", required = false, defaultValue = "1") int cp,
+							@SessionAttribute("loginMember") Member loginMember, RedirectAttributes ra) {
+		Map<String, Integer> map = new HashMap<>();
+		map.put("postNo", postNo);
+		map.put("memberNo", loginMember.getMemberNo());
+		
+		int result = service.deletePost(map);
+		String path = null;
+		String message = null;
+		
+		if(result > 0) {
+			message = "게시글이 삭제되었습니다.";
+			path = "/adoption/?cp=" + cp;
+		} else {
+			message = "게시글 삭제에 실패하였습니다.";
+			path = "/adoption/" + postNo;
+		}
+		
+		ra.addFlashAttribute("message", message);
+		return "redirect:"+ path;
 	}
 }

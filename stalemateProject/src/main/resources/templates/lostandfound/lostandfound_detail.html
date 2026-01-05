@@ -30,7 +30,9 @@
                             <strong th:text="*{memberName}">작성자</strong>
                         </span>
                         <span class="detail-meta-item" th:text="*{postDate}"><i class="fa-solid fa-calendar"></i>작성일</span>
-                        <span class="detail-meta-item" th:text="*{views}"><i class="fa-solid fa-eye"></i> 조회수</span>
+                        <span class="detail-meta-item" th:text="*{views}"><i class="fa-solid fa-eye"></i>
+                            조회수 : <span th:text="*{views}">0</span>
+                        </span>
                     </div>
                 </div>
             </div>
@@ -87,7 +89,7 @@
             </div>
 
             <section class="section" id="post-content">
-                <div class="post-content" th:text="*{content}">내용</div>
+                <div class="post-content" th:utext="${#strings.replace(post.content, '\n', '<br/>')}">내용</div>
             </section>
 
             <div class="section action-buttons">
@@ -130,7 +132,10 @@
                     <div>
                         <div class="detail-meta comment-meta" id="#replyNameTime">
                             <strong th:text="${reply.memberName}">이름</strong>
-                            <span th:text="${reply.replyTime}">시간</span>
+                            <span th:text="${reply.replyTime} + (${reply.replyUpdate} != null ? ' (수정됨)' : '')">
+                                시간
+                            </span>
+
                         </div>
                         <p class="comment-text" th:text="${reply.replyContent}">내용</p>
                     </div>

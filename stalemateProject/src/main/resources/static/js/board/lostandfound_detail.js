@@ -40,7 +40,7 @@ const selectReplyList = () => {
       name.innerText = reply.memberName;
 
       const time = document.createElement("span");
-      time.innerText = reply.replyTime;
+      time.innerText = reply.replyTime + (reply.replyUpdate ? " (수정됨)" : "");
 
       nameTime.append(name, time);
 
