@@ -54,8 +54,10 @@ const selectReplyList = () => {
       row.append(profileImg, commentBody);
 
       if(loginMemberNo != null && loginMemberNo == reply.memberNo) {
+        const btnBody = document.createElement("div");
         const updateBtn = document.createElement("button");
-        updateBtn.classList.add("btn" ,"btn-primary");
+        //2026-01-06 유건우 수정 : 스타일 수정
+        updateBtn.classList.add("detail-btn" ,"btn-primary");
         updateBtn.innerText = "수정";
         
         updateBtn.setAttribute("onclick", 
@@ -63,14 +65,16 @@ const selectReplyList = () => {
         );
 
         const deleteBtn = document.createElement("button");
-        deleteBtn.classList.add("btn", "btn-primary");
+        //2026-01-06 유건우 수정 : 스타일 수정
+        deleteBtn.classList.add("detail-btn", "btn-primary");
         deleteBtn.innerText = "삭제";
 
         deleteBtn.setAttribute("onclick",
           `deleteReply(${reply.replyNo})`
         );
 
-        row.append(updateBtn, deleteBtn);
+        btnBody.append(updateBtn, deleteBtn);
+        row.append(btnBody);
       }
       replyListContent.append(row);
     }
@@ -156,12 +160,12 @@ const showUpdateReply = (replyNo, btn) => {
 
   const updateBtn = document.createElement("button");
   updateBtn.innerText = "수정";
-  updateBtn.classList.add("btn", "btn-primary");
+  updateBtn.classList.add("edit-comment-btn", "btn-primary");
   updateBtn.setAttribute("onclick", `updateReply(${replyNo}, this)`);
 
   const cancelBtn = document.createElement("button");
   cancelBtn.innerText = "취소";
-  cancelBtn.classList.add("btn", "btn-secondary");
+  cancelBtn.classList.add("edit-comment-btn", "btn-secondary");
   cancelBtn.setAttribute("onclick", "updateCancel(this)");
 
   btnContainer.append(updateBtn, cancelBtn);
@@ -253,7 +257,8 @@ reportBtn.addEventListener("click", () => {
     if(result > 0) {
       alert("신고가 접수되었습니다.");
     } else {
-      alert("신고 접수에 실패하였습니다.");
+      //2026-01-06 유건우 수정 - 신고가 된 경우, 재신고 방지
+      alert("이미 신고가 접수된 게시글입니다.");
     }
   })
   .catch(err => console.log(err));

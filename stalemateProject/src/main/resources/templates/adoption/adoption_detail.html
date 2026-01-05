@@ -78,12 +78,14 @@
                 </div>
             </div>
 
+            <!-- 2026-01-06 유건우 수정 - 괸리자는 항상 버튼 보이도록 변경 -->
             <section class="section" id="post-content">
-                <div class="post-content" th:utext="${#strings.replace(post.content, '\n', '<br/>')}"></div>
+                <div class="post-content" th:text="${post.content}"></div>
             </section>
 
             <div class="section action-buttons">
-                <th:block th:if="${session.loginMember != null and post.memberNo == session.loginMember.memberNo}">
+                <!-- 2026-01-06 유건우 수정 - 괸리자는 항상 버튼 보이도록 변경 -->
+                <th:block th:if="${(session.loginMember != null and post.memberNo == session.loginMember.memberNo) or (session.loginMember.authority == 2)}">
                     <form th:action="@{/adoption/updateStatus}" method="post">
                         <input type="hidden" name="postNo" th:value="${post.postNo}">
                         <select name="status" style="display: none;" id="statusSelect" onchange="this.form.submit()">

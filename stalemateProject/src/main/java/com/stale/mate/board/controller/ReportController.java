@@ -21,6 +21,16 @@ public class ReportController {
 	public int insertReport(@RequestBody Report report, @SessionAttribute(value = "loginMember", required = false) Member loginMember) {
 		report.setMemberNo(loginMember.getMemberNo());
 
-		return service.insertReport(report);
+		//2026-01-06 유건우 수정 - 신고가 된 경우, 재신고 방지
+		int result = 0;
+		result = service.checkReport(report);
+
+		if(result == 0) {
+			return service.insertReport(report);
+		}
+		else{
+			return -1;
+		}
+		
 	}
 }

@@ -323,11 +323,14 @@
 	
 	<!-- 작성자 : 최보윤
 	작성일자 : 2025-01-04
-	게시글 삭제 -->
+	게시글 삭제
+	
+	수정자 : 유건우
+	필요없는 조건 MEMBER 제거
+	-->
 	<update id="deletePost">
 		UPDATE POST
 		SET POST_DELETE = 'Y'
 		WHERE POST_NO = #{postNo}
-		AND MEMBER_NO = #{memberNo}
 	</update>
 </mapper>
