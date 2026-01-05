@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.session.RowBounds;
 
 import com.stale.mate.board.model.dto.Post;
+import com.stale.mate.board.model.dto.PostImg;
 
 @Mapper
 public interface AdoptionMapper {
@@ -68,5 +69,55 @@ public interface AdoptionMapper {
 	 * 게시글의 조회수를 조회하는 SQL 
 	 */
 	int selectViews(int postNo);
+
+	/**
+	 * 작성자 : 최보윤
+	 * 작성일자 : 2026-01-05
+	 * 게시글을 삽입한 후 삽입된 게시글의 시퀀스 번호 가져오는 SQL 
+	 */
+	int insertPost(Post inputPost);
+
+	/**
+	 * 작성자 : 최보윤
+	 * 작성일자 : 2026-01-05
+	 * 삽입하고자 하는 게시글에 이미지 등록하는 SQL 
+	 */
+	int insertUploadList(List<PostImg> uploadList);
+
+	/**
+	 * 작성자 : 최보윤
+	 * 작성일자 : 2026-01-05
+	 * 게시글의 상태값을 수정하는 SQL 
+	 */
+	int updateStatus(Map<String, Object> map);
+
+	/**
+	 * 작성자 : 최보윤
+	 * 작성일자 : 2026-01-04
+	 * 게시글 수정(이미지 제외)하는 SQL
+	 */
+	int updatePost(Post inputPost);
+	
+	/**
+	 * 작성자 : 최보윤
+	 * 작성일자 : 2026-01-05
+	 * 게시글 이미지 수정 SQL
+	 */
+	int updatePostImg(PostImg img);
+
+	/**
+	 * 작성자 : 최보윤
+	 * 작성일자 : 2026-01-05
+	 * 게시글 이미지 삽입 SQL
+	 */
+	int insertPostImg(PostImg img);
+
+	/**
+	 * 작성자 : 최보윤
+	 * 작성일자 : 2026-01-05
+	 * 게시글 삭제
+	 */
+	int deletePost(Map<String, Integer> map);
+
 
 }

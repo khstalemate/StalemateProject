@@ -177,7 +177,7 @@ public class LostAndFoundServiceImpl implements LostAndFoundService {
 
 	/**
 	 * 작성자 : 최보윤
-	 * 작성일자 : 2025-01-01
+	 * 작성일자 : 2026-01-01
 	 * 상태값 변경하기
 	 */
 	@Override

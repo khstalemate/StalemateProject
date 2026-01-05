@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/board/adoption_detail.css">
     <script>window.FontAwesomeConfig = { autoReplaceSvg: "nest"};</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
@@ -47,8 +48,8 @@
                         <span class="info-icon"><i class="fa-solid fa-dog"></i></span>
                         <div>
                             <p class="muted info-label">품종 / 성별</p>
-                            <strong th:text="|*{species} / *{gender}|">품종 / 성별</strong>
-                            <p class="muted info-desc" th:text="|*{age}, *{weight}|">나이, 체중</p>
+                            <strong th:text="|*{speciesText} / *{genderText}|">품종 / 성별</strong>
+                            <p class="muted info-desc" th:text="|*{ageText}, *{weightText}|">나이, 체중</p>
                         </div>
                     </div>
                     <div class="info-box">
@@ -78,12 +79,12 @@
             </div>
 
             <section class="section" id="post-content">
-                <div class="post-content" th:text="*{content}"></div>
+                <div class="post-content" th:utext="${#strings.replace(post.content, '\n', '<br/>')}"></div>
             </section>
 
             <div class="section action-buttons">
                 <th:block th:if="${session.loginMember != null and post.memberNo == session.loginMember.memberNo}">
-                    <form th:action="@{/lostandfound/updateStatus}" method="post">
+                    <form th:action="@{/adoption/updateStatus}" method="post">
                         <input type="hidden" name="postNo" th:value="${post.postNo}">
                         <select name="status" style="display: none;" id="statusSelect" onchange="this.form.submit()">
                             <option th:value="'NOT_START'" th:selected="${post.status == 'NOT_START'}">미해결</option>
@@ -93,8 +94,8 @@
                         <button type = "button" class="btn btn-primary" id="statusChangeBtn">상태 변경</button>
                     </form>
                     <button class="btn btn-primary"
-                            th:onclick="|location.href='@{/lostandfound/{postNo}/update(postNo=*{postNo})}'|">수정</button>
-                    <form th:action="@{/lostandfound/{postNo}/delete(postNo=*{postNo})}" method="post">
+                            th:onclick="|location.href='@{/adoption/{postNo}/update(postNo=*{postNo})}'|">수정</button>
+                    <form th:action="@{/adoption/{postNo}/delete(postNo=*{postNo})}" method="post">
                         <button class="btn btn-primary" onclick="return confirm('게시글을 삭제하시겠습니까?');">삭제</button>
                     </form>
                 </th:block>

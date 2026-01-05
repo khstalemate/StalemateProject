@@ -183,7 +183,8 @@ public class LostAndFoundController {
 	 * '글쓰기' 버튼을 눌렀을 때 게시글 작성 페이지로 이동시키기 
 	 */
 	@GetMapping("insert")	
-	public String showInsertPost() {
+	public String showInsertPost(Model model) {
+		model.addAttribute("post", new Post());
 		return "lostandfound/lostandfound_edit";
 	}
 	
@@ -294,6 +295,11 @@ public class LostAndFoundController {
 		return "redirect:" + path;
 	}
 	
+	/**
+	 * 작성자 : 최보윤
+	 * 작성일자 : 2026-01-04
+	 * 게시글 삭제
+	 */
 	@PostMapping("{postNo:[0-9]+}/delete")
 	public String deletePost(@PathVariable("postNo") int postNo, @RequestParam(value="cp", required = false, defaultValue = "1") int cp,
 							@SessionAttribute("loginMember") Member loginMember, RedirectAttributes ra) {

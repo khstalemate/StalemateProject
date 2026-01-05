@@ -3,7 +3,7 @@ const insertBtn = document.querySelector("#insertBtn");
 
 if (insertBtn != null) {
   insertBtn.addEventListener("click", () => {
-    location.href = ``;
+    location.href = "/adoption/insert";
   });
 }
 

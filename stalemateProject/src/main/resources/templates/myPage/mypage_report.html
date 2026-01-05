@@ -51,11 +51,12 @@
                                     
                                 </div>
                                 <div>   
-                                    <h3 th:text="*{postTitle}"
-                                        class="report-list-title"
-                                        th:onclick="|location.href='@{${category == '분양' || category == '입양'
-                                            ? '/adoption/detail'
-                                            : '/lostandfound/detail'}(postNo=*{postNo})}'|">
+									<h3 th:text="*{postTitle}"
+									    class="report-list-title"
+									    th:onclick="|location.href='@{${category == '분양' or category == '입양' 
+									        ? '/adoption/{postNo}' 
+									        : '/lostandfound/{postNo}'}(postNo=*{postNo})}'|">
+
                                     </h3>
                                     <p th:text="*{content}" class="report-list-desc character-limit" data-limit="30">내용</p>
                                 </div>

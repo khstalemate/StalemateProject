@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,149 +10,198 @@
     <link rel="stylesheet" href="/css/board/lostandfound_edit.css">
 </head>
 <body>
-    <th:block th:replace="~{common/header}"></th:block>
+<th:block th:replace="~{common/header}"></th:block>
 
-    <main class="page">
-        <section class="form-shell">
-            <h1 class="title-lg"
-                th:text="${post == null} ? '실종 &amp; 목격 게시글 작성' : '실종 &amp; 목격 게시글 수정'">페이지 제목</h1>
-            <form th:action="${post == null} ? @{/lostandfound/insert} : @{/lostandfound/{postNo}/update(postNo=${post.postNo})}"
-            method="POST" enctype="multipart/form-data" id="postWriteForm">
-                <div class="upload-box upload-box-spacing">
-                    <label for="uploadImg" class="custom-file-upload">📷 사진 업로드 (클릭하여 파일 선택)</label>
-                    <input type="file" name="uploadImg" id="uploadImg" accept="image/*" multiple>
+<main class="page">
+    <section class="form-shell">
+        <h1 class="title-lg"
+            th:text="*{postNo} == 0 ? '실종 &amp; 목격 게시글 작성' : '실종 &amp; 목격 게시글 수정'"
+            th:object="${post}">
+            페이지 제목
+        </h1>
+
+        <form th:object="${post}"
+            th:action="*{postNo} == 0 ? @{/lostandfound/insert} : @{/lostandfound/{postNo}/update(postNo=*{postNo})}"
+            method="POST"
+            enctype="multipart/form-data"
+            id="postWriteForm">
+
+            <div class="upload-box upload-box-spacing">
+                <label for="uploadImg" class="custom-file-upload">
+                    📷 사진 업로드 (클릭하여 파일 선택)
+                </label>
+                <input type="file" name="uploadImg" id="uploadImg" accept="image/*" multiple>
+
+                <!-- 기존 업로드된 파일명만 텍스트로 보여주기 -->
+                <th:block th:if="*{imgList} != null and *{imgList.size()} > 0">
+                    <p class="muted">
+                        기존에 업로드된 파일:
+                        <span th:each="img, stat : *{imgList}">
+                            <span th:text="${img.imgOriginalName}">파일명</span>
+                            <span th:if="${!stat.last}">, </span>
+                        </span>
+                    </p>
+                </th:block>
+            </div>
+
+            <div class="form-field">
+                <label>제목</label>
+                <input type="text" class="form-control"
+                    th:field="*{postTitle}"
+                    placeholder="예: 골든 리트리버 '곰디' 실종">
+            </div>
+
+            <div class="form-row">
+                <div class="form-field">
+                    <label>실종 / 목격 구분</label>
+                    <select class="form-control" th:field="*{category}">
+                        <option value="실종">실종</option>
+                        <option value="목격">목격</option>
+                    </select>
                 </div>
 
                 <div class="form-field">
-                    <label>제목</label>
-                    <input type="text" class="form-control" name="postTitle" placeholder="예: 골든 리트리버 '곰디' 실종"
-                        th:value="${post!=null} ? post.postTitle : ''">
-                </div>
-
-                <div class="form-row">
-                    <div class="form-field">
-                        <label>실종 / 목격 구분</label>
-                        <select class="form-control" name="category">
-                            <option value="실종"
-                                th:selected="${post != null and post.category == '실종'}">실종</option>
-                            <option value="목격"
-                                th:selected="${post != null and post.category == '목격'}">목격</option>
-                        </select>
-                    </div>
-                    <div class="form-field">
-                        <label>실종/목격 날짜</label>
-                        <input type="date" class="form-control" name="missingDate"
-                            th:value="${post != null} ? post.missingDate : ''">
-                    </div>
-                    <div class="form-field">
-                        <label>시간</label>
-                        <input type="time" class="form-control" name="missingTime"
-                            th:value="${post != null} ? post.missingTime : ''">
-                    </div>
+                    <label>실종/목격 날짜</label>
+                    <input type="date" class="form-control" th:field="*{missingDate}">
                 </div>
 
                 <div class="form-field">
-                    <label>발생 위치
-                        &nbsp;
-                        <input type="button" onclick="sample4_execDaumPostcode()" value="주소 찾기" class="btn btn-ghost"
-                            th:value = "${post != null} ? post.location : ''"><br>
-                    </label>
-                    
-                    <input type="text" id="sample4_roadAddress" placeholder="도로명주소" class="form-control2" name="location"
-                        th:value = "${post != null} ? post.location : ''">
-                    <input type="text" id="sample4_detailAddress" placeholder="상세주소" class="form-control2" name="detailLocation"
-                        th:value = "${post != null} ? post.detailLocation : ''">
+                    <label>시간</label>
+                    <input type="time" class="form-control" th:field="*{missingTime}">
                 </div>
+            </div>
 
-                <div class="form-row">
-                    <div class="form-field">
-                        <label>동물 정보 (종)</label>
-                        <select class="form-control" name="species">
-                            <option value="dog" th:selected = "${post != null and post.species == 'dog'}">개</option>
-                            <option value="cat" th:selected = "${post != null and post.species == 'cat'}">고양이</option>
-                            <option value="etc" th:selected = "${post != null and post.species == 'etc'}">기타</option>
-                        </select>
-                    </div>
-                    <div class="form-field">
-                        <label>성별</label>
-                        <select class="form-control" name="gender">
-                            <option value="M" th:selected = "${post != null and post.gender == 'M'}">수컷</option>
-                            <option value="F" th:selected = "${post != null and post.gender == 'F'}">암컷</option>
-                            <option value="neutering" th:selected = "${post != null and post.gender == 'neutering'}">중성화</option>
-                            <option value="unknown" th:selected = "${post != null and post.gender == 'unknown'}">알 수 없음</option>
-                        </select>
-                    </div>
-                </div>
+            <div class="form-field">
+                <label>발생 위치
+                    &nbsp;
+                    <input type="button"
+                        onclick="sample4_execDaumPostcode()"
+                        value="주소 찾기"
+                        class="btn btn-ghost"><br>
+                </label>
 
-                <div class="form-row">
-                    <div class="form-field">
-                        <label>나이</label>
-                        <select class="form-control" name="age">
-                            <option value="0">알 수 없음</option>
-                            <option value="1">0~3개월</option>
-                            <option value="2">4~6개월</option>
-                            <option value="3">7~12개월(1살)</option>
-                            <option value="4">13~18개월</option>
-                            <option value="5">19~24개월(2살)</option>
-                            <option value="6">2살~3살</option>
-                            <option value="7">3살~4살</option>
-                            <option value="8">4살~5살</option>
-                            <option value="9">5살~6살</option>
-                            <option value="10">6살~7살</option>
-                            <option value="11">7살~8살</option>
-                            <option value="12">8살 이상</option>
-                        </select>
-                    </div>
-                    <div class="form-field">
-                        <label>체중</label>
-                        <select class="form-control" name="weight">
-                            <option value="0">알 수 없음</option>
-                            <option value="1">초소형(3kg 미만)</option>
-                            <option value="2">소형(3~8kg)</option>
-                            <option value="3">중형(8~15kg)</option>
-                            <option value="4">대형(25~40kg)</option>
-                            <option value="5">초대형(40kg 초과)</option>
-                        </select>
-                    </div>
-                </div>
+                <input type="text"
+                    id="sample4_roadAddress"
+                    placeholder="도로명주소"
+                    class="form-control2"
+                    th:field="*{location}">
 
+                <input type="text"
+                    id="sample4_detailAddress"
+                    placeholder="상세주소"
+                    class="form-control2"
+                    th:field="*{detailLocation}">
+            </div>
+
+            <div class="form-row">
                 <div class="form-field">
-                    <label>특징</label>
-                    <textarea class="form-control" rows="4" name="content"
-                    placeholder="예: 밝은 황금색 털, 왼쪽 귀에 작은 흰색 반점, 겁이 많고 사람을 잘 따름"></textarea>
+                    <label>동물 정보 (종)</label>
+                    <select class="form-control" th:field="*{species}">
+                        <option value="dog">개</option>
+                        <option value="cat">고양이</option>
+                        <option value="etc">기타</option>
+                    </select>
                 </div>
-
-                <div class="form-actions">
-                    <button class="btn btn-primary"
-                        th:text="${post==null} ? '등록' : '수정'">등록
-                    </button>
-                    <button type="button" class="btn btn-ghost" id="cancleBtn">취소</button>
+                <div class="form-field">
+                    <label>성별</label>
+                    <select class="form-control" th:field="*{gender}">
+                        <option value="M">수컷</option>
+                        <option value="F">암컷</option>
+                        <option value="neutering">중성화</option>
+                        <option value="unknown">알 수 없음</option>
+                    </select>
                 </div>
-            </form>
-        </section>
-    </main>
+            </div>
 
-    <th:block th:replace="~{common/footer}"></th:block>
+            <div class="form-row">
+                <div class="form-field">
+                    <label>나이</label>
+                    <select class="form-control" th:field="*{age}">
+                        <option value="0">알 수 없음</option>
+                        <option value="1">0~3개월</option>
+                        <option value="2">4~6개월</option>
+                        <option value="3">7~12개월(1살)</option>
+                        <option value="4">13~18개월</option>
+                        <option value="5">19~24개월(2살)</option>
+                        <option value="6">2살~3살</option>
+                        <option value="7">3살~4살</option>
+                        <option value="8">4살~5살</option>
+                        <option value="9">5살~6살</option>
+                        <option value="10">6살~7살</option>
+                        <option value="11">7살~8살</option>
+                        <option value="12">8살 이상</option>
+                    </select>
+                </div>
+                <div class="form-field">
+                    <label>체중</label>
+                    <select class="form-control" th:field="*{weight}">
+                        <option value="0">알 수 없음</option>
+                        <option value="1">초소형(3kg 미만)</option>
+                        <option value="2">소형(3~8kg)</option>
+                        <option value="3">중형(8~15kg)</option>
+                        <option value="4">대형(25~40kg)</option>
+                        <option value="5">초대형(40kg 초과)</option>
+                    </select>
+                </div>
+            </div>
 
-    <script src="/js/board/lostandfound_edit.js"></script>
-    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-    <script>
-        //본 예제에서는 도로명 주소 표기 방식에 대한 법령에 따라, 내려오는 데이터를 조합하여 올바른 주소를 구성하는 방법을 설명합니다.
-        function sample4_execDaumPostcode() {
-            new daum.Postcode({
-                oncomplete: function(data) {
-                    // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
-    
-                    // 도로명 주소의 노출 규칙에 따라 주소를 표시한다.
-                    // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-                    var roadAddr = data.roadAddress; // 도로명 주소 변수
-                    
-                    // 주소 정보를 해당 필드에 넣는다.
-                    document.getElementById("sample4_roadAddress").value = roadAddr;
-                }
-            }).open();
+            <div class="form-field">
+                <label>특징</label>
+                <textarea class="form-control"
+                        rows="4"
+                        th:field="*{content}"
+                        placeholder="예: 밝은 황금색 털, 왼쪽 귀에 작은 흰색 반점, 겁이 많고 사람을 잘 따름"></textarea>
+            </div>
+
+            <div class="form-actions">
+                <button class="btn btn-primary"
+                        th:text="*{postNo} == 0 ? '등록' : '수정'">
+                    등록
+                </button>
+                <button type="button" class="btn btn-ghost" id="cancleBtn">취소</button>
+            </div>
+        </form>
+    </section>
+</main>
+
+<th:block th:replace="~{common/footer}"></th:block>
+
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script>
+    // 카카오 주소 찾기
+    function sample4_execDaumPostcode() {
+        new daum.Postcode({
+            oncomplete: function(data) {
+                var roadAddr = data.roadAddress;
+                document.getElementById("sample4_roadAddress").value = roadAddr;
+            }
+        }).open();
+    }
+
+    // 파일 선택 시 라벨에 파일명 표시
+    document.addEventListener("DOMContentLoaded", function () {
+        const fileInput = document.querySelector("#uploadImg");
+        const label = document.querySelector(".custom-file-upload");
+
+        if (!fileInput || !label) return;
+
+        fileInput.addEventListener("change", function (e) {
+            const files = e.target.files;
+            if (files && files.length > 0) {
+                const names = Array.from(files).map(f => f.name);
+                label.innerText = "선택한 파일: " + names.join(", ");
+            } else {
+                label.innerText = "📷 사진 업로드 (클릭하여 파일 선택)";
+            }
+        });
+
+        const cancelBtn = document.querySelector("#cancleBtn");
+        if (cancelBtn) {
+            cancelBtn.addEventListener("click", function () {
+                location.href = "/lostandfound/";
+            });
         }
-    </script>
+    });
+</script>
 </body>
 </html>
-

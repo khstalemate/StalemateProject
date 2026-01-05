@@ -26,7 +26,7 @@ const cancleBtn = document.querySelector("#cancleBtn");
 cancleBtn.addEventListener("click", ()=>{
   if(confirm("게시글 작성을 취소하시겠습니까?")) {
     alert("게시글 작성을 취소합니다.");
-    location.href = "/lostandfound/";
+    location.href("/adoption/");
   } 
 });
 
@@ -34,10 +34,6 @@ const form = document.querySelector("#postWriteForm");
 form.addEventListener("submit", e => {
   const postTitle = document.querySelector("[name=postTitle]");
   const category = document.querySelector("[name=category]");
-  const missingDate = document.querySelector("[name=missingDate]");
-  const missingTime = document.querySelector("[name=missingTime]");
-  const location = document.querySelector("[name=location]");
-  const detailLocation = document.querySelector("[name=detailLocation]");
   const species = document.querySelector("[name=species]");
   const gender = document.querySelector("[name=gender]");
   const age = document.querySelector("[name=age]");

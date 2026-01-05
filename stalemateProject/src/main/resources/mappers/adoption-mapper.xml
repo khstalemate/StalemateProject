@@ -194,8 +194,8 @@
 	</resultMap>
 
 	<select id="getPost" resultMap="postResultMap">
-		SELECT POST_NO, POST_TITLE, CATEGORY, STATUS, VIEWS, LOCATION, DETAIL_LOCATION, SPECIES, GENDER, AGE, WEIGHT, CONTENT,
-		MEMBER_NAME AS "memberName", PROFILE_IMG AS "profileImg", MEMBER_NO,
+		SELECT POST_NO, POST_TITLE, CATEGORY, STATUS, VIEWS, SPECIES, GENDER, AGE, WEIGHT, CONTENT,
+		MEMBER_NAME AS "memberName", PROFILE_IMG AS "profileImg", MEMBER_NO, ADOPT_FEE,
 		TO_CHAR(MISSING_DATE, 'YYYY"년" MM"월" DD"일"') AS MISSING_DATE,
 		TO_CHAR(MISSING_TIME, 'HH24:MI') AS MISSING_TIME,
 		TO_CHAR(POST_DATE, 'YYYY"년" MM"월" DD"일"') AS POST_DATE
@@ -253,4 +253,85 @@
 		SELECT VIEWS FROM POST
 		WHERE POST_NO = #{postNo}
 	</select>
+	
+	<!-- 작성자 : 최보윤
+	작성일자 : 2026-01-05
+	게시글 삽입(이미지 제외) -->
+	<insert id="insertPost" parameterType="Post">
+		<selectKey order="BEFORE" resultType="_int" keyProperty="postNo">
+			SELECT SEQ_POST.NEXTVAL FROM DUAL
+		</selectKey>
+		INSERT INTO POST (POST_NO, POST_TITLE, CATEGORY, SPECIES, GENDER, AGE, WEIGHT, CONTENT, MENU_NO, MEMBER_NO, ADOPT_FEE)
+		VALUES (#{postNo}, #{postTitle}, #{category}, #{species}, #{gender}, #{age}, #{weight}, #{content}, 1, #{memberNo}, #{adoptFee})
+	</insert>
+		
+	<!-- 작성자 : 최보윤
+	작성일자 : 2026-01-05
+	게시글 삽입(이미지) -->
+	<insert id="insertUploadList">
+		INSERT INTO POST_IMG
+		<foreach collection="list" item="img" open="(" close=")" separator=" UNION ">
+			SELECT NEXT_IMG_NO() AS "IMG_NO", 
+			#{img.imgPath} AS "IMG_PATH",  
+			#{img.imgOriginalName} AS "IMG_ORIGINAL_NAME", 
+			#{img.imgRename} AS "IMG_RENAME",
+			#{img.postNo} AS "POST_NO" 
+			FROM DUAL
+		</foreach>
+	</insert>
+	
+	<!-- 작성자 : 최보윤
+	작성일자 : 2026-01-05
+	게시글 상태값 수정 -->
+	<update id="updateStatus">
+		UPDATE POST
+		SET STATUS = #{status}
+		WHERE POST_NO = #{postNo}
+		AND MENU_NO = 1
+		AND POST_DELETE = 'N'
+	</update>
+	
+	<!-- 작성자 : 최보윤
+	작성일자 : 2026-01-5
+	게시글 수정(이미지 제외) -->
+	<update id="updatePost">
+		UPDATE "POST"
+		SET POST_TITLE = #{postTitle},
+		CONTENT = #{content},
+		ADOPT_FEE=#{adoptFee},
+		SPECIES=#{species},
+		GENDER=#{gender},
+		AGE=#{age},
+		WEIGHT=#{weight}
+		WHERE POST_NO = #{postNo}
+		AND MEMBER_NO = #{memberNo}
+	</update>
+	
+	<!-- 작성자 : 최보윤
+	작성일자 : 2026-01-05
+	게시글 수정(이미지 수정) -->
+	<update id="updatePostImg">
+		UPDATE "POST_IMG"
+		SET IMG_ORIGINAL_NAME = #{imgOriginalName},
+		IMG_RENAME = #{imgRename}
+		WHERE POST_NO = #{postNo}
+	</update>
+	
+	<!-- 작성자 : 최보윤
+	작성일자 : 2025-01-05
+	게시글 수정(이미지 삭제) -->
+	<insert id="insertPostImg">
+		INSERT INTO "POST_IMG"
+		VALUES(SEQ_POST_IMG.NEXTVAL, #{imgPath}, #{imgOriginalName}, #{imgRename}, #{postNo})
+	</insert>
+	
+	<!-- 작성자 : 최보윤
+	작성일자 : 2025-01-05
+	게시글 삭제 -->
+	<update id="deletePost">
+		UPDATE POST
+		SET POST_DELETE = 'Y'
+		WHERE POST_NO = #{postNo}
+		AND MEMBER_NO = #{memberNo}
+	</update>
 </mapper>
