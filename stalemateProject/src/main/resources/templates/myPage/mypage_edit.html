@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>마이페이지 - MatE</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/common.css">
+    <script>window.FontAwesomeConfig = { autoReplaceSvg: "nest"};</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+<body>
+    <th:block th:replace="~{common/header}"></th:block>
+
+    <main class="page">
+        <div class="mypage-layout">
+            
+            <th:block th:replace="~{myPage/aside}"></th:block>
+
+            <section class="info-section">
+                <h2 class="info-title">내 정보 수정</h2>
+                
+                <form id="edit-form" action="/myPage/edit" method="post" onsubmit="return chageProfile()" enctype="multipart/form-data">
+                <div class="profile-section">
+                    <div class="profile-image">
+                        <div class="profile-image-overflow" >
+                            <img id="profilePreview"
+                                th:src="${session.loginMember != null and session.loginMember.profileImg != null}
+                                        ? @{'/myPage/profile/' + ${session.loginMember.profileImg.split('/')[3]}}
+                                        : ''" style="visibility:hidden;" alt="프로필 이미지">
+                            <span class="default-profile"
+                                th:style="${session.loginMember == null or session.loginMember.profileImg == null} ? '' : 'visibility: hidden;'">
+                                <i class="fa-solid fa-paw"></i>
+                            </span>
+                        </div>
+                        <label class="profile-edit-icon" for="imageInput">
+                            <i class="fa-solid fa-camera"></i>
+                            <input type="file" name="profileImg" id="imageInput" accept="image/*" onchange="previewImage(this)">
+                        </label>
+                        <label class="profile-delete-icon" for="profileImgDelete" style="display: none;" >
+                            <i class="fa-solid fa-x"></i>
+                            <input onclick="deleteImage()" id="profileImgDelete"style="display: none;">
+                        </label>
+                    </div>
+                </div>
+
+                <div class="info-item">
+                    <label>아이디(이메일)</label>
+                    <div class="value" th:text="${session.loginMember != null ? session.loginMember.memberId : '로그인 정보가 없어 이메일을 표시할 수 없습니다.'}"></div>
+                </div>
+                    <div class="info-item">
+                        <label>닉네임</label>
+                        <div class="membership-notice">(최대 10글자, 한글, 영어 대소문자, 숫자 조합가능)</div>
+                        <div class="membership-input-group">
+                            <div class="input-wrap">
+                                <input type="text" class="form-control" placeholder="닉네임을 입력하세요" id="memberName" name="memberName" onkeyup="checkName()" th:value="${session.loginMember != null ? session.loginMember.memberName : ''}">
+                            </div>
+                            <label id="nickNameMessage" class="membership-label mypage-label"></label>
+                        </div>
+                    </div>
+
+                    <div class="info-item">
+                        <label>전화번호</label>
+                        <input id="memberPhone" name="memberPhone" type="text" class="form-control" th:value="${session.loginMember != null ? session.loginMember.memberPhone : ''}" placeholder="010-0000-0000" onkeyup="checkPhoneNumber()">
+                    </div>
+                    <div class="info-edit">
+                        <label id="memberPhoneCheck" class="membership-label"></label>
+                    </div>
+
+                    <div class="info-item">
+                        <label>가입일자</label>
+                        <div class="value" th:text="${session.loginMember != null ? session.loginMember.enrollDate : '로그인 정보가 없어 가입일자를 표시할 수 없습니다.'}"></div>
+                    </div>
+                    <input type="hidden" name="profileImgStatus" id="profileImgStatus" value="keep" />
+                    <button class="btn btn-primary edit-btn">정보 수정하기</button>
+                </form>
+            </section>
+        </div>
+    </main>
+
+    <th:block th:replace="~{common/footer}"></th:block>
+
+    <script th:if="${message}" th:inline="javascript">
+        alert(/*[[${message}]]*/"");
+    </script>
+</body>
+</html>
+

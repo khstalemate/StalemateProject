@@ -1,0 +1,37 @@
+<header xmlns:th="http://www.thymeleaf.org" th:fragment="header">
+    <div class="header-wrap">
+        <a class="logo" href="/">
+            <div class="logo">
+                <span class="logo-badge"><i class="fa-solid fa-paw"></i></span>
+                <span class="logo-text">MatE</span>
+            </div>
+        </a>
+
+        <th:block th:if="${session.loginMember == null}">
+            <nav>
+                <a href="/adoption/"><i class="fa-solid fa-heart"></i>분양·입양</a>
+                <a href="/lostandfound/"><i class="fa-solid fa-search"></i>실종·목격</a>
+            </nav>
+        </th:block>
+
+        <th:block th:if="${session.loginMember != null}">
+            <nav>
+                <a href="/adoption/"><i class="fa-solid fa-heart"></i>분양·입양</a>
+                <a href="/lostandfound/"><i class="fa-solid fa-search"></i>실종·목격</a>
+                <a href="/myPage/info"><i class="fa-solid fa-user"></i>마이페이지</a>
+                <a href="/myPage/info">
+                    <span class="profile-info">
+                        <img th:if="${session.loginMember.profileImg != null}"
+                            th:src="@{/myPage/profile/{file}(file=${session.loginMember.profileImg.split('/')[3]})}"
+                            width="44px" height="44px"
+                            alt="프로필 이미지">
+                            <span th:if="${session.loginMember.profileImg == null}" class="logo-badge">
+                                <i class="fa-solid fa-paw"></i>
+                            </span>
+                        <span th:text="${session.loginMember.memberName}">로그인세션 관련 프론트</span>
+                    </span>
+                </a>
+            </nav>
+        </th:block>
+    </div>
+</header>

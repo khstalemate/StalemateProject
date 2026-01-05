@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.stale.mate.board.model.mapper.AdoptionMapper">
+
+	<!-- 작성자 : 최보윤
+		 수정자 : 유건우
+		작성일자 : 2025-12-23
+	 	분양, 입양 게시판의 총 게시글 개수 가져오기 -->
+	<select id="getAllPostCount">
+		SELECT COUNT(*) FROM POST
+		WHERE MENU_NO = 1
+	</select>
+	
+	<!-- 작성자 : 최보윤
+		작성일자 : 2025-12-23
+		상태가 분양인 게시글의 개수 가져오기 -->
+	<select id="getSalePostCount">
+		SELECT COUNT(*) FROM POST
+		WHERE MENU_NO = 1
+		AND CATEGORY = '분양'
+	</select>
+	
+	<!-- 작성자 : 최보윤
+		 수정자 : 유건우
+		작성일자 : 2025-12-23
+		상태가 입양인 게시글의 개수 가져오기 -->
+	<select id="getAdoptionPostCount">
+		SELECT COUNT(*) FROM POST
+		WHERE MENU_NO = 1
+		AND CATEGORY = '입양'
+	</select>
+	
+	<!-- 작성자 : 최보윤
+		 수정자 : 유건우
+		작성일자 : 2025-12-23
+		오늘 등록한 게시글의 개수 가져오기 -->
+	<select id="getTodayPostCount">
+		SELECT COUNT(*) FROM POST
+		WHERE MENU_NO = 1
+		AND TO_CHAR(POST_DATE, 'YYYYMMDD') = TO_CHAR(SYSDATE, 'YYYYMMDD')
+	</select>
+	
+	<!-- 작성자 : 최보윤
+		수정자 : 유건우
+		작성일자 : 2025-12-23
+		게시글 목록 조회하기 -->
+	<select id="selectPostList">
+		SELECT POST_NO, CATEGORY, POST_TITLE, CONTENT, MEMBER_NAME AS "memberName", VIEWS, STATUS,
+		<![CDATA[
+		CASE
+			WHEN SYSDATE - CAST(POST_DATE AS DATE) < 1 / 24 / 60
+			THEN FLOOR((SYSDATE - CAST(POST_DATE AS DATE)) * 24 * 60 * 60) || '초 전'
+			
+			WHEN SYSDATE - CAST(POST_DATE AS DATE) < 1 / 24
+			THEN FLOOR((SYSDATE - CAST(POST_DATE AS DATE)) * 24 * 60) || '분 전'
+			
+			WHEN SYSDATE - CAST(POST_DATE AS DATE) < 1
+			THEN FLOOR((SYSDATE - CAST(POST_DATE AS DATE)) * 24) || '시간 전' 
+			
+			ELSE TO_CHAR(POST_DATE, 'YYYY.MM.DD')
+		END POST_DATE
+		]]>
+		FROM POST
+		JOIN MEMBER USING (MEMBER_NO)
+		WHERE POST_DELETE = 'N'
+		AND MENU_NO = 1
+		AND CATEGORY IN ('분양', '입양')
+		ORDER BY POST_NO DESC
+	</select>
+	
+	<!-- 작성자 : 최보윤
+		작성일자 : 2026-01-05
+		검색 결과에 부합하는 게시글 개수 가져오는 SQL -->
+	<select id="getSearchCount">
+		SELECT COUNT(*)
+		FROM POST
+		JOIN MEMBER USING (MEMBER_NO)
+		WHERE POST_DELETE = 'N'
+		AND MENU_NO = 1
+		<if test="title != null and title != ''">
+			AND POST_TITLE LIKE '%'||#{title}||'%'
+		</if>
+		<if test="writer != null and writer != ''">
+			AND MEMBER_NAME LIKE '%'||#{writer}||'%'
+		</if>
+		<choose>
+			<when test='category=="adoption"'>
+				AND CATEGORY = '입양'
+			</when>
+			<when test='category=="sale"'>
+				AND CATEGORY = '분양'
+			</when>
+			<otherwise>
+				AND CATEGORY IN ('입양', '분양')
+			</otherwise>
+		</choose>
+		<if test="status != null and status != ''">
+			AND STATUS = #{status}
+		</if>
+		<if test="species != null and species != ''">
+			AND SPECIES = #{species}
+		</if>
+		<if test="gender != null and gender != ''">
+			AND GENDER = #{gender}
+		</if>
+		<if test="age != null and age != ''">
+			AND AGE = #{age}
+		</if>
+		<if test="weight != null and weight != ''">
+			AND WEIGHT = #{weight}
+		</if>
+		ORDER BY POST_NO DESC
+	</select>
+	
+	<!-- 작성자 : 최보윤
+		작성일자 : 2026-01-05
+		검색 결과에 부합하는 게시글 목록 조회하는 SQL -->
+	<select id="selectSearchList">
+		SELECT POST_NO, CATEGORY, POST_TITLE, MEMBER_NAME AS "memberName", VIEWS, STATUS, CONTENT,
+      	<![CDATA[
+		CASE
+			WHEN SYSDATE - CAST(POST_DATE AS DATE) < 1 / 24 / 60
+			THEN FLOOR((SYSDATE - CAST(POST_DATE AS DATE)) * 24 * 60 * 60) || '초 전'
+			
+			WHEN SYSDATE - CAST(POST_DATE AS DATE) < 1 / 24
+			THEN FLOOR((SYSDATE - CAST(POST_DATE AS DATE)) * 24 * 60) || '분 전'
+			
+			WHEN SYSDATE - CAST(POST_DATE AS DATE) < 1
+			THEN FLOOR((SYSDATE - CAST(POST_DATE AS DATE)) * 24) || '시간 전' 
+			
+			ELSE TO_CHAR(POST_DATE, 'YYYY.MM.DD')
+		END POST_DATE
+		]]>
+      	FROM POST
+      	JOIN MEMBER USING (MEMBER_NO)
+      	WHERE POST_DELETE = 'N'
+      	AND MENU_NO = 1
+      	<if test="title != null and title != ''">
+        	 AND POST_TITLE LIKE '%'||#{title}||'%'
+      	</if>
+      	<if test="writer != null and writer != ''">
+      	   AND MEMBER_NAME LIKE '%'||#{writer}||'%'
+      	</if>
+      	<choose>
+        	 <when test='category=="adoption"'>
+            	AND CATEGORY = '입양'
+         	</when>
+         	<when test='category=="sale"'>
+            	AND CATEGORY = '분양'
+         	</when>
+         	<otherwise>
+	            AND CATEGORY IN ('입양', '분양')
+         	</otherwise>
+      	</choose>
+      	<if test="status != null and status != ''">
+        	 AND STATUS = #{status}
+      	</if>
+      	<if test="species != null and species != ''">
+         	AND SPECIES = #{species}
+      	</if>
+      	<if test="gender != null and gender != ''">
+         	AND GENDER = #{gender}
+      	</if>
+      	<if test="age != null and age != ''">
+         	AND AGE = #{age}
+      	</if>
+      	<if test="weight != null and weight != ''">
+         	AND WEIGHT = #{weight}
+      	</if>
+      	ORDER BY POST_NO DESC
+	</select>
+	
+	<!-- 작성자 : 최보윤
+		작성일자 : 2026-01-05
+		게시글 상세 조회 SQL -->
+	<resultMap id="postResultMap" type="Post">
+	    <id property="postNo" column="POST_NO"/>
+	
+	    <collection
+	        property="imgList"
+	        select="selectImgList"
+	        column="POST_NO"
+	        javaType="java.util.ArrayList"
+	        ofType="PostImg"
+	    />
+	    
+	    <collection
+	    	property="replyList"
+	    	column = "POST_NO"
+	    	select = "selectReplyList"
+	    	javaType="java.util.ArrayList"
+	    	ofType="Reply"
+	    />
+	</resultMap>
+
+	<select id="getPost" resultMap="postResultMap">
+		SELECT POST_NO, POST_TITLE, CATEGORY, STATUS, VIEWS, LOCATION, DETAIL_LOCATION, SPECIES, GENDER, AGE, WEIGHT, CONTENT,
+		MEMBER_NAME AS "memberName", PROFILE_IMG AS "profileImg", MEMBER_NO,
+		TO_CHAR(MISSING_DATE, 'YYYY"년" MM"월" DD"일"') AS MISSING_DATE,
+		TO_CHAR(MISSING_TIME, 'HH24:MI') AS MISSING_TIME,
+		TO_CHAR(POST_DATE, 'YYYY"년" MM"월" DD"일"') AS POST_DATE
+		FROM POST
+		JOIN MEMBER USING(MEMBER_NO)
+		WHERE POST_NO = #{postNo}
+		AND MENU_NO = 1
+		AND POST_DELETE = 'N'
+	</select>
+	
+	<!-- 이미지 조회 -->	
+	<select id="selectImgList" resultType="PostImg">
+	    SELECT * FROM POST_IMG
+	    WHERE POST_NO = #{value}
+	</select>
+	
+	<!-- 댓글 조회 -->
+	<select id="selectReplyList" resultType="Reply">
+		SELECT REPLY_NO, MEMBER_NO, REPLY_CONTENT, 
+		MEMBER_NAME AS "memberName", PROFILE_IMG AS "profileImg",
+		<![CDATA[
+			CASE
+			WHEN SYSDATE - CAST(REPLY_TIME AS DATE) < 1 / 24 / 60
+			THEN FLOOR((SYSDATE - CAST(REPLY_TIME AS DATE)) * 24 * 60 * 60) || '초 전'
+			
+			WHEN SYSDATE - CAST(REPLY_TIME AS DATE) < 1 / 24
+			THEN FLOOR((SYSDATE - CAST(REPLY_TIME AS DATE)) * 24 * 60) || '분 전'
+			
+			WHEN SYSDATE - CAST(REPLY_TIME AS DATE) < 1
+			THEN FLOOR((SYSDATE - CAST(REPLY_TIME AS DATE)) * 24) || '시간 전' 
+			
+			ELSE TO_CHAR(REPLY_TIME, 'YYYY.MM.DD')
+		END REPLY_TIME
+		]]>
+		FROM REPLY
+		JOIN MEMBER USING(MEMBER_NO)
+		WHERE POST_NO = #{value}
+		AND REPLY_DELETE = 'N'
+		ORDER BY REPLY_NO
+	</select>
+	
+	<!-- 작성자 : 최보윤
+	작성일자 : 2026-01-05
+	게시글 조회수 증가 -->
+	<update id="updateViews">
+		UPDATE POST
+		SET VIEWS = VIEWS+1
+		WHERE POST_NO = #{postNo}
+	</update>
+	
+	<!-- 작성자 : 최보윤
+	작성일자 : 2026-01-05
+	게시글 조회수 조회 -->
+	<select id="selectViews">
+		SELECT VIEWS FROM POST
+		WHERE POST_NO = #{postNo}
+	</select>
+</mapper>
