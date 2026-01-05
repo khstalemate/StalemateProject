@@ -21,20 +21,113 @@
                     <p class="subtext">사랑스러운 반려동물과의 만남을 도와드립니다</p>
                 </div>
                 <div class="controls">
-                    <select class="input">
-                        <option>전체</option>
-                        <option>실종</option>
-                        <option>목격</option>
-                    </select>
                     <div class="search">
                         <i class="fa-solid fa-search"></i>
-                        <input type="text" class="input" placeholder="제목, 내용으로 검색">
+                        <input type="text" class="input" placeholder="제목, 내용으로 검색" readonly>
                     </div>
-                    <button class="btn btn-primary" id="insertBtn">
+                    <button type="button" class="btn btn-primary" id="insertBtn">
                         <i class="fa-solid fa-plus"></i> 글쓰기
                     </button>
                 </div>
             </div>
+
+            <div class="popup-overlay popup-hidden"></div>
+
+            <form class="popup popup-hidden" method="get">
+                <div class="popup-row setting">
+                    <label>검색 조건 설정</label>
+                    <label id="popup-close">&times;</label>
+                </div>
+                <div class="popup-row">
+                    <div class="popup-row-item">
+                        <label>제목</label>
+                        <input type="text" name="title" class="popup-input" placeholder="제목">
+                    </div>
+                </div>
+                <div class="popup-row">
+                    <div class="popup-row-item">
+                        <label>작성자</label>
+                        <input type="text" name="writer" class="popup-input" placeholder="작성자">
+                    </div>
+                </div>
+                <div class="popup-row">
+                    <div class="popup-row-item">
+                        <label>구분</label>
+                        <select name="category" class="popup-select">
+                            <option value="">전체</option>
+                            <option value="sale">분양</option>
+                            <option value="adoption">입양</option>
+                        </select>
+                    </div>
+                    <div class="popup-row-item">
+                        <label>상태</label>
+                        <select name="status" class="popup-select">
+                            <option value="">전체</option>
+                            <option value="NOT_START">미해결</option>
+                            <option value="IN_PROGRESS">진행중</option>
+                            <option value="COMPLETE">완료</option>
+                        </select>
+                    </div>
+                </div>  
+                <div class="popup-row">
+                    <div class="popup-row-item">
+                        <label>동물 정보</label>
+                        <select name="species" class="popup-select">
+                            <option value="">전체</option>
+                            <option value="dog">개</option>
+                            <option value="cat">고양이</option>
+                            <option value="etc">기타</option>
+                        </select>
+                    </div>
+                    
+                    <div class="popup-row-item">
+                        <label>성별</label>
+                        <select name="gender" class="popup-select">
+                            <option value="">전체</option>
+                            <option value="M">수컷</option>
+                            <option value="F">암컷</option>
+                            <option value="neutering">중성화</option>
+                            <option value="unknown">기타</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="popup-row">
+                    <div class="popup-row-item">
+                        <label>나이</label>
+                        <select name="age" class="popup-select">
+                            <option value="">전체</option>
+                            <option value="0">알 수 없음</option>
+                            <option value="1">0~3개월</option>
+                            <option value="2">4~6개월</option>
+                            <option value="3">7~12개월(1살)</option>
+                            <option value="4">13~18개월</option>
+                            <option value="5">19~24개월(2살)</option>
+                            <option value="6">2살~3살</option>
+                            <option value="7">3살~4살</option>
+                            <option value="8">4살~5살</option>
+                            <option value="9">5살~6살</option>
+                            <option value="10">6살~7살</option>
+                            <option value="11">7살~8살</option>
+                            <option value="12">8살 이상</option>
+                        </select>   
+                    </div>
+                    <div class="popup-row-item">
+                        <label>체중</label>
+                        <select name="weight" class="popup-select">
+                            <option value="">전체</option>
+                            <option value="0">알 수 없음</option>
+                            <option value="1">초소형(3kg 미만)</option>
+                            <option value="2">소형(3~8kg)</option>
+                            <option value="3">중형(8~15kg)</option>
+                            <option value="4">대형(25~40kg)</option>
+                            <option value="5">초대형(40kg 초과)</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="popup-row">
+                    <button>검색하기</button>
+                </div>
+            </form>  
 
             <div class="stat-grid">
                 <div class="stat-card">
@@ -83,7 +176,8 @@
                 </th:block>
 
                 <th:block th:unless="${#lists.isEmpty(postList)}">
-                    <div th:each="post, iter : ${postList}" th:object="${post}" class="list-row">
+                    <div th:each="post, iter : ${postList}" th:object="${post}" class="list-row"
+                        th:onclick="|location.href='@{/adoption/{postNo}(postNo=*{postNo})}'|">
                         <div th:text="${pagination.listCount - ((pagination.currentPage - 1) * pagination.limit) - iter.index}" class="list-meta">1</div>
                         <div><span th:text="*{category == '분양'} ? '분양' : '입양'" class="badge"
                                 th:classappend="*{category == '입양'} ? 'badge-primary' : 'badge-secondary'">실종</span></div>
@@ -95,9 +189,9 @@
                         <div th:text="*{postDate}" class="list-meta">2024.03.15</div>
                         <div th:text="*{views}" class="list-meta">1</div>
                         <div th:switch="*{status}">
-                            <span th:case="*{'NOT_START'}" class="badge badge-primary">대기중</span>
-                            <span th:case="*{'IN_PROGRESS'}" class="badge badge-green">진행중</span>
-                            <span th:case="*{'COMPLETE'}" class="badge badge-dark">완료</span>
+                            <span th:case="'NOT_START'" class="badge badge-primary">대기중</span>
+                            <span th:case="'IN_PROGRESS'" class="badge badge-green">진행중</span>
+                            <span th:case="'COMPLETE'" class="badge badge-dark">완료</span>
                         </div>
                     </div>
                 </th:block>

@@ -89,5 +89,54 @@ public class AdoptionServiceImpl implements AdoptionService{
 		
 		return map;
 	}
+
+	/**
+	 * 작성자 : 최보윤
+	 * 작성일자 : 2026-01-05
+	 * 검색 결과에 부합하는 게시글 목록 조회
+	 */
+	@Override
+	public Map<String, Object> searchList(Map<String, Object> paramMap, int cp) {
+		int listCount = mapper.getSearchCount(paramMap);
+		Pagination pagination = new Pagination(cp, listCount);
+		int limit = pagination.getLimit();
+		
+		int offset = (cp - 1) * limit;
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		List<Post> postList = mapper.selectSearchList(paramMap, rowBounds);
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("postList", postList);
+		map.put("pagination", pagination);
+		
+		return map;
+	}
+	
+	/**
+	 * 작성자 : 최보윤
+	 * 작성일자 : 2026-01-05
+	 * 게시글 상세 정보 가져오기
+	 */
+	@Override
+	public Post getPost(int postNo) {
+		return mapper.getPost(postNo);
+	}
+
+	/**
+	 * 작성자 : 최보윤
+	 * 작성일자 : 2026-01-05
+	 * 조회수 증가하기
+	 */
+	@Override
+	public int updateViews(int postNo) {
+		int result = mapper.updateViews(postNo);
+		
+		if(result > 0) {
+			return mapper.selectViews(postNo);
+		}
+		
+		return -1;
+	}
+
 	
 }

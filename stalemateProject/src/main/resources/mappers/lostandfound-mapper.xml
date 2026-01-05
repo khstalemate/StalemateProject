@@ -62,6 +62,7 @@
 		AND CATEGORY IN ('실종', '목격')
 		ORDER BY POST_NO DESC
 	</select>
+
 	
 	<!-- 작성자 : 최보윤
 		작성일자 : 2025-12-24
@@ -231,7 +232,6 @@
 		AND REPLY_DELETE = 'N'
 		ORDER BY REPLY_NO
 	</select>
-
 	
 	<!-- 작성자 : 최보윤
 	작성일자 : 2025-12-28
@@ -264,7 +264,7 @@
 	</insert>
 	
 	<!-- 작성자 : 최보윤
-	작성일자 : 2025-01-01
+	작성일자 : 2026-01-01
 	게시글 상태값 수정 -->
 	<update id="updateStatus">
 		UPDATE POST
@@ -275,7 +275,7 @@
 	</update>
 	
 	<!-- 작성자 : 최보윤
-	작성일자 : 2025-01-02
+	작성일자 : 2026-01-02
 	게시글 조회수 증가 -->
 	<update id="updateViews">
 		UPDATE POST
@@ -284,7 +284,7 @@
 	</update>
 	
 	<!-- 작성자 : 최보윤
-	작성일자 : 2025-01-02
+	작성일자 : 2026-01-02
 	게시글 조회수 조회 -->
 	<select id="selectViews">
 		SELECT VIEWS FROM POST
@@ -292,7 +292,7 @@
 	</select>
 	
 	<!-- 작성자 : 최보윤
-	작성일자 : 2025-01-04
+	작성일자 : 2026-01-04
 	게시글 수정(이미지 제외) -->
 	<update id="updatePost">
 		UPDATE "POST"
@@ -303,7 +303,7 @@
 	</update>
 	
 	<!-- 작성자 : 최보윤
-	작성일자 : 2025-01-04
+	작성일자 : 2026-01-04
 	게시글 수정(이미지 수정) -->
 	<update id="updatePostImg">
 		UPDATE "POST_IMG"

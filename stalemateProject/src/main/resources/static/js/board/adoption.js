@@ -67,3 +67,26 @@ characters.forEach((item) => {
     item.textContent = resultText;
   }
 });
+
+const popup = document.querySelector(".input");
+const popupLayer = document.querySelector(".popup");
+const popupOverlay = document.querySelector(".popup-overlay");
+const popupClose = document.querySelector("#popup-close");
+
+// '제목, 내용으로 검색' 입력창을 눌렀을 때 검색 팝업창 보여주기
+popup.addEventListener("click", () => {
+  popupLayer.classList.remove("popup-hidden");
+  popupOverlay.classList.remove("popup-hidden");
+});
+
+// 팝업창의 X 버튼 눌렀을 때 팝업창 숨기기
+popupClose.addEventListener("click", () => {
+  popupLayer.classList.add("popup-hidden");
+  popupOverlay.classList.add("popup-hidden");
+});
+
+// 배경(오버레이) 클릭 시에도 닫히게 설정
+popupOverlay.addEventListener("click", () => {
+  popupLayer.classList.add("popup-hidden");
+  popupOverlay.classList.add("popup-hidden");
+});
