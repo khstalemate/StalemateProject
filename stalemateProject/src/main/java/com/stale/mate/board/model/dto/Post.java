@@ -38,6 +38,9 @@ public class Post {
 	private List<PostImg> imgList;
 	private List<Reply> replyList;
 	
+	private String thumbnail;
+	private String preview;
+	
 	public String getSpeciesText() {
         if (species == null) return "알 수 없음";
         switch (species) {
