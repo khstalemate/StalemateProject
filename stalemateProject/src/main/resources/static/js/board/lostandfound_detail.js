@@ -48,7 +48,10 @@ const selectReplyList = () => {
       content.classList.add("comment-text");
       content.innerText = reply.replyContent;
 
-      row.append(profileImg, nameTime, content);
+      //2026-01-05 유건우 수정 : div 태그 누락으로 스타일 깨짐 수정
+      const commentBody = document.createElement("div");
+      commentBody.append(nameTime, content);
+      row.append(profileImg, commentBody);
 
       if(loginMemberNo != null && loginMemberNo == reply.memberNo) {
         const updateBtn = document.createElement("button");

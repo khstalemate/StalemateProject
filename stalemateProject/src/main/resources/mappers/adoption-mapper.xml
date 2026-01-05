@@ -297,7 +297,12 @@
 	<update id="updatePost">
 		UPDATE "POST"
 		SET POST_TITLE = #{postTitle},
-		CONTENT = #{content}
+		CONTENT = #{content},
+		ADOPT_FEE=#{adoptFee},
+		SPECIES=#{species},
+		GENDER=#{gender},
+		AGE=#{age},
+		WEIGHT=#{weight}
 		WHERE POST_NO = #{postNo}
 		AND MEMBER_NO = #{memberNo}
 	</update>
@@ -308,8 +313,7 @@
 	<update id="updatePostImg">
 		UPDATE "POST_IMG"
 		SET IMG_ORIGINAL_NAME = #{imgOriginalName},
-		IMG_RENAME = #{imgRename},
-		POST_UPDATE = SYSDATE
+		IMG_RENAME = #{imgRename}
 		WHERE POST_NO = #{postNo}
 	</update>
 	

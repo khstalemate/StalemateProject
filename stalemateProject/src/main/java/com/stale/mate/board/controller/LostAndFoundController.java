@@ -183,7 +183,8 @@ public class LostAndFoundController {
 	 * '글쓰기' 버튼을 눌렀을 때 게시글 작성 페이지로 이동시키기 
 	 */
 	@GetMapping("insert")	
-	public String showInsertPost() {
+	public String showInsertPost(Model model) {
+		model.addAttribute("post", new Post());
 		return "lostandfound/lostandfound_edit";
 	}
 	
