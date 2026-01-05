@@ -13,7 +13,7 @@
         		P.MISSING_TIME,
         		P.CATEGORY,
         	   (
-            	SELECT I.IMG_PATH
+            	SELECT I.IMG_PATH || I.IMG_RENAME
             	FROM POST_IMG I
            		WHERE I.POST_NO = P.POST_NO
              	ORDER BY I.IMG_NO ASC
@@ -24,6 +24,41 @@
     	ORDER BY P.POST_NO DESC
   				)
 		WHERE ROWNUM <![CDATA[<=]]> 4
+	</select>
+	
+	<select id="selectAdoptionList" resultType="Post">
+  		SELECT *
+  			FROM (
+    			SELECT
+        		P.POST_NO,
+        		P.POST_TITLE,
+				P.LOCATION,
+				P.MISSING_DATE,
+        		P.MISSING_TIME,
+        		P.VIEWS,
+        		P.CATEGORY,
+        	   (
+				SELECT COUNT(*)
+				FROM REPLY R
+				WHERE R.POST_NO = P.POST_NO
+			   ) AS replyCount,
+			   CASE
+			   	WHEN INSTR(P.CONTENT, CHR(10)) > 0
+        		THEN SUBSTR(P.CONTENT, 1, INSTR(P.CONTENT, CHR(10)) - 1)
+        		ELSE SUBSTR(P.CONTENT, 1, 50)
+        	   END AS preview,
+        	   (
+            	SELECT I.IMG_PATH || I.IMG_RENAME
+            	FROM POST_IMG I
+           		WHERE I.POST_NO = P.POST_NO
+             	ORDER BY I.IMG_NO ASC
+            	FETCH FIRST 1 ROWS ONLY
+        	   ) AS thumbnail
+    	FROM POST P
+    	WHERE P.CATEGORY IN ('분양', '입양')
+    	ORDER BY P.POST_NO DESC
+  				)
+		WHERE ROWNUM <![CDATA[<=]]> 2		
 	</select>
 
 </mapper>

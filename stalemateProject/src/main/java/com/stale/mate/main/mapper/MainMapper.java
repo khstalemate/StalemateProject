@@ -11,4 +11,6 @@ public interface MainMapper {
 
 	List<Post> selectLostandfoundList();
 
+	List<Post> selectAdoptionList();
+
 }

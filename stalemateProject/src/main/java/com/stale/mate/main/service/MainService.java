@@ -8,6 +8,8 @@ public interface MainService {
 
 	List<Post> selectLostandfoundList();
 
+	List<Post> selectAdoptionList();
+
 
 
 }

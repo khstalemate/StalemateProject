@@ -23,34 +23,24 @@
                         </div>
                     </div>
 
-                    <div class="posts">
-                        <article class="post-card">
-                            <div class="post-thumb no-image">
-                                <i class="fa-solid fa-dog"></i>
-                            </div>
-                            <div>
-                                <div class="meta">
-                                    <span class="pill pill-primary">분양</span>
-                                    <span>2시간 전</span>
-                                </div>
-                            <h3 class="post-title">골든 리트리버 분양합니다</h3>
-                            <p class="post-desc">건강한 골든 리트리버 강아지 분양합니다. 접종 완료, 건강검진 완료...</p>
-                                <div class="meta"><span><i class="fa-solid fa-eye"></i> 234</span><span><i class="fa-solid fa-comment"></i> 12</span><span><i class="fa-solid fa-heart"></i> 45</span></div>
-                            </div>
-                        </article>
+                    <div class="posts" th:if="${adoptionList != null}">
+                        <article class="post-card" th:each="adoption : ${adoptionList}">
+                            <a th:href="@{/lostandfound/detail(postNo=${adoption.postNo})}">
+                                <img th:if="${adoption.thumbnail != null}" th:src="@{${adoption.thumbnail}}"
+                                alt="게시글 이미지" class="post-thumb">
 
-                        <article class="post-card">
-                            <div class="post-thumb">
-                                <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/eff255a17d-f595d139c828e9b26cc3.png" alt="persian cat" />
-                            </div>
+                                <div class="post-thumb no-image" th:if="${adoption.thumbnail == null}">
+                                    <i class="fa-solid fa-paw"></i>
+                                </div>
+                            </a>
                             <div>
                                 <div class="meta">
-                                    <span class="pill pill-secondary">입양</span>
-                                    <span>5시간 전</span>
+                                    <span class="pill" th:text="${adoption.category}" th:classappend="${adoption.category == '분양'} ? 'pill-primary' : 'pill-secondary'"></span>
+                                    <span th:text="${adoption.postDate}"></span>
                                 </div>
-                            <h3 class="post-title">페르시안 고양이 입양 원해요</h3>
-                            <p class="post-desc">사랑으로 키울 준비가 되어있습니다. 실내에서만 키울 예정...</p>
-                                <div class="meta"><span><i class="fa-solid fa-eye"></i> 156</span><span><i class="fa-solid fa-comment"></i> 8</span><span><i class="fa-solid fa-heart"></i> 23</span></div>
+                            <h3 class="post-title" th:href="@{/lostandfound/detail(postNo=${adoption.postNo})}" th:text="${adoption.postTitle}"></h3>
+                            <p class="post-desc" th:text="${adoption.preview}"></p>
+                                <div class="meta"><span><i class="fa-solid fa-eye"></i><span th:text="${adoption.views}"></span></span><span><i class="fa-solid fa-comment"></i><span th:text="${adoption.replyCount}"></span></span></div>
                             </div>
                         </article>
                     </div>

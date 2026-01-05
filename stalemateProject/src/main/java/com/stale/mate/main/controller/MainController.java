@@ -17,13 +17,18 @@ public class MainController {
 	private final MainService service;
 
 	/** 작성자 : 유건우
+	 *  수정자 : 이승준
 	 * 작성일자 : 2025-12-22
+	 * 수정일 : 2025-01-02
 	 * 메인페이지 이동
+	 * 수정내용 : model 로 값 전달
 	 * @return
 	 */
 	@RequestMapping("/")
 	public String mainPage(Model model) {
 		model.addAttribute("postList", service.selectLostandfoundList());
+		
+		model.addAttribute("adoptionList", service.selectAdoptionList());
 		
 		return "common/main";
 	}
