@@ -16,7 +16,6 @@ public interface LostAndFoundMapper {
 	 * 작성자 : 최보윤
 	 * 작성일자 : 2025-12-23
 	 * 총 게시글 가져오기 SQL
-	 * @return
 	 */
 	int getAllPostCount();
 
@@ -107,7 +106,7 @@ public interface LostAndFoundMapper {
 
 	/**
 	 * 작성자 : 최보윤
-	 * 작성일자 : 2025-01-01
+	 * 작성일자 : 2026-01-01
 	 * 게시글의 조회수를 조회하는 SQL 
 	 */
 	int selectViews(int postNo);
