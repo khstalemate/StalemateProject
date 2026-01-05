@@ -1,6 +1,7 @@
 package com.stale.mate.board.model.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.session.RowBounds;
@@ -10,6 +11,11 @@ import com.stale.mate.board.model.dto.Post;
 @Mapper
 public interface AdoptionMapper {
 
+	/**
+	 * 작성자 : 최보윤
+	 * 작성일자 : 2026-01-05
+	 * 총 게시글 가져오기 SQL
+	 */
 	int getAllPostCount();
 
 	int getSalePostCount();
@@ -18,6 +24,49 @@ public interface AdoptionMapper {
 
 	int getTodayPostCount();
 
+	/**
+	 * 작성자 : 최보윤
+	 * 작성일자 : 2026-01-05
+	 * 게시글 목록 조회 SQL
+	 * @param rowBounds
+	 */
 	List<Post> selectPostList(RowBounds rowBounds);
+	
+	/**
+	 * 작성자 : 최보윤
+	 * 작성일자 : 2026-01-05
+	 * 검색 결과에 부합하는 게시글 개수 가져오는 SQL
+	 * @param paramMap (사용자가 입력한 검색 조건이 담긴 맵)
+	 */
+	int getSearchCount(Map<String, Object> paramMap);
+
+	/**
+	 * 작성자 : 최보윤
+	 * 작성일자 : 2026-01-05
+	 * 검색 결과에 부합하는 게시글 목록 조회 SQL
+	 * @param paramMap (사용자가 입력한 검색 조건이 담긴 맵)
+	 */
+	List<Post> selectSearchList(Map<String, Object> paramMap, RowBounds rowBounds);
+
+	/**
+	 * 작성자 : 최보윤
+	 * 작성일자 : 2026-01-05
+	 * 게시글 상세 정보 가져오는 SQL
+	 */
+	Post getPost(int postNo);
+
+	/**
+	 * 작성자 : 최보윤
+	 * 작성일자 : 2026-01-05
+	 * 게시글의 조회수를 증가하는 SQL 
+	 */
+	int updateViews(int postNo);
+
+	/**
+	 * 작성자 : 최보윤
+	 * 작성일자 : 2026-01-05
+	 * 게시글의 조회수를 조회하는 SQL 
+	 */
+	int selectViews(int postNo);
 
 }

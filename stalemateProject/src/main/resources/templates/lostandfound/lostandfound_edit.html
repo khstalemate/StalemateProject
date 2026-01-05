@@ -14,7 +14,8 @@
 
     <main class="page">
         <section class="form-shell">
-            <h1 class="title-lg">실종 &amp; 목격 게시글 작성</h1>
+            <h1 class="title-lg"
+                th:text="${post == null} ? '실종 &amp; 목격 게시글 작성' : '실종 &amp; 목격 게시글 수정'">페이지 제목</h1>
             <form th:action="${post == null} ? @{/lostandfound/insert} : @{/lostandfound/{postNo}/update(postNo=${post.postNo})}"
             method="POST" enctype="multipart/form-data" id="postWriteForm">
                 <div class="upload-box upload-box-spacing">
@@ -24,53 +25,61 @@
 
                 <div class="form-field">
                     <label>제목</label>
-                    <input type="text" class="form-control" name="postTitle" placeholder="예: 골든 리트리버 '곰디' 실종">
+                    <input type="text" class="form-control" name="postTitle" placeholder="예: 골든 리트리버 '곰디' 실종"
+                        th:value="${post!=null} ? post.postTitle : ''">
                 </div>
 
                 <div class="form-row">
                     <div class="form-field">
                         <label>실종 / 목격 구분</label>
                         <select class="form-control" name="category">
-                            <option value="실종">실종</option>
-                            <option value="목격">목격</option>
+                            <option value="실종"
+                                th:selected="${post != null and post.category == '실종'}">실종</option>
+                            <option value="목격"
+                                th:selected="${post != null and post.category == '목격'}">목격</option>
                         </select>
                     </div>
                     <div class="form-field">
                         <label>실종/목격 날짜</label>
-                        <input type="date" class="form-control" name="missingDate">
+                        <input type="date" class="form-control" name="missingDate"
+                            th:value="${post != null} ? post.missingDate : ''">
                     </div>
                     <div class="form-field">
                         <label>시간</label>
-                        <input type="time" class="form-control" name="missingTime">
+                        <input type="time" class="form-control" name="missingTime"
+                            th:value="${post != null} ? post.missingTime : ''">
                     </div>
                 </div>
 
                 <div class="form-field">
                     <label>발생 위치
                         &nbsp;
-                        <input type="button" onclick="sample4_execDaumPostcode()" value="주소 찾기" class="btn btn-ghost"><br>
+                        <input type="button" onclick="sample4_execDaumPostcode()" value="주소 찾기" class="btn btn-ghost"
+                            th:value = "${post != null} ? post.location : ''"><br>
                     </label>
                     
-                    <input type="text" id="sample4_roadAddress" placeholder="도로명주소" class="form-control2" name="location">
-                    <input type="text" id="sample4_detailAddress" placeholder="상세주소" class="form-control2" name="detailLocation">
+                    <input type="text" id="sample4_roadAddress" placeholder="도로명주소" class="form-control2" name="location"
+                        th:value = "${post != null} ? post.location : ''">
+                    <input type="text" id="sample4_detailAddress" placeholder="상세주소" class="form-control2" name="detailLocation"
+                        th:value = "${post != null} ? post.detailLocation : ''">
                 </div>
 
                 <div class="form-row">
                     <div class="form-field">
                         <label>동물 정보 (종)</label>
                         <select class="form-control" name="species">
-                            <option value="dog">개</option>
-                            <option value="cat">고양이</option>
-                            <option value="etc">기타</option>
+                            <option value="dog" th:selected = "${post != null and post.species == 'dog'}">개</option>
+                            <option value="cat" th:selected = "${post != null and post.species == 'cat'}">고양이</option>
+                            <option value="etc" th:selected = "${post != null and post.species == 'etc'}">기타</option>
                         </select>
                     </div>
                     <div class="form-field">
                         <label>성별</label>
                         <select class="form-control" name="gender">
-                            <option value="M">수컷</option>
-                            <option value="F">암컷</option>
-                            <option value="neutering">중성화</option>
-                            <option value="unknown">알 수 없음</option>
+                            <option value="M" th:selected = "${post != null and post.gender == 'M'}">수컷</option>
+                            <option value="F" th:selected = "${post != null and post.gender == 'F'}">암컷</option>
+                            <option value="neutering" th:selected = "${post != null and post.gender == 'neutering'}">중성화</option>
+                            <option value="unknown" th:selected = "${post != null and post.gender == 'unknown'}">알 수 없음</option>
                         </select>
                     </div>
                 </div>
@@ -114,7 +123,9 @@
                 </div>
 
                 <div class="form-actions">
-                    <button class="btn btn-primary">등록</button>
+                    <button class="btn btn-primary"
+                        th:text="${post==null} ? '등록' : '수정'">등록
+                    </button>
                     <button type="button" class="btn btn-ghost" id="cancleBtn">취소</button>
                 </div>
             </form>

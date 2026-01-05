@@ -2,6 +2,8 @@ package com.stale.mate.board.model.service;
 
 import java.util.Map;
 
+import com.stale.mate.board.model.dto.Post;
+
 public interface AdoptionService {
 	/**
 	 * 작성자 : 최보윤
@@ -45,7 +47,28 @@ public interface AdoptionService {
 	 * 작성일자 : 2025-12-23
 	 * 게시글 목록 조회
 	 * @param cp (현재 페이지 번호)
-	 * @return
 	 */
 	Map<String, Object> selectPostList(int cp);
+
+	/**
+	 * 작성자 : 최보윤
+	 * 작성일자 : 2026-01-05
+	 * 검색 결과에 부합하는 게시글 목록 조회
+	 */
+	Map<String, Object> searchList(Map<String, Object> paramMap, int cp);
+
+	/**
+	 * 작성자 : 최보윤
+	 * 작성일자 : 2026-01-05
+	 * 게시글 상세 정보 가져오기
+	 */
+	Post getPost(int postNo);
+	
+	/**
+	 * 작성자 : 최보윤
+	 * 작성일자 : 2026-01-05
+	 * 조회수 증가하기
+	 */
+	int updateViews(int postNo);
+
 }
