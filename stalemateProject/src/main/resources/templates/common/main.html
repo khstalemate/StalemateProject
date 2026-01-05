@@ -25,7 +25,7 @@
 
                     <div class="posts" th:if="${adoptionList != null}">
                         <article class="post-card" th:each="adoption : ${adoptionList}">
-                            <a th:href="@{/lostandfound/{postNo}(postNo=${adoption.postNo})}">
+                            <a th:href="@{/adoption/{postNo}(postNo=${adoption.postNo})}">
                                 <img th:if="${adoption.thumbnail != null}" th:src="@{${adoption.thumbnail}}"
                                 alt="게시글 이미지" class="post-thumb">
 
@@ -38,7 +38,7 @@
                                     <span class="pill" th:text="${adoption.category}" th:classappend="${adoption.category == '분양'} ? 'pill-primary' : 'pill-secondary'"></span>
                                     <span th:text="${adoption.postDate}"></span>
                                 </div>
-                            <h3 class="post-title" th:href="@{/lostandfound/{postNo}(postNo=${adoption.postNo})}" th:text="${adoption.postTitle}"></h3>
+                            <h3 class="post-title" th:href="@{/adoption/{postNo}(postNo=${adoption.postNo})}" th:text="${adoption.postTitle}"></h3>
                             <p class="post-desc" th:text="${adoption.preview}"></p>
                                 <div class="meta"><span><i class="fa-solid fa-eye"></i><span th:text="${adoption.views}"></span></span><span><i class="fa-solid fa-comment"></i><span th:text="${adoption.replyCount}"></span></span></div>
                             </div>
