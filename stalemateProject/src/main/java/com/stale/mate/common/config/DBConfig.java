@@ -45,7 +45,7 @@ public class DBConfig {
 		sessionFactoryBean.setDataSource(dataSource);
 		sessionFactoryBean.setMapperLocations(applicationContext.getResources("classpath:/mappers/**.xml"));
 		
-		sessionFactoryBean.setTypeAliasesPackage("com.stale.mate");
+		sessionFactoryBean.setTypeAliasesPackage("edu.kh.todo");
 		sessionFactoryBean.setConfigLocation(applicationContext.getResource("classpath:mybatis-config.xml"));
 
 		return sessionFactoryBean.getObject();
