@@ -15,7 +15,8 @@
     <main class="page">
         <section class="form-shell">
             <h1 class="title-lg">실종 &amp; 목격 게시글 작성</h1>
-            <form action="/lostandfound/insert" method="POST" enctype="multipart/form-data" id="postWriteForm">
+            <form th:action="${post == null} ? @{/lostandfound/insert} : @{/lostandfound/{postNo}/update(postNo=${post.postNo})}"
+            method="POST" enctype="multipart/form-data" id="postWriteForm">
                 <div class="upload-box upload-box-spacing">
                     <label for="uploadImg" class="custom-file-upload">📷 사진 업로드 (클릭하여 파일 선택)</label>
                     <input type="file" name="uploadImg" id="uploadImg" accept="image/*" multiple>
@@ -101,7 +102,7 @@
                             <option value="2">소형(3~8kg)</option>
                             <option value="3">중형(8~15kg)</option>
                             <option value="4">대형(25~40kg)</option>
-                            <option value="5">초대형(40kg 미만)</option>
+                            <option value="5">초대형(40kg 초과)</option>
                         </select>
                     </div>
                 </div>

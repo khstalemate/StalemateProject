@@ -26,8 +26,8 @@ const cancleBtn = document.querySelector("#cancleBtn");
 cancleBtn.addEventListener("click", ()=>{
   if(confirm("게시글 작성을 취소하시겠습니까?")) {
     alert("게시글 작성을 취소합니다.");
+    location.href("/lostandfound/");
   } 
-  location.href("lostandfound/");
 });
 
 const form = document.querySelector("#postWriteForm");
