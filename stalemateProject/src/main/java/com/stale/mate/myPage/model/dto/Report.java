@@ -20,4 +20,3 @@ public class Report {
     private int memberNo;
     private String category;
 }
-

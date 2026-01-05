@@ -111,4 +111,32 @@ public interface LostAndFoundMapper {
 	 * 게시글의 조회수를 조회하는 SQL 
 	 */
 	int selectViews(int postNo);
+
+	/**
+	 * 작성자 : 최보윤
+	 * 작성일자 : 2026-01-04
+	 * 게시글 수정(이미지 제외)하는 SQL
+	 */
+	int updatePost(Post inputPost);
+
+	/**
+	 * 작성자 : 최보윤
+	 * 작성일자 : 2026-01-04
+	 * 게시글 이미지 수정 SQL
+	 */
+	int updatePostImg(PostImg img);
+
+	/**
+	 * 작성자 : 최보윤
+	 * 작성일자 : 2026-01-04
+	 * 게시글 이미지 삽입 SQL
+	 */
+	int insertPostImg(PostImg img);
+
+	/**
+	 * 작성자 : 최보윤
+	 * 작성일자 : 2026-01-04
+	 * 게시글 삭제
+	 */
+	int deletePost(Map<String, Integer> map);
 }

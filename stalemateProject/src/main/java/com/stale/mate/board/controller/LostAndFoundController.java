@@ -3,6 +3,7 @@ package com.stale.mate.board.controller;
 import java.io.IOException;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -116,8 +118,8 @@ public class LostAndFoundController {
 	 * 작성일자 : 2025-12-28
 	 * 게시글 상세 정보 가져오기
 	 */
-	@GetMapping("detail")
-	public String getPost(@RequestParam("postNo") int postNo, @SessionAttribute(value = "loginMember", required = false) Member loginMember,
+	@GetMapping("{postNo:[0-9]+}")
+	public String getPost(@PathVariable("postNo") int postNo, @SessionAttribute(value = "loginMember", required = false) Member loginMember,
 						Model model, RedirectAttributes ra,
 						HttpServletRequest req, HttpServletResponse resp) {
 		Post post = service.getPost(postNo);
@@ -131,10 +133,12 @@ public class LostAndFoundController {
 				Cookie[] cookies = req.getCookies();
 				Cookie c = null;
 				
-				for(Cookie temp : cookies) {
-					if(temp.getName().equals("viewPostNo")) {
-						c = temp;
-						break;
+				if(cookies != null) {
+					for(Cookie temp : cookies) {
+						if(temp.getName().equals("viewPostNo")) {
+							c = temp;
+							break;
+						}
 					}
 				}
 				
@@ -162,7 +166,7 @@ public class LostAndFoundController {
 				}
 			}
 			
-			path = "detail?postNo=" + postNo;
+			path = "?postNo=" + postNo;
 			model.addAttribute("post", post);
 			
 			if(!post.getImgList().isEmpty()) {
@@ -199,10 +203,10 @@ public class LostAndFoundController {
 		
 		if(postNo > 0) {
 			message = "게시글이 작성되었습니다.";
-			path = "/lostandfound/detail?postNo=" + postNo;
+			path = "/lostandfound/" + postNo;
 		} else {
 			message = "게시글 작성에 실패하였습니다.";
-			path = "insert";
+			path = "/lostandfound/insert";
 		}
 		
 		ra.addFlashAttribute("message", message);
@@ -230,6 +234,86 @@ public class LostAndFoundController {
 		
 		ra.addFlashAttribute("message", message);
 		
-		return "redirect:/lostandfound/detail?postNo=" + postNo;
+		return "redirect:/lostandfound/" + postNo;
+	}
+	
+	/**
+	 * 작성자 : 최보윤
+	 * 작성일자 : 2026-01-04
+	 * 게시글 수정 화면으로 전환
+	 */
+	@GetMapping("{postNo:[0-9]+}/update")
+	public String updatePost(@PathVariable("postNo") int postNo, @SessionAttribute("loginMember") Member loginMember,
+							Model model, RedirectAttributes ra) {
+		Post post = service.getPost(postNo);
+		String message = null;
+		String path = null;
+		
+		if(post == null) {
+			message = "해당 게시글이 존재하지 않습니다.";
+			path = "redirect:/lostandfound";
+		} else if (post.getMemberNo() != loginMember.getMemberNo()) {
+			message = "자신이 작성한 글만 수정할 수 있습니다.";
+			path = "redirect:/lostandfound";
+		} else {
+			path = "lostandfound/lostandfound_edit";
+			model.addAttribute("post", post);
+		}
+		
+		ra.addFlashAttribute("message", message);
+		
+		return path; 
+	}
+	
+	/**
+	 * 작성자 : 최보윤
+	 * 작성일자 : 2026-01-04
+	 * 게시글 수정
+	 */
+	@PostMapping("{postNo:[0-9]+}/update")
+	public String updatePost(@PathVariable("postNo") int postNo, @ModelAttribute Post inputPost,
+						@RequestParam("uploadImg") List<MultipartFile> images, @RequestParam(value = "cp", required = false, defaultValue = "1") int cp,
+						@SessionAttribute("loginMember") Member loginMember, RedirectAttributes ra) throws Exception {
+		inputPost.setPostNo(postNo);
+		inputPost.setMemberNo(loginMember.getMemberNo());
+		int result = service.updatePost(inputPost, images);
+		
+		String message = null;
+		String path = null;
+		
+		if(result > 0) {
+			message = "게시글이 수정되었습니다.";
+			path = "/lostandfound/" + postNo;
+		} else {
+			message = "게시글 수정에 실패하였습니다.";
+			path = "update";
+		}
+		
+		ra.addFlashAttribute("message", message);
+		
+		return "redirect:" + path;
+	}
+	
+	@PostMapping("{postNo:[0-9]+}/delete")
+	public String deletePost(@PathVariable("postNo") int postNo, @RequestParam(value="cp", required = false, defaultValue = "1") int cp,
+							@SessionAttribute("loginMember") Member loginMember, RedirectAttributes ra) {
+		Map<String, Integer> map = new HashMap<>();
+		map.put("postNo", postNo);
+		map.put("memberNo", loginMember.getMemberNo());
+		
+		int result = service.deletePost(map);
+		String path = null;
+		String message = null;
+		
+		if(result > 0) {
+			message = "게시글이 삭제되었습니다.";
+			path = "/lostandfound/?cp=" + cp;
+		} else {
+			message = "게시글 삭제에 실패하였습니다.";
+			path = "/lostandfound/" + postNo;
+		}
+		
+		ra.addFlashAttribute("message", message);
+		return "redirect:"+ path;
 	}
 }

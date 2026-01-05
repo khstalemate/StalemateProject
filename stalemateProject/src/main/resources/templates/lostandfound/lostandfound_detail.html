@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/board/lostandfound_detail.css">
     <script>window.FontAwesomeConfig = { autoReplaceSvg: "nest"};</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
@@ -35,7 +36,7 @@
             </div>
             <th:block th:if="${imgList != null and #lists.size(imgList) > 0}">
                 <div th:each="img:${imgList}" class="detail-cover">
-                    <img th:src="|${img.imgPath}${img.imgRename}|">
+                    <img th:src="|${img.imgPath}${img.imgRename}|" class="detail-img">
                 </div>
             </th:block> 
 
@@ -100,11 +101,14 @@
                         </select>
                         <button type = "button" class="btn btn-primary" id="statusChangeBtn">상태 변경</button>
                     </form>
-                    <button class="btn btn-primary">수정</button>
-                    <button class="btn btn-primary">삭제</button>
+                    <button class="btn btn-primary"
+                            th:onclick="|location.href='@{/lostandfound/{postNo}/update(postNo=*{postNo})}'|">수정</button>
+                    <form th:action="@{/lostandfound/{postNo}/delete(postNo=*{postNo})}" method="post">
+                        <button class="btn btn-primary" onclick="return confirm('게시글을 삭제하시겠습니까?');">삭제</button>
+                    </form>
                 </th:block>
                 <button type="button" class="btn btn-secondary" id="goToList">목록</button>
-                <button type="button" class="btn btn-secondary" id="goToList">신고</button>
+                <button type="button" class="btn btn-secondary" id="reportBtn">신고</button>
             </div>
         </article>
 
@@ -120,25 +124,35 @@
                 </div>
             </div>
 
-            <div class="section comment-list" th:each="reply : ${post.replyList}">
-                <div class="comment-item">
-                    <button id="updateReplyBtn" class="btn btn-primary">수정</button>
-                    <button id="deleteReplyBtn" class="btn btn-primary">삭제</button>
-                    <!-- <img th:src="${reply.profileImg} ?: @{/images/logo.jpg}" alt="Commenter" class="profile-avatar-large"> -->
-                    <img src="${reply.profileImg} ?: @{/images/logo.jpg}" alt="Commenter" class="profile-avatar-large">
+            <div class="section comment-list" id="replyList">
+                <div class="comment-item" id="replyRow" th:each="reply : ${post.replyList}">
+                    <img th:src="${reply.profileImg} ?: @{/images/logo.jpg}" alt="Commenter" class="profile-avatar-large">
                     <div>
-                        <div class="detail-meta comment-meta">
+                        <div class="detail-meta comment-meta" id="#replyNameTime">
                             <strong th:text="${reply.memberName}">이름</strong>
                             <span th:text="${reply.replyTime}">시간</span>
                         </div>
                         <p class="comment-text" th:text="${reply.replyContent}">내용</p>
                     </div>
+                    <th:block th:if="${reply.memberNo == session.loginMember.memberNo}">
+                        <button class="btn btn-primary updateReplyBtn">수정</button>
+                        <button class="btn btn-primary deleteReplyBtn">삭제</button>
+                    </th:block>
                 </div>
             </div>
         </section>
     </main>
 
     <th:block th:replace="~{common/footer}"></th:block>
+
+    <!-- 전역 변수로 저장
+    th:inline=javascript -> 해당 스크립트 내부가 js임을 알려줌
+    /*[[...]]*/ -> 타임리프 js 인라인 표현식(타임리프 치환 문법) => js 입장에서는 주석+문자열만 존재, 실제 값 X
+    ?. -> null-safe 연산자, NPE 방지 -->
+    <script th:inline="javascript">
+        const loginMemberNo = /*[[${session.loginMember != null} ? ${session.loginMember.memberNo} : null]]*/ null;
+        const postNo = /*[[${post.postNo}]]*/ null;
+    </script>
     <script src="/js/board/lostandfound_detail.js"></script>
 </body>
 </html>

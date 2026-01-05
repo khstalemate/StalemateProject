@@ -182,6 +182,7 @@
 	    <collection
 	    	property="replyList"
 	    	column = "POST_NO"
+	    	select = "selectReplyList"
 	    	javaType="java.util.ArrayList"
 	    	ofType="Reply"
 	    />
@@ -208,7 +209,7 @@
 	
 	<!-- 댓글 조회 -->
 	<select id="selectReplyList" resultType="Reply">
-		SELECT REPLY_CONTENT, 
+		SELECT REPLY_NO, MEMBER_NO, REPLY_CONTENT, 
 		MEMBER_NAME AS "memberName", PROFILE_IMG AS "profileImg",
 		<![CDATA[
 			CASE
@@ -228,6 +229,7 @@
 		JOIN MEMBER USING(MEMBER_NO)
 		WHERE POST_NO = #{value}
 		AND REPLY_DELETE = 'N'
+		ORDER BY REPLY_NO
 	</select>
 
 	
@@ -254,7 +256,7 @@
 		<foreach collection="list" item="img" open="(" close=")" separator=" UNION ">
 			SELECT NEXT_IMG_NO() AS "IMG_NO", 
 			#{img.imgPath} AS "IMG_PATH",  
-			#{img.imgOriginalName} AS "IMG_ORGINAL_NAME", 
+			#{img.imgOriginalName} AS "IMG_ORIGINAL_NAME", 
 			#{img.imgRename} AS "IMG_RENAME",
 			#{img.postNo} AS "POST_NO" 
 			FROM DUAL
@@ -288,4 +290,44 @@
 		SELECT VIEWS FROM POST
 		WHERE POST_NO = #{postNo}
 	</select>
+	
+	<!-- 작성자 : 최보윤
+	작성일자 : 2025-01-04
+	게시글 수정(이미지 제외) -->
+	<update id="updatePost">
+		UPDATE "POST"
+		SET POST_TITLE = #{postTitle},
+		CONTENT = #{content}
+		WHERE POST_NO = #{postNo}
+		AND MEMBER_NO = #{memberNo}
+	</update>
+	
+	<!-- 작성자 : 최보윤
+	작성일자 : 2025-01-04
+	게시글 수정(이미지 수정) -->
+	<update id="updatePostImg">
+		UPDATE "POST_IMG"
+		SET IMG_ORIGINAL_NAME = #{imgOriginalName},
+		IMG_RENAME = #{imgRename},
+		POST_UPDATE = SYSDATE
+		WHERE POST_NO = #{postNo}
+	</update>
+	
+	<!-- 작성자 : 최보윤
+	작성일자 : 2025-01-04
+	게시글 수정(이미지 삭제) -->
+	<insert id="insertPostImg">
+		INSERT INTO "POST_IMG"
+		VALUES(SEQ_POST_IMG.NEXTVAL, #{imgPath}, #{imgOriginalName}, #{imgRename}, #{postNo})
+	</insert>
+	
+	<!-- 작성자 : 최보윤
+	작성일자 : 2025-01-04
+	게시글 삭제 -->
+	<update id="deletePost">
+		UPDATE POST
+		SET POST_DELETE = 'Y'
+		WHERE POST_NO = #{postNo}
+		AND MEMBER_NO = #{memberNo}
+	</update>
 </mapper>
