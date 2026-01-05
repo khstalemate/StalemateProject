@@ -21,8 +21,6 @@ import com.stale.mate.board.model.dto.PostImg;
 import com.stale.mate.board.model.mapper.LostAndFoundMapper;
 import com.stale.mate.common.Utility;
 
-import lombok.extern.slf4j.Slf4j;
-
 @Service
 @Transactional(rollbackFor = Exception.class)
 @PropertySource("classpath:/config.properties")
@@ -144,15 +142,18 @@ public class LostAndFoundServiceImpl implements LostAndFoundService {
 		int result = mapper.insertPost(inputPost);
 		if(result == 0) return 0;
 		int postNo = inputPost.getPostNo();
+		
 		List<PostImg> uploadList = new ArrayList<>();
+		int order = 1;
 
 		for(int i = 0; i<images.size(); i++) {
 			if(!images.get(i).isEmpty()) {
 				String originalName = images.get(i).getOriginalFilename();
-				String rename = Utility.fileRename(originalName);
+				String rename = Utility.fileRename(originalName, order);
 				PostImg img = PostImg.builder().imgOriginalName(originalName).imgRename(rename).imgPath(webPath)
 						.postNo(postNo).uploadFile(images.get(i)).build();
 				uploadList.add(img);
+				order++;
 			}
 		}
 
@@ -202,5 +203,66 @@ public class LostAndFoundServiceImpl implements LostAndFoundService {
 		}
 		
 		return -1;
+	}
+
+	/**
+	 * 작성자 : 최보윤
+	 * 작성일자 : 2026-01-04
+	 * 게시글 수정
+	 * @throws IOException 
+	 * @throws IllegalStateException 
+	 */
+	@Override
+	public int updatePost(Post inputPost, List<MultipartFile> images) throws IllegalStateException, IOException {
+		int result = mapper.updatePost(inputPost);
+		
+		if(result == 0) {
+			return 0;
+		}
+		
+		List<PostImg> uploadList = new ArrayList<>();
+		int order = 1;
+		for(int i = 0; i < images.size(); i++) {
+			if(!images.get(i).isEmpty()) {
+				String originalName = images.get(i).getOriginalFilename();
+				String rename = Utility.fileRename(originalName, order);
+				
+				PostImg img = PostImg.builder().imgOriginalName(originalName).imgRename(rename)
+						.imgPath(webPath).postNo(inputPost.getPostNo()).uploadFile(images.get(i)).build();
+				uploadList.add(img);
+				
+				result = mapper.updatePostImg(img);
+				if(result == 0) {
+					result = mapper.insertPostImg(img);
+				}
+				
+				order++;
+			}
+			
+			if(result == 0) {
+				throw new RuntimeException();
+			}
+			
+			if(uploadList.isEmpty()) {
+				return result;
+			}
+			
+			for(PostImg img : uploadList) {
+				img.getUploadFile().transferTo(new File(folderPath + img.getImgRename()));
+			}
+			
+		}
+		
+		return result;
+	}
+
+	/**
+	 * 작성자 : 최보윤
+	 * 작성일자 : 2026-01-04
+	 * 게시글 삭제
+	 */
+	@Override
+	public int deletePost(Map<String, Integer> map) {
+		return mapper.deletePost(map);
 	}
 }

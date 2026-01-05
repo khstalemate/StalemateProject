@@ -22,8 +22,8 @@ public class ReplyServiceImpl implements ReplyService {
 	 * 댓글 목록 조회하기
 	 */
 	@Override
-	public List<Reply> selectReply() {
-		return mapper.selectReply();
+	public List<Reply> selectReply(int postNo) {
+		return mapper.selectReply(postNo);
 	}
 
 	/**

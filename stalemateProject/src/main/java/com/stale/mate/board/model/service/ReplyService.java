@@ -10,8 +10,9 @@ public interface ReplyService {
 	 * 작성자 : 최보윤
 	 * 작성일자 : 2026-01-02
 	 * 댓글 목록 조회하기
+	 * @param postNo 
 	 */
-	List<Reply> selectReply();
+	List<Reply> selectReply(int postNo);
 
 	/**
 	 * 작성자 : 최보윤

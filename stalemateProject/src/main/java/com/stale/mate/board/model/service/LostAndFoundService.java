@@ -84,4 +84,18 @@ public interface LostAndFoundService {
 	 * 조회수 증가하기
 	 */
 	int updateViews(int postNo);
+
+	/**
+	 * 작성자 : 최보윤
+	 * 작성일자 : 2026-01-04
+	 * 게시글 수정
+	 */
+	int updatePost(Post inputPost, List<MultipartFile> images) throws IllegalStateException, IOException;
+
+	/**
+	 * 작성자 : 최보윤
+	 * 작성일자 : 2026-01-04
+	 * 게시글 삭제
+	 */
+	int deletePost(Map<String, Integer> map);
 }

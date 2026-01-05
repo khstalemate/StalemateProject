@@ -184,7 +184,7 @@
                                 th:classappend="*{category == '실종'} ? 'badge-primary' : 'badge-secondary'">실종</span></div>
                         <div>   
                             <h3 th:text="*{postTitle}" class="list-title character-limit" data-limit="20" id="post_title"
-                                th:onclick="|location.href='@{/lostandfound/detail(postNo=*{postNo})}'|">제목</h3>
+                                th:onclick="|location.href='@{/lostandfound/{postNo}(postNo=*{postNo})}'|">제목</h3>
                             <p th:text="*{content}" class="list-desc character-limit" data-limit="30">내용</p>
                         </div>
                         <div th:text="*{memberName}" class="list-meta">작성자</div>
