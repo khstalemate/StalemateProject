@@ -299,7 +299,6 @@
 		SET POST_TITLE = #{postTitle},
 		CONTENT = #{content}
 		WHERE POST_NO = #{postNo}
-		AND MEMBER_NO = #{memberNo}
 	</update>
 	
 	<!-- 작성자 : 최보윤
