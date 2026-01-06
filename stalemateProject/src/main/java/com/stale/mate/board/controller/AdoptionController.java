@@ -254,7 +254,8 @@ public class AdoptionController {
 		if(post == null) {
 			message = "해당 게시글이 존재하지 않습니다.";
 			path = "redirect:/adoption";
-		} else if (post.getMemberNo() != loginMember.getMemberNo()) {
+		} else if (post.getMemberNo() != loginMember.getMemberNo() && loginMember.getAuthority() != 2) {
+			//2026-01-06 유건우 수정 - 관리자는 수정 할 수 있어야 함.
 			message = "자신이 작성한 글만 수정할 수 있습니다.";
 			path = "redirect:/adoption";
 		} else {
