@@ -215,45 +215,47 @@ public class AdoptionServiceImpl implements AdoptionService{
 	 * @throws IllegalStateException 
 	 */
 	@Override
-	public int updatePost(Post inputPost, List<MultipartFile> images) throws IllegalStateException, IOException {
+	public int updatePost(Post inputPost, List<MultipartFile> images, boolean deleteAllImg) throws IllegalStateException, IOException {
+	
 		int result = mapper.updatePost(inputPost);
-		
 		if(result == 0) {
 			return 0;
 		}
 		
+		if(deleteAllImg) {
+			mapper.deletePostImg(inputPost.getPostNo());
+		}
+		
 		List<PostImg> uploadList = new ArrayList<>();
 		int order = 1;
-		for(int i = 0; i < images.size(); i++ ) {
-			if(!images.get(i).isEmpty()) {
-				String originalName = images.get(i).getOriginalFilename();
-				String rename = Utility.fileRename(originalName, order);
-				
-				PostImg img = PostImg.builder().imgOriginalName(originalName).imgRename(rename)
-						.imgPath(webPath).postNo(inputPost.getPostNo()).uploadFile(images.get(i)).build();
-				uploadList.add(img);
-				
-				result = mapper.updatePostImg(img);
-				if(result == 0) {
-					result = mapper.insertPostImg(img);
-				}
-				
-				order++;
-			}
+		
+		for(MultipartFile file : images) {
+			if(file.isEmpty()) continue;
 			
-			if(result == 0) {
+			String originalName = file.getOriginalFilename();
+			String rename = Utility.fileRename(originalName, order);
+			
+			PostImg img = PostImg.builder().imgOriginalName(originalName).imgRename(rename)
+					.imgPath(webPath).postNo(inputPost.getPostNo()).uploadFile(file).build();
+			uploadList.add(img);
+			
+			int imgResult = mapper.insertPostImg(img);
+			
+			if(imgResult == 0) {
 				throw new RuntimeException();
 			}
 			
-			if(uploadList.isEmpty()) {
-				return result;
-			}
-			
-			for(PostImg img : uploadList) {
-				img.getUploadFile().transferTo(new File(folderPath + img.getImgRename()));
-			}
+			order++;
 		}
 		
+		if(uploadList.isEmpty()) {
+			return result;
+		}
+		
+		for(PostImg img : uploadList) {
+			img.getUploadFile().transferTo(new File(folderPath + img.getImgRename()));
+		}
+			
 		return result;
 	}
 

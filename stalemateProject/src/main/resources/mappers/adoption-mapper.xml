@@ -336,4 +336,12 @@
 		SET POST_DELETE = 'Y'
 		WHERE POST_NO = #{postNo}
 	</update>
+	
+	<!-- 작성자 : 최보윤
+	작성일자 : 2025-01-06
+	이미지 삭제 -->
+	<delete id="deletePostImg">
+		DELETE FROM POST_IMG
+		WHERE POST_NO = #{postNo}
+	</delete>
 </mapper>

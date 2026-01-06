@@ -34,14 +34,21 @@
 
                 <!-- 기존 업로드된 파일명만 텍스트로 보여주기 -->
                 <th:block th:if="*{imgList} != null and *{imgList.size()} > 0">
-                    <p class="muted">
-                        기존에 업로드된 파일:
-                        <span th:each="img, stat : *{imgList}">
-                            <span th:text="${img.imgOriginalName}">파일명</span>
-                            <span th:if="${!stat.last}">, </span>
-                        </span>
-                    </p>
+                    <div class="uploaded-file-info">
+                        <p class="muted">
+                            기존에 업로드된 파일:
+                            <span th:each="img, stat : *{imgList}">
+                                <span th:text="${img.imgOriginalName}">파일명</span>
+                                <span th:if="${!stat.last}">, </span>
+                            </span>
+                            <button type="button" onclick="deleteImg();">&times;</button>
+                        </p>
+                        <input type="hidden" id="existingImgCount" th:value="*{imgList.size()}">
+                    </div>
                 </th:block>
+
+                <!-- 이미지 전부 삭제할지 여부를 서버에 넘길 flag -->
+                <input type="hidden" name="deleteAllImg" id="deleteAllImg" value="false">
             </div>
 
             <div class="form-field">
@@ -166,6 +173,7 @@
 
 <th:block th:replace="~{common/footer}"></th:block>
 
+<script src="/js/board/lostandfound_edit.js"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
     // 카카오 주소 찾기

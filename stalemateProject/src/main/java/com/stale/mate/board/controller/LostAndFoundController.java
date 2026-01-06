@@ -275,10 +275,11 @@ public class LostAndFoundController {
 	@PostMapping("{postNo:[0-9]+}/update")
 	public String updatePost(@PathVariable("postNo") int postNo, @ModelAttribute Post inputPost,
 						@RequestParam("uploadImg") List<MultipartFile> images, @RequestParam(value = "cp", required = false, defaultValue = "1") int cp,
+						@RequestParam(value = "deleteAllImg", required = false, defaultValue = "false") boolean deleteAllImg,
 						@SessionAttribute("loginMember") Member loginMember, RedirectAttributes ra) throws Exception {
 		inputPost.setPostNo(postNo);
 		inputPost.setMemberNo(loginMember.getMemberNo());
-		int result = service.updatePost(inputPost, images);
+		int result = service.updatePost(inputPost, images, deleteAllImg);
 		
 		String message = null;
 		String path = null;
