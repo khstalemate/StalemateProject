@@ -53,9 +53,8 @@
 
             <div class="form-field">
                 <label>제목</label>
-                <input type="text" class="form-control"
-                    th:field="*{postTitle}"
-                    placeholder="예: 골든 리트리버 '곰디' 실종">
+                <input type="text" class="form-control" th:field="*{postTitle}" placeholder="예: 골든 리트리버 '골댕이' 분양"
+                min="0" maxlength="99" oninput="if(this.value.length > 99) this.value = this.value.slice(0, 99);">
             </div>
 
             <div class="form-row">
@@ -91,13 +90,15 @@
                     id="sample4_roadAddress"
                     placeholder="도로명주소"
                     class="form-control2"
-                    th:field="*{location}">
+                    th:field="*{location}"
+                    min="0" maxlength="49" oninput="if(this.value.length > 99) this.value = this.value.slice(0, 49);"> 
 
                 <input type="text"
                     id="sample4_detailAddress"
                     placeholder="상세주소"
                     class="form-control2"
-                    th:field="*{detailLocation}">
+                    th:field="*{detailLocation}"
+                    min="0" maxlength="99" oninput="if(this.value.length > 99) this.value = this.value.slice(0, 99);">
             </div>
 
             <div class="form-row">
