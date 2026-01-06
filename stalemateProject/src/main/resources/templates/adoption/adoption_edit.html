@@ -50,7 +50,8 @@
 
             <div class="form-field">
                 <label>제목</label>
-                <input type="text" class="form-control" th:field="*{postTitle}" placeholder="예: 골든 리트리버 '곰디' 분양">
+                <input type="text" class="form-control" th:field="*{postTitle}" placeholder="예: 골든 리트리버 '골댕이' 분양"
+                min="0" maxlength="99" oninput="if(this.value.length > 99) this.value = this.value.slice(0, 99);">
             </div>
 
             <div class="form-row">
@@ -63,7 +64,7 @@
                 </div>
                 <div class="form-field">
                     <label>입양 비용</label>
-                    <input type="number" class="form-control" th:field="*{adoptFee}" placeholder="예: 0 (무료 입양은 0으로 입력)" min="0">
+                    <input type="number" class="form-control" th:field="*{adoptFee}" placeholder="예: 0 (무료 입양은 0으로 입력)" min="0" maxlength="9" oninput="if(this.value.length > 9) this.value = this.value.slice(0, 9);">
                 </div>
             </div>  
 
