@@ -138,9 +138,9 @@
                                 <h4 class="missing-title">
                                     <p th:text="${post.postTitle}"></p>
                                 </h4>
-                                <p class="missing-location" th:text="${post.location}"></p>
+                                <p class="missing-location" th:text="${post.location != null and !#strings.isEmpty(post.location) ? post.location : '미입력'}"></p>
                                 <p class="missing-date">
-                                    <span th:text="${post.missingTime}"></span>
+                                    <span th:text="${post.missingTime != null and !#strings.isEmpty(post.missingTime) ? post.missingTime : '미입력'}">미입력</span>
                                 </p>
                             </div>
                         </article>
