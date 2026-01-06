@@ -232,8 +232,7 @@ const deleteReply = replyNo => {
   .catch(err => console.log(err));
 }
 
-const reportBtn = document.querySelector("#reportBtn");
-reportBtn.addEventListener("click", () => {
+function report() {
   if(!confirm("이 게시글을 신고하시겠습니까?")) return;
 
   const reportReason = prompt("신고 사유를 입력해주세요.", "");
@@ -262,4 +261,4 @@ reportBtn.addEventListener("click", () => {
     }
   })
   .catch(err => console.log(err));
-})
+}
