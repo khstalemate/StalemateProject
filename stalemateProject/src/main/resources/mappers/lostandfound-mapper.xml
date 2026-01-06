@@ -308,8 +308,7 @@
 	<update id="updatePostImg">
 		UPDATE "POST_IMG"
 		SET IMG_ORIGINAL_NAME = #{imgOriginalName},
-		IMG_RENAME = #{imgRename},
-		POST_UPDATE = SYSDATE
+		IMG_RENAME = #{imgRename}
 		WHERE POST_NO = #{postNo}
 	</update>
 	
