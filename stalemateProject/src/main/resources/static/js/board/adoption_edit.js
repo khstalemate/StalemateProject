@@ -22,6 +22,22 @@ uploadImgBtn.addEventListener("change", (e) => {
   }
 });
 
+// 기존에 업로드한 사진 삭제
+function deleteImg() {
+  if(!confirm("업로드된 이미지를 모두 삭제하시겠습니까?")) {
+    return;
+  }
+
+  const deleteFlag = document.querySelector("#deleteAllImg");
+  if(deleteFlag) {
+    deleteFlag.value = "true";
+    document.querySelector(".uploaded-file-info").style.display = "none";
+  }
+
+  const exist = document.querySelector("#existingImgCount");
+  if(exist) exist.value = 0;
+}
+
 const cancleBtn = document.querySelector("#cancleBtn");
 cancleBtn.addEventListener("click", ()=>{
   if(confirm("게시글 작성을 취소하시겠습니까?")) {
@@ -38,7 +54,7 @@ form.addEventListener("submit", e => {
   const gender = document.querySelector("[name=gender]");
   const age = document.querySelector("[name=age]");
   const weight = document.querySelector("[name=weight]");
-  const content = document.querySelector("[name=content]");
+  const adoptFee = document.querySelector("[name=adoptFee]");
 
   if(postTitle.value.trim().length === 0){
     alert("제목을 작성해주세요");
@@ -48,37 +64,57 @@ form.addEventListener("submit", e => {
   }
 
   if(category.value.trim().length === 0){
-    alert("제목을 작성해주세요");
+    alert("카테고리를 선택해주세요");
     category.focus();
     e.preventDefault();
     return;
   }
   
     if(species.value.trim().length === 0){
-    alert("제목을 작성해주세요");
+    alert("동물 종을 선택해주세요");
     species.focus();
     e.preventDefault();
     return;
   }  
 
     if(gender.value.trim().length === 0){
-    alert("제목을 작성해주세요");
+    alert("성별을 선택해주세요");
     gender.focus();
     e.preventDefault();
     return;
   }  
 
     if(age.value.trim().length === 0){
-    alert("제목을 작성해주세요");
+    alert("나이를 선택해주세요");
     age.focus();
     e.preventDefault();
     return;
   }  
   
     if(weight.value.trim().length === 0){
-    alert("제목을 작성해주세요");
+    alert("체중을 선택해주세요");
     weight.focus();
     e.preventDefault();
     return;
   }  
+
+  if(adoptFee.value.trim().length === 0){
+    alert("체중을 선택해주세요");
+    adoptFee.focus();
+    e.preventDefault();
+    return;
+  }  
+
+  // 제출 시 총 파일 개수 제한
+  const existing = document.querySelector("#existingImgCount");
+  const existingCount = existing ? Number(existing.value) : 0;
+  const newCount = uploadImgBtn ? uploadImgBtn.files.length : 0;
+  const total = existingCount + newCount;
+
+  if(total > 5) {
+    alert("사진은 최대 5장만 업로드할 수 있습니다.");
+    uploadImgBtn.value = "";
+    e.preventDefault();
+    return;
+  }
 });

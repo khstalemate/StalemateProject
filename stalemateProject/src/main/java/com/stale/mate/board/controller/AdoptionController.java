@@ -23,26 +23,28 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.stale.mate.board.model.dto.Post;
 import com.stale.mate.board.model.service.AdoptionService;
+import com.stale.mate.board.model.service.AdoptionServiceImpl;
 import com.stale.mate.main.controller.MainController;
 import com.stale.mate.member.model.dto.Member;
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @RequestMapping("adoption")
-@Slf4j
 public class AdoptionController {
+
+    private final AdoptionServiceImpl adoptionServiceImpl;
 
     private final MainController mainController;
 	
 	@Autowired
 	private AdoptionService service;
 
-    AdoptionController(MainController mainController) {
+    AdoptionController(MainController mainController, AdoptionServiceImpl adoptionServiceImpl) {
         this.mainController = mainController;
+        this.adoptionServiceImpl = adoptionServiceImpl;
     }
 	/**
 	 * 작성자 : 최보윤
@@ -276,10 +278,11 @@ public class AdoptionController {
 	@PostMapping("{postNo:[0-9]+}/update")
 	public String updatePost(@PathVariable("postNo") int postNo, @ModelAttribute Post inputPost,
 						@RequestParam("uploadImg") List<MultipartFile> images, @RequestParam(value = "cp", required = false, defaultValue = "1") int cp,
+						@RequestParam(value = "deleteAllImg", required = false, defaultValue = "false") boolean deleteAllImg,
 						@SessionAttribute("loginMember") Member loginMember, RedirectAttributes ra) throws Exception {
 		inputPost.setPostNo(postNo);
 		inputPost.setMemberNo(loginMember.getMemberNo());
-		int result = service.updatePost(inputPost, images);
+		int result = service.updatePost(inputPost, images, deleteAllImg);
 		
 		String message = null;
 		String path = null;

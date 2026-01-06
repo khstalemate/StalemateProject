@@ -95,10 +95,11 @@ public interface AdoptionService {
 	 * 작성자 : 최보윤
 	 * 작성일자 : 2026-01-04
 	 * 게시글 수정
+	 * @param deleteAllImg 
 	 * @throws IOException 
 	 * @throws IllegalStateException 
 	 */
-	int updatePost(Post inputPost, List<MultipartFile> images) throws IllegalStateException, IOException;
+	int updatePost(Post inputPost, List<MultipartFile> images, boolean deleteAllImg) throws IllegalStateException, IOException;
 
 	/**
 	 * 작성자 : 최보윤

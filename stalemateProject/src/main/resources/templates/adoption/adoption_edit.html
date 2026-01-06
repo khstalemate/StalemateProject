@@ -29,15 +29,23 @@
                 </label>
                 <input type="file" name="uploadImg" id="uploadImg" accept="image/*" multiple>
 
+                <!-- 기존 업로드된 파일명만 텍스트로 보여주기 -->
                 <th:block th:if="${post != null and post.imgList != null and #lists.size(post.imgList) > 0}">
-                    <p class="muted">
-                        기존에 업로드된 파일:
-                        <span th:each="img, stat : ${post.imgList}">
-                            <span th:text="${img.imgOriginalName}">파일명</span>
-                            <span th:if="${!stat.last}">, </span>
-                        </span>
-                    </p>
+                    <div class="uploaded-file-info">
+                        <p class="muted">
+                            기존에 업로드된 파일:
+                            <span th:each="img, stat : ${post.imgList}">
+                                <span th:text="${img.imgOriginalName}">파일명</span>
+                                <span th:if="${!stat.last}">, </span>
+                            </span>
+                            <button type="button" onclick="deleteImg();">&times;</button>
+                        </p>
+                        <input type="hidden" id="existingImgCount" th:value="*{imgList != null ? imgList.size() : 0}">
+                    </div>
                 </th:block>
+                
+                <!-- 이미지 전부 삭제할지 여부를 서버에 넘길 flag -->
+                <input type="hidden" name="deleteAllImg" id="deleteAllImg" value="false">
             </div>
 
             <div class="form-field">
@@ -57,7 +65,7 @@
                     <label>입양 비용</label>
                     <input type="number" class="form-control" th:field="*{adoptFee}" placeholder="예: 0 (무료 입양은 0으로 입력)" min="0">
                 </div>
-            </div>
+            </div>  
 
             <div class="form-row">
                 <div class="form-field">

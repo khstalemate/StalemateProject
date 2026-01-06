@@ -119,5 +119,12 @@ public interface AdoptionMapper {
 	 */
 	int deletePost(Map<String, Integer> map);
 
+	/**
+	 * 작성자 : 최보윤
+	 * 작성일자 : 2026-01-06
+	 * 이미지를 삭제하는 SQL
+	 */
+	int deletePostImg(int postNo);
+
 
 }
